@@ -26,10 +26,17 @@ class Database:
 
 
 @app.route('/users/<user_id>')
-def employees(user_id):
+def dash_user(user_id):
     data = user_id
     return render_template('index.html', data=data)
     #return render_template('index.html', result=res, content_type='application/json')
+
+@app.route('/probelms/<user_id>')
+def dash_problems(user_id):
+    data = user_id
+    return render_template('index.html', data=data)
+    #return render_template('index.html', result=res, content_type='application/json')
+
 @app.route('/portfolio')
 def portfolio():
     return render_template('portfolio.html')
