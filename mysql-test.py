@@ -61,16 +61,18 @@ def insert_user():
 @app.route('/new_user',methods=['POST'])
 def usuario():
 
- userName = request.form['user_id']
+ userid = request.form['user_id']
  userELO = request.form['users_elo']
  if userELO =="":
      userELO = 8.0
 
  def db_query():
      db = Database()
-     db.insert_use(userName,userELO)
+     db.insert_use(userid,userELO)
 
- return render_template('insert-user-sucess.html')
+ db_query()
+
+ return render_template('insert-user-sucess.html', data =userid )
 
 
 
