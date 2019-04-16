@@ -44,7 +44,7 @@
                     <li><a href="/forms"><i class="fa fa-list-ol"></i> Forms</a></li>
                     <li><a href="/typography"><i class="fa fa-font"></i> Typography</a></li>
                     <li><a href="/bootstrap-elements"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
-                    <li><a href="/insert_user"><i class="fa fa-table"></i> Insert User</a></li>
+                    <li><a href="/insert_user"><i class="fa fa-list-ol"></i> Insert User</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
 
@@ -79,7 +79,7 @@
                 <div class="col-md-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Visits Based on a 10 days data</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Elo Evolution Data</h3>
                         </div>
                         <div class="panel-body">
                             <div id="shieldui-chart1"></div>
@@ -89,32 +89,17 @@
              <div class="col-md-4">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-rss"></i> Feed</h3>
+                            <h3 class="panel-title"><i class="fa fa-font"></i> Info</h3>
                         </div>
                         <div class="panel-body feed">
+
                             <section class="feed-item">
                                 <div class="icon pull-left">
-                                    <i class="fa fa-comment"></i>
+                                    <i class="fa fa-plus-square-o"></i>
                                 </div>
                                 <div class="feed-item-body">
                                     <div class="text">
-                                        <a href="#">John Doe</a> commented on <a href="#">What Makes Good Code Good</a>.
-                                    </div>
-                                    <div class="time pull-left">
-                                        3 h
-                                    </div>
-                                </div>
-                            </section>
-                            <section class="feed-item">
-                                <div class="icon pull-left">
-                                    <i class="fa fa-check"></i>
-                                </div>
-                                <div class="feed-item-body">
-                                    <div class="text">
-                                        <a href="#">Merge request #42</a> has been approved by <a href="#">Jessica Lori</a>.
-                                    </div>
-                                    <div class="time pull-left">
-                                        10 h
+                                        Nivel de Elo: 7,6
                                     </div>
                                 </div>
                             </section>
@@ -124,62 +109,51 @@
                                 </div>
                                 <div class="feed-item-body">
                                     <div class="text">
-                                        New user <a href="#">Greg Wilson</a> registered.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Today
+                                        Total problemas intentados: 68
                                     </div>
                                 </div>
                             </section>
                             <section class="feed-item">
                                 <div class="icon pull-left">
-                                    <i class="fa fa-bolt"></i>
+                                    <i class="fa fa-plus-square-o"></i>
                                 </div>
                                 <div class="feed-item-body">
                                     <div class="text">
-                                        Server fail level raises above normal. <a href="#">See logs</a> for details.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Yesterday
+                                       Total problemas resueltos: 45
                                     </div>
                                 </div>
                             </section>
                             <section class="feed-item">
                                 <div class="icon pull-left">
-                                    <i class="fa fa-archive"></i>
+                                    <i class="fa fa-plus-square-o"></i>
                                 </div>
                                 <div class="feed-item-body">
                                     <div class="text">
-                                        <a href="#">Database usage report</a> is ready.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Yesterday
+                                        Problema recomendado: <a href="#">¡Nos invaden!</a>.
                                     </div>
                                 </div>
                             </section>
                             <section class="feed-item">
                                 <div class="icon pull-left">
-                                    <i class="fa fa-shopping-cart"></i>
+                                    <i class="fa fa-plus-square-o"></i>
                                 </div>
                                 <div class="feed-item-body">
                                     <div class="text">
-                                        <a href="#">Order #233985</a> needs additional processing.
-                                    </div>
-                                    <div class="time pull-left">
-                                        Wednesday
+                                        Problema recomendado: <a href="#">Árboles libres</a>.
                                     </div>
                                 </div>
                             </section>
                             <section class="feed-item">
                                 <div class="icon pull-left">
-                                    <i class="fa fa-arrow-down"></i>
+                                    <i class="fa fa-plus-square-o"></i>
                                 </div>
                                 <div class="feed-item-body">
                                     <div class="text">
-                                        <a href="#">Load more...</a>
+                                        Problema recomendado: <a href="#">¡En primera línea de playa!</a>.
                                     </div>
                                 </div>
                             </section>
+
                         </div>
                     </div>
                 </div>
@@ -188,7 +162,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Traffic Sources One month tracking </h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Traffic Problems </h3>
                         </div>
                         <div class="panel-body">
                             <div id="shieldui-grid1"></div>
@@ -200,7 +174,7 @@
                 <div class="col-md-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Logins per week</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Status Problems</h3>
                         </div>
                         <div class="panel-body">
                            <canvas id="myChart"></canvas>
@@ -210,243 +184,14 @@
                 <div class="col-lg-4">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-magnet"></i> Server Overview</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Status Problems</h3>
                         </div>
                         <div class="panel-body">
-                            <ul class="server-stats">
-                                <li>
-                                    <div class="key pull-right">CPU</div>
-                                    <div class="stat">
-                                        <div class="info">60% / 37°C / 3.3 Ghz</div>
-                                        <div class="progress progress-small">
-                                            <div style="width: 70%;" class="progress-bar progress-bar-danger"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="key pull-right">Mem</div>
-                                    <div class="stat">
-                                        <div class="info">29% / 4GB (16 GB)</div>
-                                        <div class="progress progress-small">
-                                            <div style="width: 29%;" class="progress-bar"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="key pull-right">LAN</div>
-                                    <div class="stat">
-                                        <div class="info">6 Mb/s <i class="fa fa-caret-down"></i>&nbsp; 3 Mb/s <i class="fa fa-caret-up"></i></div>
-                                        <div class="progress progress-small">
-                                            <div style="width: 48%;" class="progress-bar progress-bar-inverse"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div id="shieldui-chart2"></div>
                         </div>
                     </div>
+                </div>
 
-                </div>
-                <div class="col-lg-4">
-                    <header>
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a data-toggle="tab" href="#stats">Users</a>
-                            </li>
-                            <li class="">
-                                <a data-toggle="tab" href="#report">Favorites</a>
-                            </li>
-                            <li class="">
-                                <a data-toggle="tab" href="#dropdown1">Commenters</a>
-                            </li>
-                        </ul>
-                    </header>
-                    <div class="body tab-content">
-                        <div class="tab-pane clearfix active" id="stats">
-                            <h5 class="tab-header"><i class="fa fa-calendar-o fa-2x"></i> Last logged-in users</h5>
-                            <ul class="news-list">
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Ivan Gorge</a></div>
-                                        <div class="position">Software Engineer</div>
-                                        <div class="time">Last logged-in: Mar 12, 11:11</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Roman Novak</a></div>
-                                        <div class="position">Product Designer</div>
-                                        <div class="time">Last logged-in: Mar 12, 19:02</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Teras Uotul</a></div>
-                                        <div class="position">Chief Officer</div>
-                                        <div class="time">Last logged-in: Jun 16, 2:34</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Deral Ferad</a></div>
-                                        <div class="position">Financial Assistant</div>
-                                        <div class="time">Last logged-in: Jun 18, 4:20</div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Konrad Polerd</a></div>
-                                        <div class="position">Sales Manager</div>
-                                        <div class="time">Last logged-in: Jun 18, 5:13</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-pane" id="report">
-                            <h5 class="tab-header"><i class="fa fa-star fa-2x"></i> Popular contacts</h5>
-                            <ul class="news-list news-list-no-hover">
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Pol Johnsson</a></div>
-                                        <div class="options">
-                                            <button class="btn btn-xs btn-success">
-                                                <i class="fa fa-phone"></i>
-                                                Call
-                                            </button>
-                                            <button class="btn btn-xs btn-warning">
-                                                <i class="fa fa-envelope-o"></i>
-                                                Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Terry Garel</a></div>
-                                        <div class="options">
-                                            <button class="btn btn-xs btn-success">
-                                                <i class="fa fa-phone"></i>
-                                                Call
-                                            </button>
-                                            <button class="btn btn-xs btn-warning">
-                                                <i class="fa fa-envelope-o"></i>
-                                                Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Eruos Forkal</a></div>
-                                        <div class="options">
-                                            <button class="btn btn-xs btn-success">
-                                                <i class="fa fa-phone"></i>
-                                                Call
-                                            </button>
-                                            <button class="btn btn-xs btn-warning">
-                                                <i class="fa fa-envelope-o"></i>
-                                                Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Remus Reier</a></div>
-                                        <div class="options">
-                                            <button class="btn btn-xs btn-success">
-                                                <i class="fa fa-phone"></i>
-                                                Call
-                                            </button>
-                                            <button class="btn btn-xs btn-warning">
-                                                <i class="fa fa-envelope-o"></i>
-                                                Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Lover Lund</a></div>
-                                        <div class="options">
-                                            <button class="btn btn-xs btn-success">
-                                                <i class="fa fa-phone"></i>
-                                                Call
-                                            </button>
-                                            <button class="btn btn-xs btn-warning">
-                                                <i class="fa fa-envelope-o"></i>
-                                                Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-pane" id="dropdown1">
-                            <h5 class="tab-header"><i class="fa fa-comments fa-2x"></i> Top Commenters</h5>
-                            <ul class="news-list">
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Edin Garey</a></div>
-                                        <div class="comment">
-                                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur 
-                                            aut odit aut fugit,sed quia
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Firel Lund</a></div>
-                                        <div class="comment">
-                                            Duis aute irure dolor in reprehenderit in voluptate velit
-                                             esse cillum dolore eu fugiat.
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Jessica Desingter</a></div>
-                                        <div class="comment">
-                                            Excepteur sint occaecat cupidatat non proident, sunt in
-                                             culpa qui officia deserunt.
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Novel Forel</a></div>
-                                        <div class="comment">
-                                            Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque.
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fa fa-user fa-4x pull-left"></i>
-                                    <div class="news-item-info">
-                                        <div class="name"><a href="#">Wedol Reier</a></div>
-                                        <div class="comment">
-                                            Laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis
-                                            et quasi.
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -458,56 +203,26 @@
                 visits = [123, 323, 443, 32],
                 traffic = [
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
+                    id: "260336", problem_id: "323", user_id: "1161", status: "AC", submissionDate: "2018-10-07 15:12:22"
                 },
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
+                    id: "253981", problem_id: "323", user_id: "1161", status: "WA", submissionDate: "2018-10-07 15:15:34"
                 },
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
+                    id: "260332", problem_id: "136", user_id: "1161", status: "WA", submissionDate: "2018-10-07 19:04:50"
                 },
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
+                    id: "253953", problem_id: "136", user_id: "1161", status: "WA", submissionDate: "2018-10-07 20:02:49"
                 },
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
+                    id: "260336", problem_id: "136", user_id: "1161", status: "TL", submissionDate: "2018-10-08 19:17:53"
                 },
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
+                    id: "260336", problem_id: "323", user_id: "1161", status: "TL", submissionDate: "2018-10-09 22:22:41"
                 },
 
                 {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Source: "Refer", Amount: 345, Change: 34, Percent: 45, Target: 567
-                },
-                {
-                    Source: "Social", Amount: 567, Change: 67, Percent: 23, Target: 456
-                },
-                {
-                    Source: "Search", Amount: 234, Change: 23, Percent: 56, Target: 890
-                },
-                {
-                    Source: "Internal", Amount: 111, Change: 78, Percent: 12, Target: 345
+                    id: 260336, problem_id: "111", user_id: "1161", Percent: "AC", submissionDate: "2018-10-09 23:13:15"
                 }];
 
 
@@ -532,7 +247,7 @@
             $("#shieldui-chart2").shieldChart({
                 theme: "blue",
                 primaryHeader: {
-                    text: "Traffic Per week"
+                    text: "Total Problems "
                 },
                 exportOptions: {
                     image: false,
@@ -540,7 +255,7 @@
                 },
                 dataSeries: [{
                     seriesType: "pie",
-                    collectionAlias: "traffic",
+                    collectionAlias: "problems",
                     data: visits
                 }]
             });
@@ -575,14 +290,28 @@ var chart = new Chart(ctx, {
         labels: ['Busqueda Binaria', 'Busqueda', 'Recorridos', 'Ad-hoc', 'Geometria', 'Grafos', 'Busqueda en el espacio de soluciones','Busqueda exhaustiva,vueta atras','Divide y venceras','Programacion dinamica','Algoritmos voraces','Ordenacion'],
         datasets: [{
             label: 'My First dataset',
-            backgroundColor: 'rgb(30, 152, 228)',
+            backgroundColor: 'rgb(30, 152, 228,0.5)',
             borderColor: 'rgb(0, 195, 205)',
-            data: [5,8, 8, 12, 3, 5, 10,11,8,14.4,12,10.5]
+            data: [5,8, 8, 12, 3.4, 5, 10,11,8,14.4,12,10.5],
+            pointBackgroundColor: 'rgb(255, 255, 255)',
+            pointHoverBackgroundColor: 'rgb(255, 255, 255)',
+            pointHoverBorderColor: 'rgb(255, 255, 255)'
         }]
     },
 
     // Configuration options go here
-    options: {}
+    options: {
+    scale: {
+        ticks: {
+        beginAtZero: true,
+        min: 0,
+         max: 16,
+        stepSize: 20
+        },
+        pointLabels: {
+        fontSize: 18
+        }
+  }}
 });
     </script>
 </body>

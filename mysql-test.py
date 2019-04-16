@@ -19,17 +19,35 @@ class Database:
         cursor = self.con.cursor()
         sql_insert_query = """ INSERT INTO `users_elo` (`user_id`, `users_elo`) VALUES (%s, %s)"""
         insert_tuple = (userId, users_elo)
-        result = cursor.execute(sql_insert_query,insert_tuple)
+        cursor.execute(sql_insert_query,insert_tuple)
         self.con.commit()
         print("Record inserted successfully into python_users table")
+
+    def user_problems(self,userId):
+        cursor = self.con.cursor()
+        sql_insert_query = """ SELECT * FROM `submission` WHERE `user_id`= 11611 ORDER BY `submissionDate` DESC"""
+        insert_tuple = (userId)
+
+        cursor.execute(sql_insert_query)
+        result = cursor.fetchall()
+        return result
 
 
 
 @app.route('/users/<user_id>')
 def dash_user(user_id):
-    data = user_id
-    return render_template('index.html', data=data)
-    #return render_template('index.html', result=res, content_type='application/json')
+
+    def db_query():
+        db = Database()
+        problems = db.user_problems(user_id)
+
+        return problems
+
+    usuario = db_query()
+
+
+
+    return render_template('index.html', usuario=usuario, content_type='application/json')
 
 @app.route('/probelms/<user_id>')
 def dash_problems(user_id):
