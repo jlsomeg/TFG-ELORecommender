@@ -25,8 +25,8 @@ class Database:
 
     def user_problems(self,userId):
         cursor = self.con.cursor()
-        sql_insert_query = """ SELECT * FROM `submission` WHERE `user_id`= 11611 ORDER BY `submissionDate` DESC"""
-        insert_tuple = (userId)
+        sql_insert_query = """ SELECT `id`,`problem_id`,`status`, `submissionDate`  FROM `submission` 
+        WHERE `user_id`= '%s' ORDER BY `submissionDate` DESC""" % (userId)
 
         cursor.execute(sql_insert_query)
         result = cursor.fetchall()
@@ -43,11 +43,11 @@ def dash_user(user_id):
 
         return problems
 
-    usuario = db_query()
+    usuario_info = db_query()
 
 
 
-    return render_template('index.html', usuario=usuario, content_type='application/json')
+    return render_template('index.html', usuario_info=usuario_info,user_id=user_id, content_type='application/json')
 
 @app.route('/probelms/<user_id>')
 def dash_problems(user_id):
@@ -55,27 +55,15 @@ def dash_problems(user_id):
     return render_template('index.html', data=data)
     #return render_template('index.html', result=res, content_type='application/json')
 
-@app.route('/portfolio')
-def portfolio():
-    return render_template('portfolio.html')
-@app.route('/blog')
-def blog():
-    return render_template('blog.html')
+
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
-@app.route('/register')
-def register():
-    return render_template('register.html')
-@app.route('/timeline')
-def timeline():
-    return render_template('timeline.html')
+
 @app.route('/forms')
 def forms():
     return render_template('forms.html')
-@app.route('/typography')
-def typography():
-    return render_template('typography.html')
+
 @app.route('/bootstrap-elements')
 def bootstrapelements():
     return render_template('bootstrap-elements.html')

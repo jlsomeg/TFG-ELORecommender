@@ -35,14 +35,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul id="active" class="nav navbar-nav side-nav">
-                    <li class="selected"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard - User {{ data }}</a></li>
-                    <li><a href="/portfolio"><i class="fa fa-tasks"></i> Portfolio</a></li>
-                    <li><a href="/blog"><i class="fa fa-globe"></i> Blog</a></li>
+                    <li class="selected"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard - User {{ user_id }}</a></li>
                     <li><a href="/signup"><i class="fa fa-list-ol"></i> SignUp</a></li>
-                    <li><a href="/register"><i class="fa fa-font"></i> Register</a></li>
-                    <li><a href="/timeline"><i class="fa fa-font"></i> Timeline</a></li>
                     <li><a href="/forms"><i class="fa fa-list-ol"></i> Forms</a></li>
-                    <li><a href="/typography"><i class="fa fa-font"></i> Typography</a></li>
                     <li><a href="/bootstrap-elements"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
                     <li><a href="/insert_user"><i class="fa fa-list-ol"></i> Insert User</a></li>
                 </ul>
@@ -71,7 +66,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Dashboard - User {{ data }} <small>ELO Statistics Acepta El Reto</small></h1>
+                    <h1>Dashboard - User {{ user_id }} <small>ELO Statistics Acepta El Reto</small></h1>
 
                 </div>
             </div>
@@ -191,7 +186,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -202,28 +196,12 @@
             var performance = [8.0, 6.9, 4.8, 5.4, 6.4, 7.0, 7.5, 6.8, 5.0, 8.0, 9.3, 13.4],
                 visits = [123, 323, 443, 32],
                 traffic = [
+                {% for user in usuario_info %}
                 {
-                    id: "260336", problem_id: "323", user_id: "1161", status: "AC", submissionDate: "2018-10-07 15:12:22"
+                    Request_id: "Direct",Problem_id: '{{  user[1] }}',Status: '{{ user[2] }}',Submission_Date: '{{ user[3] }}'
                 },
-                {
-                    id: "253981", problem_id: "323", user_id: "1161", status: "WA", submissionDate: "2018-10-07 15:15:34"
-                },
-                {
-                    id: "260332", problem_id: "136", user_id: "1161", status: "WA", submissionDate: "2018-10-07 19:04:50"
-                },
-                {
-                    id: "253953", problem_id: "136", user_id: "1161", status: "WA", submissionDate: "2018-10-07 20:02:49"
-                },
-                {
-                    id: "260336", problem_id: "136", user_id: "1161", status: "TL", submissionDate: "2018-10-08 19:17:53"
-                },
-                {
-                    id: "260336", problem_id: "323", user_id: "1161", status: "TL", submissionDate: "2018-10-09 22:22:41"
-                },
-
-                {
-                    id: 260336, problem_id: "111", user_id: "1161", Percent: "AC", submissionDate: "2018-10-09 23:13:15"
-                }];
+                {% endfor %}
+                ];
 
 
             $("#shieldui-chart1").shieldChart({
@@ -270,10 +248,10 @@
                 rowHover: false,
                 paging: false,
                 columns: [
-                { field: "Source", width: "170px", title: "Source" },
-                { field: "Amount", title: "Amount" },                
-                { field: "Percent", title: "Percent", format: "{0} %" },
-                { field: "Target", title: "Target" },
+                { field: "Request_id", width: "170px", title: "Request id" },
+                { field: "Problem_id", title: "Problem id" },
+                { field: "Status", title: "Status", format: "{0} %" },
+                { field: "Submission_Date", title: "Submission Date" },
                 ]
             });
 
@@ -289,7 +267,7 @@ var chart = new Chart(ctx, {
     data: {
         labels: ['Busqueda Binaria', 'Busqueda', 'Recorridos', 'Ad-hoc', 'Geometria', 'Grafos', 'Busqueda en el espacio de soluciones','Busqueda exhaustiva,vueta atras','Divide y venceras','Programacion dinamica','Algoritmos voraces','Ordenacion'],
         datasets: [{
-            label: 'My First dataset',
+            label: 'User Skill',
             backgroundColor: 'rgb(30, 152, 228,0.5)',
             borderColor: 'rgb(0, 195, 205)',
             data: [5,8, 8, 12, 3.4, 5, 10,11,8,14.4,12,10.5],
