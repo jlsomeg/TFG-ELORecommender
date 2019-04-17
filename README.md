@@ -18,3 +18,4 @@ Tested on Windows 7
   b. sql_insert_query inside def insert_use()
   
 2.Imports: Flask, render_template, request, pymysql, mysql.connector
+3.Xampp up
