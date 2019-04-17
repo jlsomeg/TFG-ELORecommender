@@ -12,7 +12,9 @@ Tested on Windows 7
 ----------------------Conditions-----------------------------
 
 1.My not work if you have different values in bbdd in this points
+
   a. connection = mysql.connector.connect(...) inside def __init__()
+  
   b. sql_insert_query inside def insert_use()
   
 2.Imports: Flask, render_template, request, pymysql, mysql.connector
