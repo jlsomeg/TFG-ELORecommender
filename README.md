@@ -11,7 +11,7 @@ Tested on Windows 7
 
 ----------------------Conditions-----------------------------
 
-1.My not work if you have different values in bbdd in this points
+1.May not work if you have different values in bbdd in this points
 
   a. connection = mysql.connector.connect(...) inside def __init__()
   
