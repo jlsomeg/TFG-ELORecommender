@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.19)  19 APR 2019 14:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.19)  20 APR 2019 18:01
 entering extended mode
 **./TFMTeXiS.tex
 (TFMTeXiS.tex
@@ -801,7 +801,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 \evensidemarginOriginal=\skip85
 \oddsidemarginOriginal=\skip86
 \longTitulo=\skip87
-<Imagenes/Vectorial/escudoUCM.pdf, id=63, 597.23125pt x 844.15375pt>
+<Imagenes/Vectorial/escudoUCM.pdf, id=71, 597.23125pt x 844.15375pt>
 File: Imagenes/Vectorial/escudoUCM.pdf Graphic file (type pdf)
 <use Imagenes/Vectorial/escudoUCM.pdf>
 Package pdftex.def Info: Imagenes/Vectorial/escudoUCM.pdf  used on input line 1
@@ -863,12 +863,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--9
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 10--11
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
@@ -879,7 +879,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
 
 
-]) [13]
+]
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
+
+ []
+
+) [13]
 LaTeX Info: Redefining \. on input line 125.
 LaTeX Info: Redefining \% on input line 125.
 \openout2 = `TeXiS/TeXiS_toc.aux'.
@@ -888,8 +903,7 @@ LaTeX Info: Redefining \% on input line 125.
 
 
 
-]
-(TFMTeXiS.toc
+] (TFMTeXiS.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 LaTeX Info: Redefining \. on input line 3.
@@ -900,10 +914,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 7.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 7.
-LaTeX Info: Redefining \. on input line 10.
-LaTeX Info: Redefining \% on input line 10.
-LaTeX Info: Redefining \. on input line 16.
-LaTeX Info: Redefining \% on input line 16.
+LaTeX Info: Redefining \. on input line 11.
+LaTeX Info: Redefining \% on input line 11.
+LaTeX Info: Redefining \. on input line 17.
+LaTeX Info: Redefining \% on input line 17.
 )
 \tf@toc=\write6
 \openout6 = `TFMTeXiS.toc'.
@@ -923,7 +937,8 @@ LaTeX Info: Redefining \% on input line 13.
 \tf@lof=\write7
 \openout7 = `TFMTeXiS.lof'.
 
- [17] [18
+
+[17] [18
 
 ] (TFMTeXiS.lot
 LaTeX Info: Redefining \. on input line 1.
@@ -944,8 +959,7 @@ LaTeX Info: Redefining \% on input line 13.
 ]
 \openout2 = `Capitulos/Introduction.aux'.
 
-
-(Capitulos/Introduction.tex
+ (Capitulos/Introduction.tex
 Chapter 1.
 LaTeX Font Info:    Try loading font information for OT1+phv on input line 1.
 ("E:\Programas\MiKTeX 2.9\tex/latex/psnfss\ot1phv.fd"
@@ -955,121 +969,204 @@ LaTeX Font Info:    Try loading font information for OT1+ptm on input line 1.
 
 ("E:\Programas\MiKTeX 2.9\tex/latex/psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
-)) [1
+)
+Overfull \hbox (29.09209pt too wide) in paragraph at lines 4--5
+\T1/cmr/m/n/10.95 technology-mobile-poll/online-sharinginformation- overload-is
+-worldwide-problem-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--5
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--9
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
 
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+) [2]
 LaTeX Info: Redefining \. on input line 144.
 LaTeX Info: Redefining \% on input line 144.
 \openout2 = `Capitulos/Introduccion.aux'.
 
+ (Capitulos/Introduccion.tex
+Cap\'itulo 1.
 
-(Capitulos/Introduccion.tex [2
+Overfull \hbox (16.50803pt too wide) in paragraph at lines 7--8
+\T1/cmr/m/n/10.95 https://www.reuters.com/article/net-us-technology-mobile-poll
+/online-sharing-
+ []
+
+
+Overfull \hbox (2.99014pt too wide) in paragraph at lines 7--8
+\T1/cmr/m/n/10.95 information-overload-is-worldwide-problem-poll-idUSBRE8840NF2
+0120905),
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
+
+ []
+
+[3
 
 
 
 ]
-Cap\'itulo 1.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 10.
-("E:\Programas\MiKTeX 2.9\tex/latex/base\t1cmtt.fd"
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-Overfull \hbox (5.58714pt too wide) in paragraph at lines 10--11
-[][]\T1/cmtt/m/n/10.95 TeXiS\TeXiS_pream.tex []\T1/cmr/m/n/10.95 y co-men-ta la
- lí-nea [][]\T1/cmtt/m/n/10.95 \usepackage[Lenny]{fncychap}
+Underfull \hbox (badness 10000) in paragraph at lines 13--14
+
  []
 
-) [3]
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--24
+
+ []
+
+LaTeX Info: Redefining \. on input line 24.
+LaTeX Info: Redefining \% on input line 24.
+[4]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 148.
-LaTeX Info: Redefining \% on input line 148.
- [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 148.
-LaTeX Info: Redefining \% on input line 148.
+LaTeX Info: Redefining \. on input line 34.
+LaTeX Info: Redefining \% on input line 34.
  [5]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 36--37
 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
+
+ []
+
+
+Overfull \hbox (7.60155pt too wide) in paragraph at lines 44--45
+[]\T1/cmr/m/n/10.95 4. De-sa-rro-llo, ex-pe-ri-men-ta-ción y aná-li-sis de los 
+re-sul-ta-dos ob-te-ni-dos,usando
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
+
+ []
+
+)
 LaTeX Info: Redefining \. on input line 148.
 LaTeX Info: Redefining \% on input line 148.
  [6]
-LaTeX Info: Redefining \. on input line 148.
-LaTeX Info: Redefining \% on input line 148.
-
-[7]
 \openout2 = `Capitulos/EstadoDeLaCuestion.aux'.
 
- (Capitulos/EstadoDeLaCuestion.tex [8
+ (Capitulos/EstadoDeLaCuestion.tex
+Cap\'itulo 2.
+
+Package natbib Warning: Citation `ldesc2e' on page 7 undefined on input line 7.
+
+
+
+Package natbib Warning: Citation `notsoshort' on page 7 undefined on input line
+ 8.
+
+
+Package natbib Warning: Citation `latexAPrimer' on page 7 undefined on input li
+ne 9.
+
+
+Package natbib Warning: Citation `latexCompanion' on page 7 undefined on input 
+line 12.
+
+
+Package natbib Warning: Citation `LaTeXLamport' on page 7 undefined on input li
+ne 12.
+
+
+Package natbib Warning: Citation `texKnuth' on page 7 undefined on input line 1
+2.
+
+) [7
 
 
 
 ]
-Cap\'itulo 2.
-
-Package natbib Warning: Citation `ldesc2e' on page 9 undefined on input line 7.
-
-
-
-Package natbib Warning: Citation `notsoshort' on page 9 undefined on input line
- 8.
-
-
-Package natbib Warning: Citation `latexAPrimer' on page 9 undefined on input li
-ne 9.
-
-
-Package natbib Warning: Citation `latexCompanion' on page 9 undefined on input 
-line 12.
-
-
-Package natbib Warning: Citation `LaTeXLamport' on page 9 undefined on input li
-ne 12.
-
-
-Package natbib Warning: Citation `texKnuth' on page 9 undefined on input line 1
-2.
-
-) [9]
 \openout2 = `Capitulos/ConclusionesTrabajoFuturo.aux'.
 
- (Capitulos/ConclusionesTrabajoFuturo.tex [10
+ (Capitulos/ConclusionesTrabajoFuturo.tex [8
 
 
 
 ]
 Cap\'itulo 3.
-) [11]
+) [9]
 \openout2 = `Capitulos/ConclusionsFutureWork.aux'.
 
- (Capitulos/ConclusionsFutureWork.tex [12
+ (Capitulos/ConclusionsFutureWork.tex [10
 
 
 
 ]
 Chapter 3.
-) [13]
+) [11]
 LaTeX Info: Redefining \. on input line 161.
 LaTeX Info: Redefining \% on input line 161.
 \openout2 = `Apendices/appendixA.aux'.
 
- (Apendices/appendixA.tex [14
+ (Apendices/appendixA.tex [12
 
 
 
 ]
 Ap\'{e}ndice A.
-) [15]
+) [13]
 \openout2 = `Apendices/appendixB.aux'.
 
- (Apendices/appendixB.tex [16
+ (Apendices/appendixB.tex [14
 
 
 
 ]
 Ap\'{e}ndice B.
-) [17] [18
+) [15] [16
 
 
 ]
@@ -1080,11 +1177,11 @@ No file TFMTeXiS.bbl.
 )
 \openout2 = `Cascaras/fin.aux'.
 
- (Cascaras/fin.tex [19
+ (Cascaras/fin.tex [17
 
 
 
-] [20])
+] [18])
 
 Package natbib Warning: There were undefined citations.
 
@@ -1111,40 +1208,37 @@ LaTeX Info: Redefining \% on input line 43.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 216.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 216.
 Package rerunfilecheck Info: File `TFMTeXiS.out' has not changed.
-(rerunfilecheck)             Checksum: 82C00E7363DE822484B8E7488F4B549D;888.
+(rerunfilecheck)             Checksum: 4F43499F877DAB79B2A71494BD0AA760;1006.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 216.
  ) 
 Here is how much of TeX's memory you used:
- 22213 strings out of 492902
- 377105 string characters out of 3135392
- 722232 words of memory out of 3000000
- 25464 multiletter control sequences out of 15000+200000
- 550729 words of font info for 54 fonts, out of 3000000 for 9000
+ 22195 strings out of 492902
+ 376488 string characters out of 3135392
+ 631193 words of memory out of 3000000
+ 25451 multiletter control sequences out of 15000+200000
+ 550415 words of font info for 53 fonts, out of 3000000 for 9000
  1379 hyphenation exceptions out of 8191
- 55i,12n,67p,972b,610s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,12n,67p,1130b,610s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi
 600\ecti1000.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/j
 knappen/ec/dpi600\ecrm0800.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\JOSE LUIS\AppData\Local\
-MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk>{E:/Programas/MiKTeX 
-2.9/fonts/enc/dvips/base/8r.enc} <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\f
-onts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\JOSE LUIS\AppData\Loca
-l\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1095.pk> <C:\Users\JOSE LUI
-S\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\
-Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecr
-m1095.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen
-/ec/dpi600\ecti1200.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/l
-jfour/jknappen/ec/dpi600\ecrm2488.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\
-2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\JOSE LUIS\AppData
-\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\JOS
-E LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk>
-<E:/Programas/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><E:/Programa
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/Programas/MiKTeX 2.9/
-fonts/type1/urw/helvetic/uhvr8a.pfb><E:/Programas/MiKTeX 2.9/fonts/type1/urw/ti
-mes/utmr8a.pfb>
-Output written on TFMTeXiS.pdf (40 pages, 559488 bytes).
+ts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk>{E:/Programas/MiKTeX 2.9/fonts/enc/
+dvips/base/8r.enc} <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour
+/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\f
+onts/pk/ljfour/jknappen/ec/dpi600\eccc1095.pk> <C:\Users\JOSE LUIS\AppData\Loca
+l\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\JOSE LUI
+S\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\
+Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ect
+i1200.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen
+/ec/dpi600\ecrm2488.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\2.9\fonts/pk/l
+jfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\JOSE LUIS\AppData\Local\MiKTeX\
+2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\JOSE LUIS\AppData
+\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk><E:/Programas/
+MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><E:/Programas/MiKTeX 2.9/fonts/t
+ype1/urw/times/utmr8a.pfb>
+Output written on TFMTeXiS.pdf (38 pages, 545364 bytes).
 PDF statistics:
- 743 PDF objects out of 1000 (max. 8388607)
- 65 named destinations out of 1000 (max. 500000)
- 126 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 732 PDF objects out of 1000 (max. 8388607)
+ 64 named destinations out of 1000 (max. 500000)
+ 142 words of extra memory for PDF output out of 10000 (max. 10000000)
 
