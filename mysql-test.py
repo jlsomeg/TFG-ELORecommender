@@ -6,7 +6,7 @@ app = Flask(__name__)
 class Database:
     def __init__(self):
         try:
-            connection = pymysql.connect(host='127.0.0.1',
+            connection = pymysql.connect(host='localhost',
                                          database='tfg',
                                          user='root',
                                          password='')
