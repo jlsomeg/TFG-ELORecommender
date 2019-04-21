@@ -6,7 +6,7 @@ app = Flask(__name__)
 class Database:
     def __init__(self):
         try:
-            connection = pymysql.connect(host='localhost',
+            connection = pymysql.connect(host='docker.for.win.localhost',
                                          database='tfg',
                                          user='root',
                                          password='')
