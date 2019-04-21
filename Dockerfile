@@ -8,9 +8,13 @@ RUN pip install --upgrade virtualenv
 
 RUN mkdir deployment
 RUN git clone https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
-RUN pip install -r requirements.txt
+
 RUN virtualenv /deployment/env/
 RUN /deployment/env/bin/pip install flask
+RUN /deployment/env/bin/pip install flask_restful
+RUN /deployment/env/bin/pip install pymysql
+
+
 WORKDIR /deployment
-CMD env/bin/set FLASK_APP=mysql-test.py
-CMD env/bin/python -m flask run
+
+CMD env/bin/python mysql-test.py
