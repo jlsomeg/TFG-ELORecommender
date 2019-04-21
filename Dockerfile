@@ -7,7 +7,7 @@ RUN pip install --upgrade virtualenv
 
 
 RUN mkdir deployment
-RUN git clone https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
+RUN git clone -b prueba_docker https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
 
 RUN virtualenv /deployment/env/
 RUN /deployment/env/bin/pip install flask

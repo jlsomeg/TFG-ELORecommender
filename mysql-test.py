@@ -5,15 +5,13 @@ app = Flask(__name__)
 
 class Database:
     def __init__(self):
-        try:
-            connection = pymysql.connect(host='docker.for.win.localhost',
+
+        self.con = pymysql.connect(host='docker.for.win.localhost',
                                          database='tfg',
                                          user='root',
                                          password='')
-            self.con = connection
-        except pymysql.Error as error:
-            self.con.rollback()  # rollback if any exception occured
-            print("Failed connection into python_users table {}".format(error))
+
+
 
     def insert_use(self,userId,users_elo):
         cursor = self.con.cursor()
@@ -88,5 +86,5 @@ def usuario():
  return render_template('insert-user-sucess.html', data =userid )
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1')
 
