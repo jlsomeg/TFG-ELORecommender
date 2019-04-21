@@ -31,3 +31,4 @@ el Dockerfile se encarga de clonar este repositorio a traves de github
 lo diga con 'docker logs (id)'
 
 Para parar contenedores corriendo 'docker stop (id)'
+Usar docker system prune -a para limpiar de vez en cuando
