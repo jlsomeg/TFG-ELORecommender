@@ -5,15 +5,13 @@ app = Flask(__name__)
 
 class Database:
     def __init__(self):
-        try:
-            connection = pymysql.connect(host='localhost',
+
+        self.con = pymysql.connect(host='localhost',
                                          database='tfg',
                                          user='root',
                                          password='')
-            self.con = connection
-        except pymysql.Error as error:
-            self.con.rollback()  # rollback if any exception occured
-            print("Failed connection into python_users table {}".format(error))
+
+
 
     def insert_use(self,userId,users_elo):
         cursor = self.con.cursor()
