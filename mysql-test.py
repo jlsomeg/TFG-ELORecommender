@@ -1,18 +1,18 @@
 from flask import Flask, render_template, request
-import pymysql, mysql.connector
+import pymysql
 
 app = Flask(__name__)
 
 class Database:
     def __init__(self):
         try:
-            connection = mysql.connector.connect(host='127.0.0.1',
+            connection = pymysql.connect(host='127.0.0.1',
                                          database='tfg',
                                          user='root',
                                          password='')
             self.con = connection
-        except mysql.connector.Error as error:
-            connection.rollback()  # rollback if any exception occured
+        except pymysql.Error as error:
+            self.con.rollback()  # rollback if any exception occured
             print("Failed connection into python_users table {}".format(error))
 
     def insert_use(self,userId,users_elo):
