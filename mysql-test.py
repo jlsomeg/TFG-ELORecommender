@@ -4,87 +4,91 @@ import pymysql
 app = Flask(__name__)
 
 class Database:
-    def __init__(self):
+	def __init__(self):
 
-        self.con = pymysql.connect(host='localhost',
-                                         database='tfg',
-                                         user='root',
-                                         password='')
-
-
-
-    def insert_use(self,userId,users_elo):
-        cursor = self.con.cursor()
-        sql_insert_query = """ INSERT INTO `users_elo` (`user_id`, `users_elo`) VALUES (%s, %s)"""
-        insert_tuple = (userId, users_elo)
-        cursor.execute(sql_insert_query,insert_tuple)
-        self.con.commit()
-        print("Record inserted successfully into python_users table")
-
-    def user_problems(self,userId):
-        cursor = self.con.cursor()
-        sql_insert_query = """ SELECT `id`,`problem_id`,`status`, `submissionDate`  FROM `submission` 
-        WHERE `user_id`= '%s' ORDER BY `submissionDate` DESC""" % (userId)
-
-        cursor.execute(sql_insert_query)
-        result = cursor.fetchall()
-        return result
+		self.con = pymysql.connect(host='localhost',
+										 database='tfg',
+										 user='root',
+										 password='')
 
 
+
+	def insert_user(self,userId,users_elo):
+		cursor = self.con.cursor()
+		sql_insert_query = """ INSERT INTO User_Scores (user_id, elo_global) VALUES (%s, %s)"""
+		insert_tuple = (userId, users_elo)
+		cursor.execute(sql_insert_query,insert_tuple)
+		self.con.commit()
+		print("Record inserted successfully into python_users table")
+
+	def user_submissions(self,userId):
+		cursor = self.con.cursor()
+		sql_insert_query = """ SELECT `id`,`problem_id`,`status`, `submissionDate`  FROM `submission` 
+		WHERE `user_id`= '%s' ORDER BY `submissionDate` DESC""" % (userId)
+
+		cursor.execute(sql_insert_query)
+		result = cursor.fetchall()
+		return result
+
+### User / Problem Info
 
 @app.route('/users/<user_id>')
 def dash_user(user_id):
 
-    def db_query():
-        db = Database()
-        problems = db.user_problems(user_id)
+	def db_query():
+		db = Database()
+		problems = db.user_submissions(user_id)
 
-        return problems
+		return problems
 
-    usuario_info = db_query()
+	usuario_info = db_query()
 
 
 
-    return render_template('index.html', usuario_info=usuario_info,user_id=user_id, content_type='application/json')
+	return render_template('index.html', usuario_info=usuario_info,user_id=user_id, content_type='application/json')
 
 @app.route('/probelms/<user_id>')
 def dash_problems(user_id):
-    data = user_id
-    return render_template('index.html', data=data)
-    #return render_template('index.html', result=res, content_type='application/json')
+	data = user_id
+	return render_template('index.html', data=data)
+	#return render_template('index.html', result=res, content_type='application/json')
 
+### Unknown
 
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+	return render_template('signup.html')
 
 @app.route('/forms')
 def forms():
-    return render_template('forms.html')
+	return render_template('forms.html')
 
 @app.route('/bootstrap-elements')
 def bootstrapelements():
-    return render_template('bootstrap-elements.html')
+	return render_template('bootstrap-elements.html')
+
+### Insert User
+
 @app.route('/insert_user')
 def insert_user():
-    return render_template('insert-user.html')
+	return render_template('insert-user.html')
 
 @app.route('/new_user',methods=['POST'])
 def usuario():
 
- userid = request.form['user_id']
- userELO = request.form['users_elo']
- if userELO =="":
-     userELO = 8.0
+	userid = request.form['user_id']
+	userELO = request.form['users_elo']
+	if userELO =="":
+		userELO = 8.0
 
- def db_query():
-     db = Database()
-     db.insert_use(userid,userELO)
+	def db_query():
+		db = Database()
+		db.insert_user(userid,userELO)
+		
+	db_query()
 
- db_query()
-
- return render_template('insert-user-sucess.html', data =userid )
+	return render_template('insert-user-sucess.html', data =userid )
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+	app.run(host='127.0.0.1')
 
