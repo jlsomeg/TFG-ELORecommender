@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request
 import pymysql
-import py_scripts.ACR_Plots as pl
+from py_scripts import ACR_Plots as pl
 
 app = Flask(__name__)
 
 class Database:
 	def __init__(self):
 		self.conn = pymysql.connect(host='localhost',
-									database='tfg',
+									database='acr_dat',
 									user='root',
 									password='')
 
@@ -32,6 +32,7 @@ class Database:
 
 @app.route('/users/<user_id>')
 def dash_user(user_id):
+	"""
 	db = Database()
 	user_info = db.user_submissions(user_id)	# List of the user's latest submissions
 	div_plot_user_evolution = pl.GRAPH_USERS_EVOLUTION(db.cursor, user_id)		# User ELO evolution plot (in HTML code)
@@ -39,7 +40,9 @@ def dash_user(user_id):
 	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.cursor, user_id) 	# User ELOs per category (in HTML code)
 	db.close_conn()
 
-	return render_template('index.html', usuario_info=user_info,user_id=user_id, content_type='application/json')
+	return render_template('user_dash.html', usuario_info=user_info,user_id=user_id, content_type='application/json')
+	"""
+	return render_template('user_dash.html')
 
 @app.route('/problems/<problem_id>')
 def dash_problems(problem_id):

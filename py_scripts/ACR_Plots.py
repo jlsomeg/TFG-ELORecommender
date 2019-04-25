@@ -1,8 +1,9 @@
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-import plotly.graph_objs as go
+from py_scripts import ELO
 
+import plotly.graph_objs as go
 import math
-import ELO
+
 __DB_SPLITTER = 129010
 
 ### Plotly Functions

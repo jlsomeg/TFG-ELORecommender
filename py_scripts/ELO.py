@@ -1,5 +1,5 @@
 import math 
-import ACR_Globals
+from py_scripts import ACR_Globals
 
 def EXPECTATION(P1, P2): 
 	""" Calculates the 'Expectation' value following the formula provided by FIDE [https://www.fide.com/fide/handbook.html?id=172&view=article] although in this case, is more of a probability than an expectation"""
