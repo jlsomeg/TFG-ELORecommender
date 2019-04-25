@@ -1,57 +1,64 @@
 from flask import Flask, render_template, request
 import pymysql
+import py_scripts.ACR_Plots as pl
 
 app = Flask(__name__)
 
 class Database:
 	def __init__(self):
+		self.conn = pymysql.connect(host='localhost',
+									database='tfg',
+									user='root',
+									password='')
 
-		self.con = pymysql.connect(host='localhost',
-										 database='tfg',
-										 user='root',
-										 password='')
+		self.cursor = self.conn.cursor()
 
-
-
-	def insert_user(self,userId,users_elo):
-		cursor = self.con.cursor()
-		sql_insert_query = """ INSERT INTO User_Scores (user_id, elo_global) VALUES (%s, %s)"""
+	def insert_user(self, userId, users_elo):
+		sql_insert_query = "INSERT INTO User_Scores (user_id, elo_global) VALUES (%s, %s)"
 		insert_tuple = (userId, users_elo)
-		cursor.execute(sql_insert_query,insert_tuple)
-		self.con.commit()
+		self.cursor.execute(sql_insert_query,insert_tuple)
+		self.conn.commit()
 		print("Record inserted successfully into python_users table")
 
 	def user_submissions(self,userId):
-		cursor = self.con.cursor()
-		sql_insert_query = """ SELECT `id`,`problem_id`,`status`, `submissionDate`  FROM `submission` 
-		WHERE `user_id`= '%s' ORDER BY `submissionDate` DESC""" % (userId)
+		sql_insert_query = "SELECT id, problem_id, status, submissionDate FROM submission WHERE user_id=%d ORDER BY submissionDate DESC" % (userId)
+		self.cursor.execute(sql_insert_query)
+		return self.cursor.fetchall()
 
-		cursor.execute(sql_insert_query)
-		result = cursor.fetchall()
-		return result
+	def close_conn(self):
+		self.conn.close()
 
-### User / Problem Info
+### User / Problem / General Dash
 
 @app.route('/users/<user_id>')
 def dash_user(user_id):
+	db = Database()
+	user_info = db.user_submissions(user_id)	# List of the user's latest submissions
+	div_plot_user_evolution = pl.GRAPH_USERS_EVOLUTION(db.cursor, user_id)		# User ELO evolution plot (in HTML code)
+	div_plot_user_progress = pl.GRAPH_USER_PROBLEM_PROGRESS(db.cursor, user_id) # user problem completion pie chart (in HTML code)
+	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.cursor, user_id) 	# User ELOs per category (in HTML code)
+	db.close_conn()
 
-	def db_query():
-		db = Database()
-		problems = db.user_submissions(user_id)
+	return render_template('index.html', usuario_info=user_info,user_id=user_id, content_type='application/json')
 
-		return problems
+@app.route('/problems/<problem_id>')
+def dash_problems(problem_id):
+	db = Database()
+	div_plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(db.cursor, problem_id)	# Problem ELO evolution plot (in HTML code)
+	db.close_conn()
 
-	usuario_info = db_query()
-
-
-
-	return render_template('index.html', usuario_info=usuario_info,user_id=user_id, content_type='application/json')
-
-@app.route('/probelms/<user_id>')
-def dash_problems(user_id):
-	data = user_id
 	return render_template('index.html', data=data)
 	#return render_template('index.html', result=res, content_type='application/json')
+
+@app.route('/stats')
+def dash_general():
+	db = Database()
+	div_hist_users_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.cursor, 'Users')			# Users ELO distribution histogram (in HTML code)
+	div_hist_problems_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.cursor, 'Problems')	# Problems ELO distribution histogram (in HTML code)
+	div_bars_tries_till_solved = pl.GRAPH_TRIES_AVERAGE(db.cursor)
+	db.close_conn()
+
+	#return render_template('stats.html', users_hist=div_hist_users_elo_distribution, problems_hist=div_hist_problems_elo_distribution)
 
 ### Unknown
 
@@ -81,11 +88,9 @@ def usuario():
 	if userELO =="":
 		userELO = 8.0
 
-	def db_query():
-		db = Database()
-		db.insert_user(userid,userELO)
-		
-	db_query()
+	db = Database()
+	db.insert_user(userid,userELO)
+	db.close_conn()
 
 	return render_template('insert-user-sucess.html', data =userid )
 
