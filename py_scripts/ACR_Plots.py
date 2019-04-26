@@ -259,3 +259,25 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 	labels=['Resueltos', 'Intentados', 'Por Hacer']
 
 	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
+
+	# Done
+def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
+	values = []
+
+	# Problems solved by the user
+	db_cursor.execute("""SELECT COUNT(problem_id) FROM submission 
+		WHERE (problem_id= {}) 
+		AND (status = 'AC' OR status = 'PE')""".format(problem_id))
+
+	values.append(db_cursor.fetchone()[0])
+
+	# Problems tried by the user
+	db_cursor.execute("""SELECT COUNT(problem_id) FROM submission 
+	WHERE (problem_id= {}) AND 
+	(status != 'AC' AND status != 'PE')""".format(problem_id))
+
+	values.append(db_cursor.fetchone()[0])
+
+	labels = ['Veces Resuelto', 'Veces fallado']
+
+	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
