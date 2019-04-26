@@ -44,7 +44,7 @@ def PLOTLY_LINE_PLOT(x,y, x_range, title="", x_label="", y_label=""):
 	data = [trace]
 	fig = go.Figure(data=data, layout=layout)
 	#plot(fig, filename="PLOTLY_LINE_PLOT.html")
-	return plot(data, include_plotlyjs=False, output_type='div')
+	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_SPIDER_PLOT(values, axes, chart_range, title=""):
 	data = [go.Scatterpolar(
@@ -66,7 +66,7 @@ def PLOTLY_SPIDER_PLOT(values, axes, chart_range, title=""):
 
 	fig = go.Figure(data=data, layout=layout)
 	#plot(fig, filename="PLOTLY_SPIDER_PLOT.html")
-	return plot(data, include_plotlyjs=False, output_type='div')
+	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 	data = [
@@ -86,19 +86,24 @@ def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 		yaxis=dict(title=y_label)
 	)
 
-	#fig = go.Figure(data=data, layout=layout)
+	fig = go.Figure(data=data, layout=layout)
 	#plot(fig, filename="PLOTLY_HISTOGRAM_PLOT.html")
-	return plot(data, include_plotlyjs=False, output_type='div')
+	return plot(fig, include_plotlyjs=False, output_type='div')
 	#plot(data, filename='binning function')
 
-def PLOTLY_PIE_CHART(labels, values):
+def PLOTLY_PIE_CHART(labels, values, title=""):
 	trace = go.Pie(labels=labels, values=values)
 	data = [trace]
 
+	layout = go.Layout(
+		title=title
+	)
+
+	fig = go.Figure(data=data, layout=layout)
 	#fig = go.Figure(data=data)
 	#plot(fig, filename="PLOTLY_PIE_CHART.html")
 
-	return plot(data, include_plotlyjs=False, output_type='div')
+	return plot(fig, include_plotlyjs=False, output_type='div')
 
 ###  DB Queries
 
@@ -200,7 +205,7 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 	y = [x[7] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, [0,len(y)])
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, [0,len(y)], title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
 
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
@@ -222,7 +227,7 @@ def GRAPH_USER_CATEGORIES(db_cursor, user_id):
 	values.append(values[0])
 	axes = ['Ad-hoc', 'Recorridos', 'Búsqueda', 'Búsqueda Binaria', 'Ordenación', 'Algoritmos voraces','Programación dinámica',
 	'Divide y vencerás','Búsqueda exhaustiva, vuelta atrás','Búsqueda en el espacio de soluciones','Grafos','Geometría','Ad-hoc']
-	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], "ELO por Categoria")
+	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoría")
 
 # Done
 def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
@@ -253,4 +258,4 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 
 	labels=['Resueltos', 'Intentados', 'Por Hacer']
 
-	return PLOTLY_PIE_CHART(labels, values)
+	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")

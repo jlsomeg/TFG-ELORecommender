@@ -21,7 +21,7 @@ class Database:
 		print("Record inserted successfully into python_users table")
 
 	def user_submissions(self,userId):
-		sql_insert_query = "SELECT id, problem_id, status, submissionDate FROM submission WHERE user_id=%d ORDER BY submissionDate DESC" % (userId)
+		sql_insert_query = "SELECT id, problem_id, status, submissionDate FROM submission WHERE user_id=%d ORDER BY submissionDate DESC" % (int(userId))
 		self.cursor.execute(sql_insert_query)
 		return self.cursor.fetchall()
 
@@ -32,7 +32,6 @@ class Database:
 
 @app.route('/users/<user_id>')
 def dash_user(user_id):
-	"""
 	db = Database()
 	user_info = db.user_submissions(user_id)	# List of the user's latest submissions
 	div_plot_user_evolution = pl.GRAPH_USERS_EVOLUTION(db.cursor, user_id)		# User ELO evolution plot (in HTML code)
@@ -40,9 +39,9 @@ def dash_user(user_id):
 	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.cursor, user_id) 	# User ELOs per category (in HTML code)
 	db.close_conn()
 
-	return render_template('user_dash.html', usuario_info=user_info,user_id=user_id, content_type='application/json')
-	"""
-	return render_template('user_dash.html')
+	return render_template('user_dash.html', evolution=div_plot_user_evolution, progress=div_plot_user_progress, 
+		categories=div_plot_user_categories, user_id=user_id)
+	#return render_template('user_dash.html')
 
 @app.route('/problems/<problem_id>')
 def dash_problems(problem_id):

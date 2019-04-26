@@ -1,53 +1,63 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>User Dashboard</title>
+	<title> TFG - ACR Recommender </title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/acr.css">
+	<link href="https://fonts.googleapis.com/css?family=Asap|Fira+Sans" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Asap|Fira+Sans" rel="stylesheet">
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
+	<nav class="navbar navbar-inverse navbar-fixed-top bg-primary">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Estadísticas Globales</a></li>
+					<li><a href="index.html">Usuarios</a></li>
+					<li><a href="index.html">Problemas</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-	<div id="wrapper">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span> 
-					</button>
-				</div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-						<li><a href="index.html">First Link</a></li>
-						<li><a href="index.html">Second Link</a></li>
-						<li><a href="index.html">Third Link</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col">
-				1 of 2
+			<div class="col-sm-12">
+				{% autoescape false %}
+				{{ evolution | safe}}
+				{% endautoescape %}
 			</div>
-			<div class="col">
-				2 of 2
+			<div class="col-sm-12" style="padding-left: 5em; padding-right: 5em;">
+				<p>Esta gráfica muestra la evolución de tu puntuación ELO desde el momento en el que te uniste a ACR. Debes recordar que:</p>
+				<ul>
+					<li style="font-weight: 600; color: cornflowerblue;">Tu puntuación ELO solo aumentará si consigues resolver problemas.</li>
+					<li style="font-weight: 600; color: crimson;">Si "abandonas" un problema (esto es, si empiezas a enviar soluciones para un problema y luego decides enviar soluciones a otro problema distinto sin haber solucionado antes el primero), tu puntuación ELO se reducirá.</li>
+					<li style="font-weight: 600; color: crimson;">Si realizas 10 envíos para un mismo problema, y ninguno de ellos es correcto, tu puntuación ELO se reducirá. Esta reducción se efectuara por cada 10 envíos fallidos.</li>
+				</ul>
+				<hr style="border-width: 2px">
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
-				1 of 3
+			<div class="col-sm-6">
+				{% autoescape false %}
+				{{ progress | safe}}
+				{% endautoescape %}
 			</div>
-			<div class="col">
-				2 of 3
-			</div>
-			<div class="col">
-				3 of 3
+			<div class="col-sm-6">
+				{% autoescape false %}
+				{{ categories | safe}}
+				{% endautoescape %}
 			</div>
 		</div>
 	</div>    

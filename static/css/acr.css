@@ -1,0 +1,15 @@
+body {
+	padding-top: 60px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-family: 'Fira Sans', sans-serif;
+}
+
+.navbar {
+	font-family: 'Asap', sans-serif;
+}
+
+.col-sm-12.p {
+	padding-left: 5em; 
+	padding-right: 5em;
+}
