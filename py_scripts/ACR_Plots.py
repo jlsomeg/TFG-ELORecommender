@@ -29,7 +29,7 @@ def PLOTLY_BAR_PLOT(x,y, title="", x_label="", y_label=""):
 	#plot(fig, filename="PLOTLY_BAR_PLOT.html")
 	return plot(data, include_plotlyjs=False, output_type='div')
 
-def PLOTLY_LINE_PLOT(x,y, x_range, title="", x_label="", y_label=""):
+def PLOTLY_LINE_PLOT(x,y, title="", x_label="", y_label=""):
 	trace = go.Scatter(
 		x=x,
 		y=y,
@@ -37,7 +37,7 @@ def PLOTLY_LINE_PLOT(x,y, x_range, title="", x_label="", y_label=""):
 
 	layout = go.Layout(
 		title=title,
-		xaxis=dict(title=x_label, range=x_range),
+		xaxis=dict(title=x_label),
 		yaxis=dict(title=y_label)
 	)
 
@@ -167,19 +167,6 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 
 	return PLOTLY_BAR_PLOT(x,y1, title="", x_label="", y_label="")
 
-# Done - Not for web
-def GRAPH_EXPECTATION_DIFF():
-	subject_elos = [16,8,0] # ELO values to test (as users)
-	testing_elos = [round(i*0.1,1) for i in range(0,161)] # ELOs from 0 to 16 (as problems)
-	expectations = []
-
-	for i,usr_elo in enumerate(subject_elos):
-		for prb_elo in testing_elos:
-			expectations.append(ELO.EXPECTATION(usr_elo,prb_elo))
-
-		return PLOTLY_LINE_PLOT(testing_elos,expectations,[0,16],title=f"Expectation for a user with ELO {usr_elo}")
-		expectations.clear()
-
 # Done
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 	months_data = {}
@@ -197,27 +184,27 @@ def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 
 # Done
 def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
-	db_cursor.execute("""SELECT * FROM submission 
+	db_cursor.execute("""SELECT user_elo FROM submission 
 	WHERE user_id = {}
 	AND user_elo IS NOT NULL 
 	ORDER BY id""".format(user_id))
 	
-	y = [x[7] for x in db_cursor.fetchall()]
+	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, [0,len(y)], title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
 
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
-	db_cursor.execute("""SELECT * FROM submission 
+	db_cursor.execute("""SELECT problem_elo FROM submission 
 		WHERE problem_id = {}
 		AND problem_elo IS NOT NULL 
 		ORDER BY id""".format(problem_id))
 
-	y = [x[8] for x in db_cursor.fetchall()]
+	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, [0,len(y)])
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y)
 
 # Done
 def GRAPH_USER_CATEGORIES(db_cursor, user_id):
@@ -256,14 +243,39 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 
 	values.append(db_cursor.fetchone()[0] - values[1] - values[0])
 
-	labels=['Resueltos', 'Intentados', 'Por Hacer']
+	labels=['Resueltos', 'Intentados, sin resolver', 'Por Hacer']
 
-	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
+	return PLOTLY_PIE_CHART(labels, values, title="Progreso de Problemas")
 
 	# Done
-def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
-	values = []
 
+# Done
+def GRAPH_PROBLEM_SOLVE_RATIO(db_cursor, problem_id):
+	db_cursor.execute("""SELECT COUNT(DISTINCT(user_id)) FROM submission 
+		WHERE problem_id = {}
+		AND (status = 'AC' OR status = 'PE')""".format(problem_id))
+
+	user_who_solved_it = db_cursor.fetchone()[0]
+
+	db_cursor.execute("""SELECT COUNT(DISTINCT(user_id)) FROM submission 
+		WHERE problem_id = {}
+		AND (status != 'AC' AND status != 'PE')
+		AND user_id NOT IN (
+			SELECT user_id FROM submission 
+			WHERE problem_id = {}
+			AND (status = 'AC' OR status = 'PE')
+		)""".format(problem_id, problem_id))
+
+	user_who_havent_solved_yet = db_cursor.fetchone()[0]
+	
+	values = [user_who_solved_it, user_who_havent_solved_yet]
+	labels = ['Usuarios que lo han resuelto', 'Usuarios que aun no lo han resuelto']
+	return PLOTLY_PIE_CHART(labels, values, title="Gráfica de Resolución")
+
+
+def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
+
+	values = []
 	# Problems solved by the user
 	db_cursor.execute("""SELECT COUNT(problem_id) FROM submission 
 		WHERE (problem_id= {}) 

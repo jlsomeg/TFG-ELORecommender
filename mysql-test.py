@@ -47,7 +47,7 @@ def dash_user(user_id):
 def dash_problems(problem_id):
 	db = Database()
 	div_plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(db.cursor, problem_id)	# Problem ELO evolution plot (in HTML code)
-	div_plot_user_progress = pl.GRAPH_PROBLEM_PROGRESS(db.cursor,problem_id)  # problem completion pie chart (in HTML code)
+	div_plot_user_progress = pl.GRAPH_PROBLEM_SOLVE_RATIO(db.cursor,problem_id)  # problem completion pie chart (in HTML code)
 	db.close_conn()
 	return render_template('problem_dash.html', evolution = div_plot_problem_evolution,progress=div_plot_user_progress, problem_id=problem_id)
 	#return render_template('index.html', result=res, content_type='application/json')
