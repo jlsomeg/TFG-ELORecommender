@@ -6,6 +6,7 @@
 	<title> TFG - ACR Recommender </title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/acr.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/lists.css">
 	<link href="https://fonts.googleapis.com/css?family=Asap|Ubuntu" rel="stylesheet" type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -34,26 +35,24 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
-				{% autoescape false %}
-				{{ evolution | safe}}
-				{% endautoescape %}
-			</div>
-			<div class="col-sm-12" style="padding-left: 5em; padding-right: 5em;">
-				<p>Esta gráfica muestra la evolución de la puntuación ELO de un problema</p>
-				<ul>
-					<li style="font-weight: 600; color: cornflowerblue;"> </li>
-					<li style="font-weight: 600; color: crimson;"> </li>
-					<li style="font-weight: 600; color: crimson;"> </li>
-				</ul>
-				<hr style="border-width: 2px">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6">
-				<h3 style="text-align: center;">De todos los que intentan, ¿Cuantos usuarios han conseguido resolver este problema?</h3>
-				{% autoescape false %}
-				{{ progress | safe}}
-				{% endautoescape %}
+				<div class="row" style="margin-top:25px;">
+					<div class="col-sm-12">
+						<table>
+							<tr>
+								<th>ID</th>
+								<th>Nº de Problemas intentados</th>
+								<th>Nº de Problemas resueltos</th>
+							</tr>
+								{% for u in users %}
+								<tr>
+									<td> <a href="users/{{u[0]}}">{{ u[0] }}</a></td>
+									<td>{{ u[1] }}</td>
+									<td>{{ u[2] }}</td>
+								</tr>
+								{% endfor %}
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>    

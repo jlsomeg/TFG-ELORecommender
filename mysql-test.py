@@ -25,6 +25,19 @@ class Database:
 		self.cursor.execute(sql_insert_query)
 		return self.cursor.fetchall()
 
+	def problem_list(self):
+		self.cursor.execute("SELECT internalId, title, totalDistinctUsers FROM problem ORDER BY internalId ASC")
+		return self.cursor.fetchall()
+
+	def user_list(self):
+		self.cursor.execute("""SELECT user_id, COUNT(DISTINCT(problem_id)), SUM(CASE 
+								WHEN status = 'AC' THEN 1 
+								WHEN status = 'PE' THEN 1 
+								ELSE 0 END) FROM submission 
+								GROUP BY user_id 
+								ORDER BY user_id ASC""")
+		return self.cursor.fetchall()
+
 	def close_conn(self):
 		self.conn.close()
 
@@ -61,6 +74,20 @@ def dash_general():
 	db.close_conn()
 
 	#return render_template('stats.html', users_hist=div_hist_users_elo_distribution, problems_hist=div_hist_problems_elo_distribution)
+
+@app.route('/problems')
+def list_problems():
+	db = Database()
+	problems = db.problem_list()
+	db.close_conn()
+	return render_template('problems.html', problems=problems)
+
+@app.route('/users')
+def list_users():
+	db = Database()
+	users = db.user_list()
+	db.close_conn()
+	return render_template('users.html', users=users)
 
 ### Unknown
 

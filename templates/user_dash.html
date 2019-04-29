@@ -6,7 +6,7 @@
 	<title> TFG - ACR Recommender </title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/acr.css">
-	<link href="https://fonts.googleapis.com/css?family=Asap|Fira+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Asap|Ubuntu" rel="stylesheet" type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -24,8 +24,8 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li><a href="index.html">Estadísticas Globales</a></li>
-					<li><a href="index.html">Usuarios</a></li>
-					<li><a href="index.html">Problemas</a></li>
+					<li><a href="/users">Usuarios</a></li>
+					<li><a href="/problems">Problemas</a></li>
 				</ul>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12" style="padding: 1em">
 				{% autoescape false %}
 				{{ evolution | safe}}
 				{% endautoescape %}
