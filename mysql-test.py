@@ -80,14 +80,14 @@ def list_problems():
 	db = Database()
 	problems = db.problem_list()
 	db.close_conn()
-	return render_template('problems.html', problems=problems)
+	return render_template('problems_list.html', problems=problems)
 
 @app.route('/users')
 def list_users():
 	db = Database()
 	users = db.user_list()
 	db.close_conn()
-	return render_template('users.html', users=users)
+	return render_template('users_list.html', users=users)
 
 ### Unknown
 
