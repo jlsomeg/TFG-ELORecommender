@@ -13,7 +13,6 @@ RUN virtualenv /deployment/env/
 RUN /deployment/env/bin/pip install flask
 RUN /deployment/env/bin/pip install flask_restful
 RUN /deployment/env/bin/pip install pymysql
-RUN /deployment/env/bin/pip install math
 RUN /deployment/env/bin/pip install plotly
 
 
