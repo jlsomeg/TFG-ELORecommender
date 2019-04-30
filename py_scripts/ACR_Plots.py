@@ -208,7 +208,7 @@ def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
 
 # Done
 def GRAPH_USER_CATEGORIES(db_cursor, user_id):
-	db_cursor.execute("""SELECT * FROM User_Scores WHERE user_id = {}""".format(user_id))
+	db_cursor.execute("""SELECT * FROM user_scores WHERE user_id = {}""".format(user_id))
 	row = db_cursor.fetchall()[0]
 	values = [i for i in row[2:]]
 	values.append(values[0])
