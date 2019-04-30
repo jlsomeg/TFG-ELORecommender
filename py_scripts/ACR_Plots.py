@@ -238,7 +238,7 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 	
 	values.append(db_cursor.fetchone()[1] - values[0])
 
-	# Nº of problems
+	# Number of problems
 	db_cursor.execute("""SELECT COUNT(*) FROM problem_scores""")
 
 	values.append(db_cursor.fetchone()[0] - values[1] - values[0])
