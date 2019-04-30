@@ -14,7 +14,7 @@ class Database:
 		self.cursor = self.conn.cursor()
 
 	def insert_user(self, userId, users_elo):
-		sql_insert_query = "INSERT INTO User_Scores (user_id, elo_global) VALUES (%s, %s)"
+		sql_insert_query = "INSERT INTO user_scores (user_id, elo_global) VALUES (%s, %s)"
 		insert_tuple = (userId, users_elo)
 		self.cursor.execute(sql_insert_query,insert_tuple)
 		self.conn.commit()
