@@ -19,4 +19,4 @@ RUN /deployment/env/bin/pip install plotly
 
 WORKDIR /deployment
 
-CMD env/bin/python mysql-test.py
+ENTRYPOINT ["python", "mysql-test.py"]

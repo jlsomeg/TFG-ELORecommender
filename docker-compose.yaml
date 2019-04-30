@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  acr-mysql:
+    container_name: acr-mysql
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    restart: always
+
+  acr-app:
+    container_name: acr-app
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    depends_on:
+      - acr-mysql
+    ports:
+      - "8181:8181"
+    restart: always
