@@ -149,7 +149,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 		if row[1] != 0:
 			average = math.floor(row[2] / row[1])
 			if average < 21:  num_subm[str(average)] += 1
-			else: num_subm['Más de 20'] += 1
+			else: num_subm['Mas de 20'] += 1
 		else:
 			num_subm['Cero Aciertos'] += 1
 
@@ -192,7 +192,7 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolucion de tu Puntuacion ELO", x_label="", y_label="Puntuacion ELO")
 
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
@@ -212,9 +212,9 @@ def GRAPH_USER_CATEGORIES(db_cursor, user_id):
 	row = db_cursor.fetchall()[0]
 	values = [i for i in row[2:]]
 	values.append(values[0])
-	axes = ['Ad-hoc', 'Recorridos', 'Búsqueda', 'Búsqueda Binaria', 'Ordenación', 'Algoritmos voraces','Programación dinámica',
-	'Divide y vencerás','Búsqueda exhaustiva, vuelta atrás','Búsqueda en el espacio de soluciones','Grafos','Geometría','Ad-hoc']
-	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoría")
+	axes = ['Ad-hoc', 'Recorridos', 'Busqueda', 'Busqueda Binaria', 'Ordenacion', 'Algoritmos voraces','Programacion dinamica',
+	'Divide y venceras','Busqueda exhaustiva, vuelta atras','Busqueda en el espacio de soluciones','Grafos','Geometria','Ad-hoc']
+	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoria")
 
 # Done
 def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
@@ -270,7 +270,7 @@ def GRAPH_PROBLEM_SOLVE_RATIO(db_cursor, problem_id):
 	
 	values = [user_who_solved_it, user_who_havent_solved_yet]
 	labels = ['Usuarios que lo han resuelto', 'Usuarios que aun no lo han resuelto']
-	return PLOTLY_PIE_CHART(labels, values, title="Gráfica de Resolución")
+	return PLOTLY_PIE_CHART(labels, values, title="Grafica de Resolucion")
 
 
 def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):

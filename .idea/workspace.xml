@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b60af04-93c3-4518-8ce9-6369efa7d250" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Dockerfile-app" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-app" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py_scripts/ACR_Plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_scripts/ACR_Plots.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/py_scripts/ACR_Plots.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="144" column="16" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
+            <state relative-caret-position="173">
+              <caret line="133" column="49" selection-start-line="133" selection-start-column="49" selection-end-line="133" selection-end-column="49" />
               <folding>
                 <element signature="e#0#77#0" expanded="true" />
               </folding>
@@ -175,7 +174,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="width" value="960" />
     <option name="height" value="1040" />
   </component>
@@ -490,8 +489,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/py_scripts/ACR_Plots.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="144" column="16" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
+        <state relative-caret-position="173">
+          <caret line="133" column="49" selection-start-line="133" selection-start-column="49" selection-end-line="133" selection-end-column="49" />
           <folding>
             <element signature="e#0#77#0" expanded="true" />
           </folding>
