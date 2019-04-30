@@ -6,10 +6,10 @@ app = Flask(__name__)
 
 class Database:
 	def __init__(self):
-		self.conn = pymysql.connect(host='localhost',
+		self.conn = pymysql.connect(host='acr-mysql',
 									database='acr_dat',
-									user='root',
-									password='')
+									user='dev',
+									password='dev')
 
 		self.cursor = self.conn.cursor()
 
