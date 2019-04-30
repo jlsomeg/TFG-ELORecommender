@@ -142,7 +142,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 
 	num_subm = {}
 	for i in range(1,21): num_subm[str(i)] = 0
-	num_subm['Más de 20'] = 0
+	num_subm['Mas de 20'] = 0
 	num_subm['Cero Aciertos'] = 0
 
 	for row in db_cursor.fetchall():
