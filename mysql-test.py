@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, flash, redirect
+from forms import UserInsertForm, ProblemInsertForm
 from py_scripts import ACR_Plots as pl
 from py_scripts import DB_Functions as db
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '5404d19eaf645951b91dae10a842be5b'
 
 ### Dashes
 
@@ -32,13 +34,13 @@ def dash_general():
 	return render_template('db_stats.html', subm_per_month=div_bar_submissions_per_month, user_distribution=div_hist_users_elo_distribution, 
 		problem_distribution=div_hist_problems_elo_distribution, tries_average=div_bars_tries_till_solved)
 
-@app.route('/problems')
+@app.route('/problems_list')
 def list_problems():
 	problems = db.problem_list()
 	return render_template('list.html', item_name='Usuarios', item_list=problems, item='problems',
 		cols=['ID', 'Titulo', 'Nº de Usuarios que lo han intentado'])
 
-@app.route('/users')
+@app.route('/users_list')
 def list_users():
 	users = db.user_list()
 	return render_template('list.html', item_name='Problemas', item_list=users, item='users', 
@@ -46,37 +48,27 @@ def list_users():
 
 ### Unknown
 
-@app.route('/signup')
-def signup():
-	return render_template('signup.html')
-
-@app.route('/forms')
-def forms():
-	return render_template('forms.html')
-
 @app.route('/bootstrap-elements')
 def bootstrapelements():
 	return render_template('bootstrap-elements.html')
 
-### Insert User
+### Inserts
 
-@app.route('/insert_user')
+@app.route("/insert_user", methods=['GET', 'POST'])
 def insert_user():
-	return render_template('insert-user.html')
+	form = UserInsertForm()
+	if form.validate_on_submit():
+		flash(f'Usuario con ID {form.user.data} añadido!', 'success')
+		return redirect(url_for('insert_user'))
+	return render_template('insert_user.html', form=form)
 
-@app.route('/new_user',methods=['POST'])
-def usuario():
-	"""
-	userid = request.form['user_id']
-	userELO = request.form['users_elo']
-	if userELO =="":
-		userELO = 8.0
-
-	db = Database()
-	db.insert_user(userid,userELO)
-	db.close_conn()
-	"""
-	return render_template('insert-user-sucess.html', data =0 )
+@app.route("/insert_problem", methods=['GET', 'POST'])
+def insert_problem():
+	form = ProblemInsertForm()
+	if form.validate_on_submit():
+		flash(f'Problema con ID {form.problem.data} añadido!', 'success')
+		return redirect(url_for('insert_problem'))
+	return render_template('insert_problem.html', form=form)
 	
 if __name__ == '__main__':
 	app.run(host='127.0.0.1')

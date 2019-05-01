@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="row" style="padding-top: 2em">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+						<div class="alert alert-{{ category }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<div class="content-section">
+				<form method="POST" action="">
+					{{ form.hidden_tag() }}
+					<fieldset class="form-group">
+						<legend class="border-bottom mb-4">Insertar nuevo usuario</legend>
+						<div class="form-group">
+							{{ form.user.label(class="form-control-label") }}
+							{% if form.user.errors %}
+								{{ form.user(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.user.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.user(class="form-control form-control-lg") }}
+							{% endif %}
+						</div>
+						<div class="form-group">
+							{{ form.elo.label(class="form-control-label") }}
+							{% if form.elo.errors %}
+								{{ form.elo(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.elo.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.elo(class="form-control form-control-lg") }}
+							{% endif %}
+						</div>
+					</fieldset>
+					<div class="form-group">
+						{{ form.submit(class="btn btn-outline-info") }}
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+{% endblock content %}
