@@ -13,6 +13,12 @@ RUN pip install pymysql
 RUN pip install plotly
 RUN pip install flask
 RUN pip install flask_restful
+RUN virtualenv /deployment/env/
+RUN /deployment/env/bin/pip install flask
+RUN /deployment/env/bin/pip install flask_restful
+RUN /deployment/env/bin/pip install plotly
+
+
 
 WORKDIR /deployment
 
