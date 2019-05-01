@@ -9,7 +9,7 @@ class Database:
 		self.conn = pymysql.connect(host='acr-mysql',
 									database='acr_dat',
 									user='user',
-									password='password')
+									password='')
 
 		self.cursor = self.conn.cursor()
 
