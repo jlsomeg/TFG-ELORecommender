@@ -3,8 +3,6 @@ version: '2'
 services:
   acr-mysql:
     container_name: acr-mysql
-    ports:
-    - "3306:3306"
     build:
       context: .
       dockerfile: Dockerfile-mysql
