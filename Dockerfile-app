@@ -8,7 +8,7 @@ RUN pip install --upgrade virtualenv
 
 
 RUN mkdir deployment
-RUN git clone -b prueba_docker https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
+RUN prueba_docker https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
 RUN pip install pymysql
 RUN pip install plotly
 RUN pip install flask
