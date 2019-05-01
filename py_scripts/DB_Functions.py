@@ -1,6 +1,7 @@
 import pymysql
 
-__conn = pymysql.connect(host='localhost', database='acr_dat', user='root', password='')
+### __conn = pymysql.connect(host='localhost', database='acr_dat', user='root', password='')
+__conn = pymysql.connect(host='acr-mysql', database='acr_dat', user='user', password='password')
 __cursor = __conn.cursor()
 
 def insert_user(user_id, user_elo):
