@@ -138,8 +138,8 @@ def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
 	for row in db_cursor.fetchall():
 		x.append(row[0])
 
-	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribución de Puntuación ELO de los {} de ACR".format(items),
-	 x_label="Puntuación ELO", y_label="% de {}".format(items))
+	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribucion de Puntuacion ELO de los {} de ACR".format(items),
+	 x_label="Puntuacion ELO", y_label="% de {}".format(items))
 
 # Done
 def GRAPH_ELO_DIFFERENCES(db_cursor, half):
@@ -221,7 +221,7 @@ def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 		x.append(r[0])
 		y.append(r[1])
 
-	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="Nº de Envios", x_label="Fecha")
+	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="N de Envios", x_label="Fecha")
 
 # Done
 def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
