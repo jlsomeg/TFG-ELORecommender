@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b60af04-93c3-4518-8ce9-6369efa7d250" name="Default Changelist" comment="">
-<<<<<<< HEAD
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/Dockerfile-app" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-app" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/acr_dat.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/acr_dat.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
->>>>>>> prueba_docker
+
       <change beforePath="$PROJECT_DIR$/mysql-test.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysql-test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,13 +18,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysql-test.py">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
+
             <state relative-caret-position="740">
               <caret line="88" column="18" lean-forward="true" selection-start-line="88" selection-start-column="18" selection-end-line="88" selection-end-column="18" />
-=======
-            <state relative-caret-position="170">
-              <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
->>>>>>> prueba_docker
+
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -198,28 +191,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-<<<<<<< HEAD
+
       <pane id="ProjectPane" />
       <pane id="Scope" />
-=======
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-" type="462c0819:PsiDirectoryNode" />
-              <item name="py_scripts" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
->>>>>>> prueba_docker
+
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -415,7 +390,7 @@
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
+
     <entry file="file://$PROJECT_DIR$/mysql-test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="740">
@@ -426,8 +401,6 @@
         </state>
       </provider>
     </entry>
-=======
->>>>>>> prueba_docker
     <entry file="file://$PROJECT_DIR$/templates/forms.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">

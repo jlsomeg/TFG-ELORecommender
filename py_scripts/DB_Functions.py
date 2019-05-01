@@ -4,7 +4,7 @@ __conn = pymysql.connect(host='localhost', database='acr_dat', user='root', pass
 __cursor = __conn.cursor()
 
 def insert_user(user_id, user_elo):
-	__cursor.execute("INSERT INTO User_Scores (user_id, elo_global) VALUES ({}, {})".format(user_id, user_elo))
+	__cursor.execute("INSERT INTO user_scores (user_id, elo_global) VALUES ({}, {})".format(user_id, user_elo))
 	__conn.commit()
 
 def user_submissions(user_id):
