@@ -119,12 +119,13 @@ def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 def PLOTLY_PIE_CHART(labels, values, title=""):
 	trace = go.Pie(labels=labels, values=values)
 	data = [trace]
-
+	
 	layout = go.Layout(
 		title=title
 	)
 
 	fig = go.Figure(data=data, layout=layout)
+
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 ###  DB Queries
@@ -132,12 +133,13 @@ def PLOTLY_PIE_CHART(labels, values, title=""):
 # Done
 def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
 	db_cursor.execute("""SELECT elo_global FROM {} WHERE elo_global != 8.0""".format('user_scores' if items=='Usuarios' else 'problem_scores'))
+
 	x = []
 	for row in db_cursor.fetchall():
 		x.append(row[0])
 
-	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribución de Puntuación ELO de los {} de ACR".format(items),
-	 x_label="Puntuación ELO", y_label="% de {}".format(items))
+	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribucion de Puntuacion ELO de los {} de ACR".format(items),
+	 x_label="Puntuacion ELO", y_label="% de {}".format(items))
 
 # Done
 def GRAPH_ELO_DIFFERENCES(db_cursor, half):
@@ -176,6 +178,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 		#else:
 			#num_subm['Cero Aciertos'] += 1
 
+
 	x = []
 	y1 = []
 	y2 = []
@@ -192,7 +195,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 		y3.append(perc_sum/sum(y1))
 
 	return PLOTLY_BAR_PLOT_2YAXIS(x,y2,y3, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
-		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
+		x_label="Numero de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
 
 # Done
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
@@ -218,7 +221,7 @@ def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 		x.append(r[0])
 		y.append(r[1])
 
-	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="Nº de Envios", x_label="Fecha")
+	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="N de Envios", x_label="Fecha")
 
 # Done
 def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
@@ -230,7 +233,9 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
+
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolucion de tu Puntuacion ELO", x_label="", y_label="Puntuacion ELO")
+
 
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
@@ -246,13 +251,14 @@ def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
 
 # Done
 def GRAPH_USER_CATEGORIES(db_cursor, user_id):
-	db_cursor.execute("""SELECT * FROM User_Scores WHERE user_id = {}""".format(user_id))
+	db_cursor.execute("""SELECT * FROM user_scores WHERE user_id = {}""".format(user_id))
 	row = db_cursor.fetchall()[0]
 	values = [i for i in row[2:]]
 	values.append(values[0])
-	axes = ['Ad-hoc', 'Recorridos', 'Búsqueda', 'Búsqueda Binaria', 'Ordenación', 'Algoritmos voraces','Programación dinámica',
-	'Divide y vencerás','Búsqueda exhaustiva, vuelta atrás','Búsqueda en el espacio de soluciones','Grafos','Geometría','Ad-hoc']
-	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoría")
+	axes = ['Ad-hoc', 'Recorridos', 'Busqueda', 'Busqueda Binaria', 'Ordenacion', 'Algoritmos voraces','Programacion dinamica',
+	'Divide y venceras','Busqueda exhaustiva, vuelta atras','Busqueda en el espacio de soluciones','Grafos','Geometria','Ad-hoc']
+	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoria")
+
 
 # Done
 def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
@@ -276,7 +282,7 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 	
 	values.append(db_cursor.fetchone()[1] - values[0])
 
-	# Nº of problems
+	# Number of problems
 	db_cursor.execute("""SELECT COUNT(*) FROM problem_scores""")
 
 	values.append(db_cursor.fetchone()[0] - values[1] - values[0])
@@ -308,7 +314,8 @@ def GRAPH_PROBLEM_SOLVE_RATIO(db_cursor, problem_id):
 	
 	values = [user_who_solved_it, user_who_havent_solved_yet]
 	labels = ['Usuarios que lo han resuelto', 'Usuarios que aun no lo han resuelto']
-	return PLOTLY_PIE_CHART(labels, values, title="Gráfica de Resolución")
+
+	return PLOTLY_PIE_CHART(labels, values, title="Grafica de Resolucion")
 
 
 def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
@@ -331,3 +338,4 @@ def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
 	labels = ['Veces Resuelto', 'Veces fallado']
 
 	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
+

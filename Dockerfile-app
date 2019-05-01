@@ -1,0 +1,20 @@
+FROM ubuntu:latest
+RUN apt-get update
+
+RUN apt-get install -y -q build-essential python-pip python-dev python-simplejson git
+RUN apt-get install python-flask -y
+RUN pip install --upgrade pip
+RUN pip install --upgrade virtualenv
+
+
+RUN mkdir deployment
+RUN git clone https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
+RUN pip install pymysql
+RUN pip install plotly
+RUN pip install flask
+RUN pip install flask_restful
+RUN virtualenv /deployment/env/
+
+WORKDIR /deployment
+
+ENTRYPOINT ["python", "mysql-test.py"]
