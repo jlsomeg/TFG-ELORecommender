@@ -8,28 +8,57 @@ __DB_SPLITTER = 129010
 
 ### Plotly Functions
 
-def PLOTLY_BAR_PLOT(x,y, title="", x_label="", y_label=""):
+def PLOTLY_BAR_PLOT(x,y, ax_type="-", title="", x_label="", y_label=""):
 	trace = go.Bar(
 		x=x,
 		y=y,
-		name='Secondary Product',
-		marker=dict(
-			color='rgb(59, 67, 219)',
-		)
+		marker=dict(color='rgb(255,166,0)')
 	)
 
 	data = [trace]
 	layout = go.Layout(
 		title=title,
-		xaxis=dict(title=x_label, type='category'),
+		xaxis=dict(title=x_label, 
+			type=ax_type, 
+			tickformat='%Y-%b'),
 		yaxis=dict(title=y_label)
 	)
 
-	#fig = go.Figure(data=data, layout=layout)
-	#plot(fig, filename="PLOTLY_BAR_PLOT.html")
-	return plot(data, include_plotlyjs=False, output_type='div')
+	fig = go.Figure(data=data, layout=layout)
+	return plot(fig, include_plotlyjs=False, output_type='div')
 
-def PLOTLY_LINE_PLOT(x,y, title="", x_label="", y_label=""):
+def PLOTLY_BAR_PLOT_2YAXIS(x,y1,y2, y1_name='', y2_name='', title="", x_label="", y1_label="", y2_label=""):
+	trace1 = go.Bar(
+		x=x,
+		y=y1,
+		name=y1_name,
+		marker=dict(color='rgb(47,75,124)')
+	)
+
+	trace2 = go.Scatter(
+		x=x,
+		y=y2,
+		name=y2_name,
+		yaxis = 'y2',
+		marker=dict(color='rgb(188, 80, 144)')
+	)
+
+	data = [trace1, trace2]
+	layout = go.Layout(
+		title=title,
+		xaxis=dict(title=x_label, type='category'),
+		yaxis=dict(title=y1_label),
+		yaxis2=dict(title=y2_label,
+					range=[0,1],
+					tickfont=dict(color='rgb(188, 80, 144)'),
+					overlaying='y',
+					side='right')
+	)
+
+	fig = go.Figure(data=data, layout=layout)
+	return plot(fig, include_plotlyjs=False, output_type='div')
+
+def PLOTLY_LINE_PLOT(x,y, ax_type="-", title="", x_label="", y_label=""):
 	trace = go.Scatter(
 		x=x,
 		y=y,
@@ -37,13 +66,12 @@ def PLOTLY_LINE_PLOT(x,y, title="", x_label="", y_label=""):
 
 	layout = go.Layout(
 		title=title,
-		xaxis=dict(title=x_label),
+		xaxis=dict(title=x_label, type=ax_type),
 		yaxis=dict(title=y_label)
 	)
 
 	data = [trace]
 	fig = go.Figure(data=data, layout=layout)
-	#plot(fig, filename="PLOTLY_LINE_PLOT.html")
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_SPIDER_PLOT(values, axes, chart_range, title=""):
@@ -65,7 +93,6 @@ def PLOTLY_SPIDER_PLOT(values, axes, chart_range, title=""):
 	)
 
 	fig = go.Figure(data=data, layout=layout)
-	#plot(fig, filename="PLOTLY_SPIDER_PLOT.html")
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
@@ -87,9 +114,7 @@ def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 	)
 
 	fig = go.Figure(data=data, layout=layout)
-	#plot(fig, filename="PLOTLY_HISTOGRAM_PLOT.html")
 	return plot(fig, include_plotlyjs=False, output_type='div')
-	#plot(data, filename='binning function')
 
 def PLOTLY_PIE_CHART(labels, values, title=""):
 	trace = go.Pie(labels=labels, values=values)
@@ -100,21 +125,19 @@ def PLOTLY_PIE_CHART(labels, values, title=""):
 	)
 
 	fig = go.Figure(data=data, layout=layout)
-	#fig = go.Figure(data=data)
-	#plot(fig, filename="PLOTLY_PIE_CHART.html")
-
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 ###  DB Queries
 
 # Done
 def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
-	db_cursor.execute("""SELECT elo_global FROM {} WHERE elo_global != 8.0""".format('user_scores' if items=='Users' else 'problem_scores'))
+	db_cursor.execute("""SELECT elo_global FROM {} WHERE elo_global != 8.0""".format('user_scores' if items=='Usuarios' else 'problem_scores'))
 	x = []
 	for row in db_cursor.fetchall():
 		x.append(row[0])
 
-	return PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label="")
+	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribución de Puntuación ELO de los {} de ACR".format(items),
+	 x_label="Puntuación ELO", y_label="% de {}".format(items))
 
 # Done
 def GRAPH_ELO_DIFFERENCES(db_cursor, half):
@@ -142,33 +165,39 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 
 	num_subm = {}
 	for i in range(1,21): num_subm[str(i)] = 0
-	num_subm['Más de 20'] = 0
-	num_subm['Cero Aciertos'] = 0
+	num_subm['+ de 20'] = 0
+	#num_subm['Cero Aciertos'] = 0
 
 	for row in db_cursor.fetchall():
 		if row[1] != 0:
 			average = math.floor(row[2] / row[1])
 			if average < 21:  num_subm[str(average)] += 1
-			else: num_subm['Más de 20'] += 1
-		else:
-			num_subm['Cero Aciertos'] += 1
+			else: num_subm['+ de 20'] += 1
+		#else:
+			#num_subm['Cero Aciertos'] += 1
 
 	x = []
 	y1 = []
 	y2 = []
+	y3 = []
 	for k,v in num_subm.items():
 		x.append(k)
 		y1.append(v)
 
 	perc_sum = 0
+	sum_y1 = sum(y1)
 	for i in y1:
 		perc_sum += i
-		y2.append((perc_sum/sum(y1))*100)
+		y2.append(i/sum_y1)
+		y3.append(perc_sum/sum(y1))
 
-	return PLOTLY_BAR_PLOT(x,y1, title="", x_label="", y_label="")
+	return PLOTLY_BAR_PLOT_2YAXIS(x,y2,y3, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
+		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
 
 # Done
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
+
+	"""
 	months_data = {}
 	[months_data.update({k:0}) for k in range(1,13)]
 	db_cursor.execute("SELECT submissionDate FROM submission ORDER BY submissionDate ASC")
@@ -180,7 +209,16 @@ def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 	values = []
 
 	for k,v in months_data.items(): values.append(v)
-	return PLOTLY_BAR_PLOT(months,values)
+	"""
+
+	db_cursor.execute("SELECT DATE_FORMAT(submissionDate, '%Y-%m'), COUNT(id) FROM submission GROUP BY  DATE_FORMAT(submissionDate, '%Y-%m') ORDER BY submissionDate ASC")
+	x = []
+	y = []
+	for r in db_cursor.fetchall():
+		x.append(r[0])
+		y.append(r[1])
+
+	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="Nº de Envios", x_label="Fecha")
 
 # Done
 def GRAPH_USERS_EVOLUTION(db_cursor, user_id):

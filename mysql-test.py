@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-import pymysql
 from py_scripts import ACR_Plots as pl
+import pymysql
 
 app = Flask(__name__)
 
@@ -68,12 +68,14 @@ def dash_problems(problem_id):
 @app.route('/stats')
 def dash_general():
 	db = Database()
-	div_hist_users_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.cursor, 'Users')			# Users ELO distribution histogram (in HTML code)
-	div_hist_problems_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.cursor, 'Problems')	# Problems ELO distribution histogram (in HTML code)
+	div_bar_submissions_per_month = pl.GRAPH_SUBMISSIONS_PER_MONTHS(db.cursor)		# Users ELO distribution histogram (in HTML code)
+	div_hist_users_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.cursor, 'Usuarios')		# Users ELO distribution histogram (in HTML code)
+	div_hist_problems_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.cursor, 'Problemas')	# Problems ELO distribution histogram (in HTML code)
 	div_bars_tries_till_solved = pl.GRAPH_TRIES_AVERAGE(db.cursor)
 	db.close_conn()
 
-	#return render_template('stats.html', users_hist=div_hist_users_elo_distribution, problems_hist=div_hist_problems_elo_distribution)
+	return render_template('db_stats.html', subm_per_month=div_bar_submissions_per_month, user_distribution=div_hist_users_elo_distribution, 
+		problem_distribution=div_hist_problems_elo_distribution, tries_average=div_bars_tries_till_solved)
 
 @app.route('/problems')
 def list_problems():

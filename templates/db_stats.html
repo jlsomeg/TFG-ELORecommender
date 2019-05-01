@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+		<div class="row">
+			<div class="col-sm-12" style="padding: 1em">
+				{% autoescape false %}
+				{{ subm_per_month | safe}}
+				{% endautoescape %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6" style="padding: 1em">
+				{% autoescape false %}
+				{{ user_distribution | safe}}
+				{% endautoescape %}
+			</div>
+			<div class="col-sm-6" style="padding: 1em">
+				{% autoescape false %}
+				{{ problem_distribution | safe}}
+				{% endautoescape %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12" style="padding: 1em">
+				{% autoescape false %}
+				{{ tries_average | safe}}
+				{% endautoescape %}
+			</div>
+		</div>
+{% endblock %}
