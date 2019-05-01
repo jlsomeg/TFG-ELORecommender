@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> TFG - ACR Recommender </title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/acr.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/lists.css">
+	<link href="https://fonts.googleapis.com/css?family=Asap|Ubuntu" rel="stylesheet" type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top bg-primary">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Estadísticas Globales</a></li>
+					<li><a href="/users">Usuarios</a></li>
+					<li><a href="/problems">Problemas</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row" style="margin-top:25px;">
+					<div class="col-sm-12">
+						<table>
+							<tr>
+								<th>ID</th>
+								<th>Nº de Problemas intentados</th>
+								<th>Nº de Problemas resueltos</th>
+							</tr>
+								{% for u in users %}
+								<tr>
+									<td> <a href="users/{{u[0]}}">{{ u[0] }}</a></td>
+									<td>{{ u[1] }}</td>
+									<td>{{ u[2] }}</td>
+								</tr>
+								{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>    
+</body>
+</html>

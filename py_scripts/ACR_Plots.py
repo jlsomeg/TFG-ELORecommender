@@ -27,6 +27,7 @@ def PLOTLY_BAR_PLOT(x,y, ax_type="-", title="", x_label="", y_label=""):
 	fig = go.Figure(data=data, layout=layout)
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
+<<<<<<< HEAD
 def PLOTLY_BAR_PLOT_2YAXIS(x,y1,y2, y1_name='', y2_name='', title="", x_label="", y1_label="", y2_label=""):
 	trace1 = go.Bar(
 		x=x,
@@ -59,6 +60,9 @@ def PLOTLY_BAR_PLOT_2YAXIS(x,y1,y2, y1_name='', y2_name='', title="", x_label=""
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_LINE_PLOT(x,y, ax_type="-", title="", x_label="", y_label=""):
+=======
+def PLOTLY_LINE_PLOT(x,y, title="", x_label="", y_label=""):
+>>>>>>> prueba_docker
 	trace = go.Scatter(
 		x=x,
 		y=y,
@@ -66,12 +70,20 @@ def PLOTLY_LINE_PLOT(x,y, ax_type="-", title="", x_label="", y_label=""):
 
 	layout = go.Layout(
 		title=title,
+<<<<<<< HEAD
 		xaxis=dict(title=x_label, type=ax_type),
+=======
+		xaxis=dict(title=x_label),
+>>>>>>> prueba_docker
 		yaxis=dict(title=y_label)
 	)
 
 	data = [trace]
 	fig = go.Figure(data=data, layout=layout)
+<<<<<<< HEAD
+=======
+	#plot(fig, filename="PLOTLY_LINE_PLOT.html")
+>>>>>>> prueba_docker
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_SPIDER_PLOT(values, axes, chart_range, title=""):
@@ -93,6 +105,10 @@ def PLOTLY_SPIDER_PLOT(values, axes, chart_range, title=""):
 	)
 
 	fig = go.Figure(data=data, layout=layout)
+<<<<<<< HEAD
+=======
+	#plot(fig, filename="PLOTLY_SPIDER_PLOT.html")
+>>>>>>> prueba_docker
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
@@ -114,7 +130,13 @@ def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 	)
 
 	fig = go.Figure(data=data, layout=layout)
+<<<<<<< HEAD
 	return plot(fig, include_plotlyjs=False, output_type='div')
+=======
+	#plot(fig, filename="PLOTLY_HISTOGRAM_PLOT.html")
+	return plot(fig, include_plotlyjs=False, output_type='div')
+	#plot(data, filename='binning function')
+>>>>>>> prueba_docker
 
 def PLOTLY_PIE_CHART(labels, values, title=""):
 	trace = go.Pie(labels=labels, values=values)
@@ -123,15 +145,27 @@ def PLOTLY_PIE_CHART(labels, values, title=""):
 	layout = go.Layout(
 		title=title
 	)
+<<<<<<< HEAD
 
 	fig = go.Figure(data=data, layout=layout)
+=======
+
+	fig = go.Figure(data=data, layout=layout)
+	#fig = go.Figure(data=data)
+	#plot(fig, filename="PLOTLY_PIE_CHART.html")
+
+>>>>>>> prueba_docker
 	return plot(fig, include_plotlyjs=False, output_type='div')
 
 ###  DB Queries
 
 # Done
 def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
+<<<<<<< HEAD
 	db_cursor.execute("""SELECT elo_global FROM {} WHERE elo_global != 8.0""".format('user_scores' if items=='Usuarios' else 'problem_scores'))
+=======
+	db_cursor.execute("""SELECT elo_global FROM {} WHERE elo_global != 8.0""".format('user_scores' if items=='Users' else 'problem_scores'))
+>>>>>>> prueba_docker
 	x = []
 	for row in db_cursor.fetchall():
 		x.append(row[0])
@@ -165,16 +199,27 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 
 	num_subm = {}
 	for i in range(1,21): num_subm[str(i)] = 0
+<<<<<<< HEAD
 	num_subm['+ de 20'] = 0
 	#num_subm['Cero Aciertos'] = 0
+=======
+	num_subm['Mas de 20'] = 0
+	num_subm['Cero Aciertos'] = 0
+>>>>>>> prueba_docker
 
 	for row in db_cursor.fetchall():
 		if row[1] != 0:
 			average = math.floor(row[2] / row[1])
 			if average < 21:  num_subm[str(average)] += 1
+<<<<<<< HEAD
 			else: num_subm['+ de 20'] += 1
 		#else:
 			#num_subm['Cero Aciertos'] += 1
+=======
+			else: num_subm['Mas de 20'] += 1
+		else:
+			num_subm['Cero Aciertos'] += 1
+>>>>>>> prueba_docker
 
 	x = []
 	y1 = []
@@ -188,6 +233,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 	sum_y1 = sum(y1)
 	for i in y1:
 		perc_sum += i
+<<<<<<< HEAD
 		y2.append(i/sum_y1)
 		y3.append(perc_sum/sum(y1))
 
@@ -198,6 +244,14 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 
 	"""
+=======
+		y2.append((perc_sum/sum(y1))*100)
+
+	return PLOTLY_BAR_PLOT(x,y1, title="", x_label="", y_label="")
+
+# Done
+def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
+>>>>>>> prueba_docker
 	months_data = {}
 	[months_data.update({k:0}) for k in range(1,13)]
 	db_cursor.execute("SELECT submissionDate FROM submission ORDER BY submissionDate ASC")
@@ -230,7 +284,11 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
+<<<<<<< HEAD
 	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
+=======
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolucion de tu Puntuacion ELO", x_label="", y_label="Puntuacion ELO")
+>>>>>>> prueba_docker
 
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
@@ -246,6 +304,7 @@ def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
 
 # Done
 def GRAPH_USER_CATEGORIES(db_cursor, user_id):
+<<<<<<< HEAD
 	db_cursor.execute("""SELECT * FROM User_Scores WHERE user_id = {}""".format(user_id))
 	row = db_cursor.fetchall()[0]
 	values = [i for i in row[2:]]
@@ -253,6 +312,15 @@ def GRAPH_USER_CATEGORIES(db_cursor, user_id):
 	axes = ['Ad-hoc', 'Recorridos', 'Búsqueda', 'Búsqueda Binaria', 'Ordenación', 'Algoritmos voraces','Programación dinámica',
 	'Divide y vencerás','Búsqueda exhaustiva, vuelta atrás','Búsqueda en el espacio de soluciones','Grafos','Geometría','Ad-hoc']
 	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoría")
+=======
+	db_cursor.execute("""SELECT * FROM user_scores WHERE user_id = {}""".format(user_id))
+	row = db_cursor.fetchall()[0]
+	values = [i for i in row[2:]]
+	values.append(values[0])
+	axes = ['Ad-hoc', 'Recorridos', 'Busqueda', 'Busqueda Binaria', 'Ordenacion', 'Algoritmos voraces','Programacion dinamica',
+	'Divide y venceras','Busqueda exhaustiva, vuelta atras','Busqueda en el espacio de soluciones','Grafos','Geometria','Ad-hoc']
+	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoria")
+>>>>>>> prueba_docker
 
 # Done
 def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
@@ -275,12 +343,21 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 		GROUP BY user_id""".format(user_id))
 	
 	values.append(db_cursor.fetchone()[1] - values[0])
+<<<<<<< HEAD
 
 	# Nº of problems
 	db_cursor.execute("""SELECT COUNT(*) FROM problem_scores""")
 
 	values.append(db_cursor.fetchone()[0] - values[1] - values[0])
 
+=======
+
+	# Number of problems
+	db_cursor.execute("""SELECT COUNT(*) FROM problem_scores""")
+
+	values.append(db_cursor.fetchone()[0] - values[1] - values[0])
+
+>>>>>>> prueba_docker
 	labels=['Resueltos', 'Intentados, sin resolver', 'Por Hacer']
 
 	return PLOTLY_PIE_CHART(labels, values, title="Progreso de Problemas")
@@ -308,7 +385,11 @@ def GRAPH_PROBLEM_SOLVE_RATIO(db_cursor, problem_id):
 	
 	values = [user_who_solved_it, user_who_havent_solved_yet]
 	labels = ['Usuarios que lo han resuelto', 'Usuarios que aun no lo han resuelto']
+<<<<<<< HEAD
 	return PLOTLY_PIE_CHART(labels, values, title="Gráfica de Resolución")
+=======
+	return PLOTLY_PIE_CHART(labels, values, title="Grafica de Resolucion")
+>>>>>>> prueba_docker
 
 
 def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
@@ -330,4 +411,8 @@ def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
 
 	labels = ['Veces Resuelto', 'Veces fallado']
 
+<<<<<<< HEAD
 	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
+=======
+	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
+>>>>>>> prueba_docker

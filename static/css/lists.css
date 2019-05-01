@@ -1,8 +1,11 @@
 table {
 	width: 100%;
+<<<<<<< HEAD
 	padding-left: 10em;
 	padding-right: 10em;
 	padding-bottom: 5em;
+=======
+>>>>>>> prueba_docker
 }
 
 table th {
@@ -14,9 +17,26 @@ table td {
 	vertical-align: middle;
 }
 
+<<<<<<< HEAD
+=======
+table a {
+	color: lightgray;
+	margin: 5px 0 5px 0;
+}
+
+>>>>>>> prueba_docker
 table th, td {
 	padding: 5px;
 	text-align: center;
 	border-bottom: 1px solid #999;
 	font-family: 'Ubuntu', serif;
 }
+<<<<<<< HEAD
+=======
+
+.col-sm-12 {
+	padding-left: 10em;
+	padding-right: 10em;
+	padding-bottom: 5em;
+}
+>>>>>>> prueba_docker
