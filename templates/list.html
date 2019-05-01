@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+		<div class="row" style="margin-left:5em; margin-right:5em;">
+			<div class="col-sm-12">
+				<h3 style="text-align: center;">Listado de {{ item_name }} de la BD</h3>
+				<table>
+					<tr>
+					{% for c in cols %}
+						<th> {{ c }} </th>
+					{% endfor %}
+					</tr>
+					{% for i in item_list %}
+					<tr>
+						<td> <a href="{{ item }}/{{i[0]}}">{{ i[0] }}</a></td>
+						<td>{{ i[1] }}</td>
+						<td>{{ i[2] }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+{% endblock %}
