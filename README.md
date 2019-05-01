@@ -27,3 +27,7 @@ lo diga con 'docker logs (id)'
 
 Para parar contenedores corriendo 'docker stop (id)'
 Usar docker system prune -a para limpiar de vez en cuando
+
+---------------------Depurar sin docker----------------------------------
+1. Cambiar los valores pymysql.connect por los de tu base de datos en localhost
+2. En mysql_test.py, cambiar app.run() por el host y el puerto donde vas a colgar el servicio

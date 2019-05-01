@@ -71,5 +71,5 @@ def insert_problem():
 	return render_template('insert_problem.html', form=form)
 	
 if __name__ == '__main__':
-	app.run(host='127.0.0.1')
+	app.run(port=8181, host="0.0.0.0")
 
