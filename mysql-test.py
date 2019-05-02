@@ -37,39 +37,48 @@ def dash_general():
 @app.route('/problems_list')
 def list_problems():
 	problems = db.problem_list()
-	return render_template('list.html', item_name='Usuarios', item_list=problems, item='problems',
-		cols=['ID', 'Titulo', 'Nº de Usuarios que lo han intentado'])
+	return render_template('list.html', item_name='Problemas', item_list=problems, item='problems',
+		cols=['ID', 'Titulo'])
 
 @app.route('/users_list')
 def list_users():
 	users = db.user_list()
-	return render_template('list.html', item_name='Problemas', item_list=users, item='users', 
-		cols=['ID', 'Nº de Problemas intentados', 'Nº de Problemas resueltos'])
-
-### Unknown
-
-@app.route('/bootstrap-elements')
-def bootstrapelements():
-	return render_template('bootstrap-elements.html')
+	return render_template('list.html', item_name='Usuarios', item_list=users, item='users', 
+		cols=['ID', 'Nº de Problemas intentados', 'Puntuacion ELO'])
 
 ### Inserts
 
 @app.route("/insert_user", methods=['GET', 'POST'])
 def insert_user():
 	form = UserInsertForm()
+
 	if form.validate_on_submit():
-		flash(f'Usuario con ID {form.user.data} añadido!', 'success')
+
+		if db.insert_user(form.user.data, form.elo.data):
+			flash(f'Usuario con ID {form.user.data} añadido!', 'success')
+		else:
+			flash(f'Usuario con ID {form.user.data} ya existe en la BD!', 'danger')
+
 		return redirect(url_for('insert_user'))
+
 	return render_template('insert_user.html', form=form)
 
 @app.route("/insert_problem", methods=['GET', 'POST'])
 def insert_problem():
 	form = ProblemInsertForm()
+
 	if form.validate_on_submit():
-		flash(f'Problema con ID {form.problem.data} añadido!', 'success')
+
+		if db.insert_problem(form.problem.data, form.elo.data, form.title.data):
+			flash(f'Problema con ID {form.problem.data} añadido!', 'success')
+		else:
+			flash(f'Problema con ID {form.problem.data} ya existe en la BD!', 'danger')
+
 		return redirect(url_for('insert_problem'))
+
 	return render_template('insert_problem.html', form=form)
 	
 if __name__ == '__main__':
 	app.run(port=8181, host="0.0.0.0")
+	#app.run(host='127.0.0.1')
 
