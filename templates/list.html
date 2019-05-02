@@ -10,12 +10,13 @@
 						<th> {{ c }} </th>
 					{% endfor %}
 					</tr>
-					{% for i in item_list %}
-					<tr>
-						<td> <a href="{{ item }}/{{i[0]}}">{{ i[0] }}</a></td>
-						<td>{{ i[1] }}</td>
-						<td>{{ i[2] }}</td>
-					</tr>
+					{% for rw in item_list %}
+						<tr>
+							<td> <a href="{{ item }}/{{rw[0]}}">{{ rw[0] }}</a></td>
+							{% for i in rw[1:] %}
+								<td>{{ i }}</td>
+							{% endfor %}
+						</tr>
 					{% endfor %}
 				</table>
 			</div>
