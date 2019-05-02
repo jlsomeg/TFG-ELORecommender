@@ -32,9 +32,10 @@ def problem_list():
 	return __cursor.fetchall()
 
 def user_list():
-	__cursor.execute("""SELECT u.user_id, COUNT(DISTINCT(s.problem_id)), u.elo_global 
-							FROM submission s, user_scores u
-							WHERE u.user_id = s.user_id
+	__cursor.execute("""SELECT user_id, COUNT(DISTINCT(problem_id)), SUM(CASE 
+							WHEN status = 'AC' THEN 1 
+							WHEN status = 'PE' THEN 1 
+							ELSE 0 END) FROM submission 
 							GROUP BY user_id 
 							ORDER BY user_id ASC""")
 	return __cursor.fetchall()

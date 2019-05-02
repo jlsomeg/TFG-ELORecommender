@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
-from forms import UserInsertForm, ProblemInsertForm
+from forms import UserInsertForm, ProblemInsertForm, SubmissionForm
 from py_scripts import ACR_Plots as pl
 from py_scripts import DB_Functions as db
 
@@ -43,8 +43,9 @@ def list_problems():
 @app.route('/users_list')
 def list_users():
 	users = db.user_list()
+	print(users[0])
 	return render_template('list.html', item_name='Usuarios', item_list=users, item='users', 
-		cols=['ID', 'Nº de Problemas intentados', 'Puntuacion ELO'])
+		cols=['ID', 'Nº de Problemas intentados', 'Nº de Problemas Resueltos'])
 
 ### Inserts
 
@@ -77,7 +78,24 @@ def insert_problem():
 		return redirect(url_for('insert_problem'))
 
 	return render_template('insert_problem.html', form=form)
-	
+
+### Simulation
+@app.route("/submission", methods=['GET', 'POST'])
+def simulate_submission():
+	form = SubmissionForm()
+
+	if form.validate_on_submit():
+		"""
+		if db.insert_problem(form.problem.data, form.elo.data, form.title.data):
+			flash(f'Problema con ID {form.problem.data} añadido!', 'success')
+		else:
+			flash(f'Problema con ID {form.problem.data} ya existe en la BD!', 'danger')
+		"""
+		return redirect(url_for('simulate_submission'))
+
+	return render_template('submission.html', form=form)
+
+
 if __name__ == '__main__':
 	app.run(port=8181, host="0.0.0.0")
 	#app.run(host='127.0.0.1')
