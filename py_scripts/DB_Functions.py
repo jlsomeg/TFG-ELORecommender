@@ -162,3 +162,107 @@ def simulate_fight(user_id, problem_id, language, status, tries):
 	__cursor.execute("UPDATE Problem_Scores SET elo_global = {} WHERE problem_id = {}".format(new_problem_elo, problem_id))
 	
 	__conn.commit()
+
+def RECOMMENDATIONS(user_id):
+	__cursor.execute("SELECT * FROM user_scores WHERE user_id = {}".format(user_id))
+	ELOS = __cursor.fetchone()
+
+	CATEGORY_CODES = []
+	CATEGORY_FIELD_NAMES = []
+	for k,v in ACR_Globals.__CATEGORIES.items():
+		CATEGORY_CODES.append(k)
+		CATEGORY_FIELD_NAMES.append(v)
+
+	ELOS_PER_CATEGORY = {}
+	RECOMMENDATIONS_PER_CATEGORY = {}
+	for i, score in enumerate(ELOS[2:]):
+		if score != 8.0:
+			ELOS_PER_CATEGORY[CATEGORY_FIELD_NAMES[i]] = score
+			RECOMMENDATIONS_PER_CATEGORY[CATEGORY_FIELD_NAMES[i]] = []
+
+	ELOS_PER_CATEGORY['Global'] = ELOS[1]
+	RECOMMENDATIONS_PER_CATEGORY['Global'] = []
+
+	for CTGRY, ELO_SCORE in ELOS_PER_CATEGORY.items():
+		if CTGRY != 'Global':
+			CODE = CATEGORY_CODES[CATEGORY_FIELD_NAMES.index(CTGRY)]
+			CATEGORIES_RECOMMENDATION(1, user_id, ELO_SCORE, CODE)
+		else:
+			GLOBAL_RECOMMENDATION(1, user_id, ELO_SCORE)
+
+		for P in __cursor.fetchall():
+			RECOMMENDATIONS_PER_CATEGORY[CTGRY].append((P[0], P[1]))
+
+	RECOMMENDATIONS_LIST = []
+	for CTGRY, RECO_LIST in RECOMMENDATIONS_PER_CATEGORY.items():
+		if CTGRY == 'Global':
+			CATEGORY_TITLE = CTGRY
+		else:
+			CATEGORY_TITLE = ACR_Globals.__CATEGORIES_READABLE[CTGRY]
+
+		for RECO in RECO_LIST:
+			__cursor.execute(""" SELECT pb.internalId, pb.title, ps.elo_global 
+				FROM problem pb, problem_scores ps
+				WHERE ps.problem_id = pb.internalId 
+				AND pb.internalId = {}""".format(RECO[0]))
+
+			prb = __cursor.fetchone()
+			
+			PROBLEM_ID = prb[0]
+			PROBLEM_TITLE = prb[1]
+			PROBLEM_SCORE = prb[2]
+			RECOMMENDATIONS_LIST.append((PROBLEM_ID, PROBLEM_TITLE, CATEGORY_TITLE, PROBLEM_SCORE))
+
+	return RECOMMENDATIONS_LIST
+
+def GLOBAL_RECOMMENDATION(r_type, user_id, user_elo):
+
+	if r_type == 1:
+		query = """SELECT problem_id, ABS({} - elo_global) as diff FROM problem_scores
+			WHERE problem_id NOT IN (
+				SELECT DISTINCT(problem_id) FROM submission
+				WHERE user_id = {}
+				AND (status = 'AC' or status = 'PE')
+				GROUP BY problem_id
+			)
+			ORDER BY diff ASC LIMIT {}""".format(user_elo, user_id, ACR_Globals.__NUM_RECOMD)
+	elif r_type == 2:
+		query = """SELECT problem_id, ABS({} - elo_global) as diff FROM problem_scores
+			WHERE elo_global >= {}
+			AND problem_id NOT IN (
+				SELECT DISTINCT(problem_id) FROM submission
+				WHERE user_id = {}
+				AND (status = 'AC' or status = 'PE')
+				GROUP BY problem_id
+			)
+			ORDER BY diff ASC LIMIT {}""".format(user_elo, user_elo, user_id, ACR_Globals.__NUM_RECOMD)
+	
+	__cursor.execute(query)
+
+def CATEGORIES_RECOMMENDATION(r_type, user_id, user_elo, code):
+	
+	if r_type == 1:
+		query = """SELECT problem_id, ABS({} - elo_global) as diff FROM problem_scores 
+			WHERE problem_id IN (
+				SELECT problem_id FROM problemcategories
+				WHERE categoryId = {})
+			AND problem_id NOT IN (
+				SELECT DISTINCT(problem_id) FROM submission
+				WHERE user_id = {}
+				AND (status = 'AC' or status = 'PE')
+				GROUP BY problem_id	)
+			ORDER BY diff ASC LIMIT {}""".format(user_elo, code, user_id, ACR_Globals.__NUM_RECOMD)
+	elif r_type == 2:
+		query = """SELECT problem_id, ABS({} - elo_global) as diff FROM problem_scores 
+			WHERE elo_global >= {} 
+			AND problem_id IN (
+				SELECT problem_id FROM problemcategories
+				WHERE categoryId = {})
+			AND problem_id NOT IN (
+				SELECT DISTINCT(problem_id) FROM submission
+				WHERE user_id = {}
+				AND (status = 'AC' or status = 'PE')
+				GROUP BY problem_id	)
+			ORDER BY diff ASC LIMIT {}""".format(user_elo, user_elo, code, user_id, ACR_Globals.__NUM_RECOMD)
+	
+	__cursor.execute(query)
