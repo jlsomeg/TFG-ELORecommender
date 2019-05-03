@@ -101,7 +101,7 @@ def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 		histnorm="percent",
 		xbins = dict(
 			end=16, 
-		    size=1, 
+		    size=0.5, 
 		    start=0)
 		)
 	]
@@ -131,7 +131,7 @@ def PLOTLY_PIE_CHART(labels, values, title=""):
 
 # Done
 def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
-	db_cursor.execute("""SELECT elo_global FROM {} WHERE elo_global != 8.0""".format('user_scores' if items=='Usuarios' else 'problem_scores'))
+	db_cursor.execute("""SELECT elo_global FROM {}""".format('user_scores' if items=='Usuarios' else 'problem_scores'))
 
 	x = []
 	for row in db_cursor.fetchall():
@@ -220,7 +220,6 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 
 	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolucion de tu Puntuacion ELO", x_label="", y_label="Puntuacion ELO")
 
-
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
 	db_cursor.execute("""SELECT problem_elo FROM submission 
@@ -242,7 +241,6 @@ def GRAPH_USER_CATEGORIES(db_cursor, user_id):
 	axes = ['Ad-hoc', 'Recorridos', 'Busqueda', 'Busqueda Binaria', 'Ordenacion', 'Algoritmos voraces','Programacion dinamica',
 	'Divide y venceras','Busqueda exhaustiva, vuelta atras','Busqueda en el espacio de soluciones','Grafos','Geometria','Ad-hoc']
 	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoria")
-
 
 # Done
 def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):

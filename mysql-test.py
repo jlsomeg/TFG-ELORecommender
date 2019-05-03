@@ -8,17 +8,17 @@ app.config['SECRET_KEY'] = '5404d19eaf645951b91dae10a842be5b'
 
 ### Dashes
 
-@app.route('/users/<user_id>')
+@app.route('/user/<user_id>')
 def dash_user(user_id):
-	user_info = db.user_submissions(user_id)									# List of the user's latest submissions
+	user_submissions = db.user_submissions(user_id)									# List of the user's latest submissions
 	div_plot_user_evolution = pl.GRAPH_USERS_EVOLUTION(db.__cursor, user_id)		# User ELO evolution plot (in HTML code)
-	div_plot_user_progress = pl.GRAPH_USER_PROBLEM_PROGRESS(db.__cursor, user_id) # user problem completion pie chart (in HTML code)
-	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.__cursor, user_id) 	# User ELOs per category (in HTML code)
+	div_plot_user_progress = pl.GRAPH_USER_PROBLEM_PROGRESS(db.__cursor, user_id) 	# user problem completion pie chart (in HTML code)
+	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.__cursor, user_id) 		# User ELOs per category (in HTML code)
 
 	return render_template('user_dash.html', evolution=div_plot_user_evolution, progress=div_plot_user_progress, 
-		categories=div_plot_user_categories, user_id=user_id)
+		categories=div_plot_user_categories, user_id=user_id, user_submissions=user_submissions, cols=['Problema', 'Estado', 'Fecha'])
 
-@app.route('/problems/<problem_id>')
+@app.route('/problem/<problem_id>')
 def dash_problems(problem_id):
 	div_plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(db.__cursor, problem_id)	# Problem ELO evolution plot (in HTML code)
 	div_plot_user_progress = pl.GRAPH_PROBLEM_SOLVE_RATIO(db.__cursor,problem_id)  		# problem completion pie chart (in HTML code)
@@ -34,17 +34,17 @@ def dash_general():
 	return render_template('db_stats.html', subm_per_month=div_bar_submissions_per_month, user_distribution=div_hist_users_elo_distribution, 
 		problem_distribution=div_hist_problems_elo_distribution, tries_average=div_bars_tries_till_solved)
 
-@app.route('/problems_list')
+@app.route('/problem_list')
 def list_problems():
 	problems = db.problem_list()
-	return render_template('list.html', item_name='Problemas', item_list=problems, item='problems',
+	return render_template('list.html', item_name='Problemas', item_list=problems, item='problem',
 		cols=['ID', 'Titulo'])
 
-@app.route('/users_list')
+@app.route('/user_list')
 def list_users():
 	users = db.user_list()
 	print(users[0])
-	return render_template('list.html', item_name='Usuarios', item_list=users, item='users', 
+	return render_template('list.html', item_name='Usuarios', item_list=users, item='user', 
 		cols=['ID', 'Nº de Problemas intentados', 'Nº de Problemas Resueltos'])
 
 ### Inserts
@@ -54,13 +54,13 @@ def insert_user():
 	form = UserInsertForm()
 
 	if form.validate_on_submit():
-
-		if db.insert_user(form.user.data, form.elo.data):
+		try:
+			db.insert_user(form.user.data, form.elo.data)
 			flash(f'Usuario con ID {form.user.data} añadido!', 'success')
-		else:
-			flash(f'Usuario con ID {form.user.data} ya existe en la BD!', 'danger')
-
-		return redirect(url_for('insert_user'))
+		except RuntimeError as err:
+			flash("ERROR: {}".format(err.args[0]), 'danger')
+		finally:
+			return redirect(url_for('insert_user'))
 
 	return render_template('insert_user.html', form=form)
 
@@ -70,12 +70,13 @@ def insert_problem():
 
 	if form.validate_on_submit():
 
-		if db.insert_problem(form.problem.data, form.elo.data, form.title.data):
+		try:
+			db.insert_problem(form.problem.data, form.elo.data, form.title.data)
 			flash(f'Problema con ID {form.problem.data} añadido!', 'success')
-		else:
-			flash(f'Problema con ID {form.problem.data} ya existe en la BD!', 'danger')
-
-		return redirect(url_for('insert_problem'))
+		except RuntimeError as err:
+			flash("ERROR: {}".format(err.args[0]), 'danger')
+		finally:
+			return redirect(url_for('insert_problem'))
 
 	return render_template('insert_problem.html', form=form)
 
@@ -85,16 +86,16 @@ def simulate_submission():
 	form = SubmissionForm()
 
 	if form.validate_on_submit():
-		if db.insert_submission(form.user.data, form.problem.data, form.language.data, form.status.data):
+		try:
+			db.insert_submission(form.user.data, form.problem.data, form.language.data, form.status.data)
 			flash(f'Envio realizado con exito!', 'success')
-		else:
-			flash(f'ERROR: Comprueba que el usuario y problema existen y que el usuario no ha resuelto ya el problema', 'danger')
-		return redirect(url_for('simulate_submission'))
+		except RuntimeError as err:
+			flash("ERROR: {}".format(err.args[0]), 'danger')
+		finally:
+			return redirect(url_for('simulate_submission'))
 
 	return render_template('submission.html', form=form)
-
 
 if __name__ == '__main__':
 	app.run(port=8181, host="0.0.0.0")
 	#app.run(host='127.0.0.1')
-

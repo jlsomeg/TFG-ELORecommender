@@ -18,16 +18,36 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
-				<h3 style="text-align: center;">Has resuelto algunos problemas, pero todavia quedan muchos por intentar...</h3>
+				<h3 style="text-align: center;">Tu puntuación en distintas categorías</h3>
+				{% autoescape false %}
+				{{ categories | safe}}
+				{% endautoescape %}
+				<h3 style="text-align: center;">¿Cuántos problemas has resuelto?</h3>
 				{% autoescape false %}
 				{{ progress | safe}}
 				{% endautoescape %}
 			</div>
 			<div class="col-sm-6">
-				<h3 style="text-align: center;">Atrévete a resolver problemas de otras categorías y mejorar tu puntuación</h3>
-				{% autoescape false %}
-				{{ categories | safe}}
-				{% endautoescape %}
+				<h3 style="text-align: center;">Tus últimos envios</h3>
+				<table>
+					<tr>
+					{% for c in cols %}
+						<th> {{ c }} </th>
+					{% endfor %}
+					</tr>
+					{% for rw in user_submissions %}
+						<tr>
+							<td> <a href="problem/{{rw[0]}}">{{ rw[0] }}</a></td>
+							{% for i in rw[1:] %}
+								<td>{{ i }}</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="col-sm-12">
+				<hr style="border-width: 2px">
+				<h3 style="text-align: center;">Problemas Recomendados</h3>
 			</div>
 		</div>
 {% endblock content %}
