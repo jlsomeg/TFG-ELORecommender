@@ -1,5 +1,4 @@
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-from py_scripts import ELO
 
 import plotly.graph_objs as go
 import math
@@ -199,21 +198,6 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 
 # Done
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
-
-	"""
-	months_data = {}
-	[months_data.update({k:0}) for k in range(1,13)]
-	db_cursor.execute("SELECT submissionDate FROM submission ORDER BY submissionDate ASC")
-
-	for r in db_cursor.fetchall():
-		months_data[int(str(r[0]).split('-')[1])] += 1
-
-	months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-	values = []
-
-	for k,v in months_data.items(): values.append(v)
-	"""
-
 	db_cursor.execute("SELECT DATE_FORMAT(submissionDate, '%Y-%m'), COUNT(id) FROM submission GROUP BY  DATE_FORMAT(submissionDate, '%Y-%m') ORDER BY submissionDate ASC")
 	x = []
 	y = []

@@ -85,12 +85,10 @@ def simulate_submission():
 	form = SubmissionForm()
 
 	if form.validate_on_submit():
-		"""
-		if db.insert_problem(form.problem.data, form.elo.data, form.title.data):
-			flash(f'Problema con ID {form.problem.data} añadido!', 'success')
+		if db.insert_submission(form.user.data, form.problem.data, form.language.data, form.status.data):
+			flash(f'Envio realizado con exito!', 'success')
 		else:
-			flash(f'Problema con ID {form.problem.data} ya existe en la BD!', 'danger')
-		"""
+			flash(f'ERROR: Comprueba que el usuario y problema existen y que el usuario no ha resuelto ya el problema', 'danger')
 		return redirect(url_for('simulate_submission'))
 
 	return render_template('submission.html', form=form)
