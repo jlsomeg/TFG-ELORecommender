@@ -217,6 +217,10 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
+	db_cursor.execute("SELECT elo_global FROM user_scores WHERE user_id = {}".format(user_id))
+	latest_elo = db_cursor.fetchone()[0]
+	if y[-1] != latest_elo:
+		y.append(latest_elo)
 
 	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
 
@@ -229,6 +233,11 @@ def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
 
 	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
+
+	db_cursor.execute("SELECT elo_global FROM problem_scores WHERE problem_id = {}".format(problem_id))
+	latest_elo = db_cursor.fetchone()[0]
+	if y[-1] != latest_elo:
+		y.append(latest_elo)
 
 	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de la Puntuación ELO del Problema", x_label="", y_label="Puntuación ELO")
 
@@ -247,22 +256,30 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 	
 	values = []
 
-	# Problems solved by the user
-	db_cursor.execute("""SELECT user_id, SUM(CASE 
-		WHEN status = 'AC' THEN 1 
-		WHEN status = 'PE' THEN 1 
-		ELSE 0 END) FROM submission 
-		WHERE user_id = {}
-		GROUP BY user_id""".format(user_id))
+	# if user new (no submissions)
+	db_cursor.execute("SELECT COUNT(*) FROM submission WHERE user_id = {}".format(user_id))
+	if db_cursor.fetchone()[0] != 0:
 
-	values.append(db_cursor.fetchone()[1])
+		# Problems solved by the user
+		db_cursor.execute("""SELECT user_id, SUM(CASE 
+			WHEN status = 'AC' THEN 1 
+			WHEN status = 'PE' THEN 1 
+			ELSE 0 END) FROM submission 
+			WHERE user_id = {}
+			GROUP BY user_id""".format(user_id))
 
-	# Problems tried by the user
-	db_cursor.execute("""SELECT user_id, COUNT(DISTINCT(problem_id)) FROM submission 
-		WHERE user_id = {}
-		GROUP BY user_id""".format(user_id))
-	
-	values.append(db_cursor.fetchone()[1] - values[0])
+		values.append(db_cursor.fetchone()[1])
+
+		# Problems tried by the user
+		db_cursor.execute("""SELECT user_id, COUNT(DISTINCT(problem_id)) FROM submission 
+			WHERE user_id = {}
+			GROUP BY user_id""".format(user_id))
+		
+		values.append(db_cursor.fetchone()[1] - values[0])
+
+	else:
+		values = [0,0]
+
 
 	# Number of problems
 	db_cursor.execute("""SELECT COUNT(*) FROM problem_scores""")
@@ -277,37 +294,50 @@ def GRAPH_USER_PROBLEM_PROGRESS(db_cursor, user_id):
 
 # Done
 def GRAPH_PROBLEM_SOLVE_RATIO(db_cursor, problem_id):
-	db_cursor.execute("""SELECT COUNT(DISTINCT(user_id)) FROM submission 
-		WHERE problem_id = {}
-		AND (status = 'AC' OR status = 'PE')""".format(problem_id))
 
-	user_who_solved_it = db_cursor.fetchone()[0]
+	db_cursor.execute("SELECT COUNT(*) FROM submission WHERE problem_id = {}".format(problem_id))
+	if db_cursor.fetchone()[0] != 0:
 
-	db_cursor.execute("""SELECT COUNT(DISTINCT(user_id)) FROM submission 
-		WHERE problem_id = {}
-		AND (status != 'AC' AND status != 'PE')
-		AND user_id NOT IN (
-			SELECT user_id FROM submission 
+		db_cursor.execute("""SELECT COUNT(DISTINCT(user_id)) FROM submission 
 			WHERE problem_id = {}
-			AND (status = 'AC' OR status = 'PE')
-		)""".format(problem_id, problem_id))
+			AND (status = 'AC' OR status = 'PE')""".format(problem_id))
 
-	user_who_havent_solved_yet = db_cursor.fetchone()[0]
-	
-	values = [user_who_solved_it, user_who_havent_solved_yet]
-	labels = ['Usuarios que lo han resuelto', 'Usuarios que aun no lo han resuelto']
+		user_who_solved_it = db_cursor.fetchone()[0]
 
-	return PLOTLY_PIE_CHART(labels, values, title="Grafica de Resolucion")
+		db_cursor.execute("""SELECT COUNT(DISTINCT(user_id)) FROM submission 
+			WHERE problem_id = {}
+			AND (status != 'AC' AND status != 'PE')
+			AND user_id NOT IN (
+				SELECT user_id FROM submission 
+				WHERE problem_id = {}
+				AND (status = 'AC' OR status = 'PE')
+			)""".format(problem_id, problem_id))
+
+		user_who_havent_solved_yet = db_cursor.fetchone()[0]
+		
+		values = [user_who_solved_it, user_who_havent_solved_yet]
+		labels = ['Usuarios que lo han resuelto', 'Usuarios que aun no lo han resuelto']
+
+		return PLOTLY_PIE_CHART(labels, values, title="Grafica de Resolucion")
+
+	else: 
+		return '<h2 style="text-align: center; vertical-align: middle; line-height: 200px; height: 200px; color: dimgray;"> Sin Actividad </h2>'
 
 # Done
 def GRAPH_PROBLEM_LANGUAGES(db_cursor, problem_id):
-	db_cursor.execute("""SELECT language, COUNT(*) FROM submission 
-		WHERE problem_id = {}
-		GROUP BY language""".format(problem_id))
-	
-	labels = []
-	values = []
-	for row in db_cursor.fetchall():
-		labels.append(row[0])
-		values.append(row[1])
-	return PLOTLY_PIE_CHART(labels, values, title="Distribucion de Lenguajes")
+	db_cursor.execute("SELECT COUNT(*) FROM submission WHERE problem_id = {}".format(problem_id))
+	if db_cursor.fetchone()[0] != 0:
+
+		db_cursor.execute("""SELECT language, COUNT(*) FROM submission 
+			WHERE problem_id = {}
+			GROUP BY language""".format(problem_id))
+		
+		labels = []
+		values = []
+		for row in db_cursor.fetchall():
+			labels.append(row[0])
+			values.append(row[1])
+		return PLOTLY_PIE_CHART(labels, values, title="Distribucion de Lenguajes")
+
+	else: 
+		return '<h2 style="text-align: center; vertical-align: middle; line-height: 200px; height: 200px; color: dimgray;"> Sin Actividad </h2>'
