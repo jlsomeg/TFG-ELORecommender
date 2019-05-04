@@ -1,20 +1,18 @@
 FROM ubuntu:latest
 RUN apt-get update
 
-RUN apt-get install -y -q build-essential python-pip python-dev python-simplejson git
+RUN apt-get install -y -q build-essential python3-pip python3-dev python-simplejson git
 RUN apt-get install python-flask -y
-RUN pip install --upgrade pip
-RUN pip install --upgrade virtualenv
-
 
 RUN mkdir deployment
 RUN git clone https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
-RUN pip install pymysql
-RUN pip install plotly
-RUN pip install flask
-RUN pip install flask_restful
-RUN virtualenv /deployment/env/
+RUN pip3 install pymysql
+RUN pip3 install flask_wtf
+RUN pip3 install wtforms
 
+RUN pip3 install plotly
+RUN pip3 install flask
+RUN pip3 install flask_restful
+
+ENV LANG en_US.UTF-8
 WORKDIR /deployment
-
-ENTRYPOINT ["python", "mysql-test.py"]

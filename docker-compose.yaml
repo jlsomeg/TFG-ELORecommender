@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-mysql
+    ports:
+      - "3306:3306"
     restart: always
 
   acr-app:
@@ -15,6 +17,7 @@ services:
       dockerfile: Dockerfile-app
     depends_on:
       - acr-mysql
+    command: ["./wait-for-it.sh", "db:3306", "--", "python3", "mysql-test.py"]
     ports:
       - "8181:8181"
     restart: always
