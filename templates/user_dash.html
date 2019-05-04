@@ -37,7 +37,7 @@
 					</tr>
 					{% for rw in user_submissions %}
 						<tr>
-							<td> <a href="problem/{{rw[0]}}">{{ rw[0] }}</a></td>
+							<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
 							{% for i in rw[1:] %}
 								<td>{{ i }}</td>
 							{% endfor %}
@@ -56,7 +56,7 @@
 					</tr>
 					{% for rw in user_recommendations %}
 						<tr>
-							<td> <a href="problem/{{rw[0]}}">{{ rw[0] }}</a></td>
+							<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
 							{% for i in rw[1:] %}
 								<td style="font-size: medium;">{{ i }}</td>
 							{% endfor %}

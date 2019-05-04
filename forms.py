@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, SubmitField, DecimalField, StringField, SelectField
+from wtforms import IntegerField, SubmitField, DecimalField, StringField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Length
+from py_scripts import ACR_Globals
+categories_code = ACR_Globals.__CATEGORIES
+categories_name = ACR_Globals.__CATEGORIES_READABLE
 
 
 class UserInsertForm(FlaskForm):
@@ -11,6 +14,8 @@ class UserInsertForm(FlaskForm):
 class ProblemInsertForm(FlaskForm):
 	problem = IntegerField('ID', validators=[DataRequired()])
 	elo = DecimalField('ELO', validators=[DataRequired()], default=8.0)
+	categories = SelectMultipleField('Categorias', choices = [(k, categories_name[v]) for k,v in categories_code.items()],
+									validators=[DataRequired()], coerce=int)
 	title = StringField('Titulo', validators=[DataRequired(), Length(min=2, max=30)])
 	submit = SubmitField('Crear Problema')
 

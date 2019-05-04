@@ -20,10 +20,12 @@ def insert_user(user_id, elo):
 		print(e)
 		raise RuntimeError('El usuario ya existe en la BD')
 
-def insert_problem(problem_id, elo, title):
+def insert_problem(problem_id, elo, title, categories):
 	try:
 		__cursor.execute("INSERT INTO problem (internalId, title) VALUES ({}, '{}')".format(problem_id, title))
 		__cursor.execute("INSERT INTO problem_scores (problem_id, elo_global) VALUES ({}, {})".format(problem_id, elo)) #check later
+		for code in categories:
+			__cursor.execute("INSERT INTO problemcategories (categoryId, problemId) VALUES ({}, {})".format(code, problem_id))
 		__conn.commit()
 	except Exception as e:
 		print(e)
@@ -31,6 +33,10 @@ def insert_problem(problem_id, elo, title):
 
 def user_submissions(user_id):
 	__cursor.execute("SELECT problem_id, status, submissionDate FROM submission WHERE user_id={} ORDER BY submissionDate DESC LIMIT 30".format(user_id))
+	return __cursor.fetchall()
+
+def problem_latest_submissions(problem_id):
+	__cursor.execute("SELECT user_id, status, submissionDate FROM submission WHERE problem_id={} ORDER BY submissionDate DESC LIMIT 30".format(problem_id))
 	return __cursor.fetchall()
 
 def problem_list():

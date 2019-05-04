@@ -12,7 +12,7 @@
 					</tr>
 					{% for rw in item_list %}
 						<tr>
-							<td> <a href="{{ item }}/{{rw[0]}}">{{ rw[0] }}</a></td>
+							<td> <a href="/{{ item }}/{{rw[0]}}">{{ rw[0] }}</a></td>
 							{% for i in rw[1:] %}
 								<td>{{ i }}</td>
 							{% endfor %}

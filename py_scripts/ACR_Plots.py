@@ -299,25 +299,16 @@ def GRAPH_PROBLEM_SOLVE_RATIO(db_cursor, problem_id):
 
 	return PLOTLY_PIE_CHART(labels, values, title="Grafica de Resolucion")
 
-
-def GRAPH_PROBLEM_PROGRESS(db_cursor, problem_id):
-
+# Done
+def GRAPH_PROBLEM_LANGUAGES(db_cursor, problem_id):
+	db_cursor.execute("""SELECT language, COUNT(*) FROM submission 
+		WHERE problem_id = {}
+		GROUP BY language""".format(problem_id))
+	
+	labels = []
 	values = []
-	# Problems solved by the user
-	db_cursor.execute("""SELECT COUNT(problem_id) FROM submission 
-		WHERE (problem_id= {}) 
-		AND (status = 'AC' OR status = 'PE')""".format(problem_id))
-
-	values.append(db_cursor.fetchone()[0])
-
-	# Problems tried by the user
-	db_cursor.execute("""SELECT COUNT(problem_id) FROM submission 
-	WHERE (problem_id= {}) AND 
-	(status != 'AC' AND status != 'PE')""".format(problem_id))
-
-	values.append(db_cursor.fetchone()[0])
-
-	labels = ['Veces Resuelto', 'Veces fallado']
-
-	return PLOTLY_PIE_CHART(labels, values, title="Progreso Total")
-
+	for row in db_cursor.fetchall():
+		print(row)
+		labels.append(row[0])
+		values.append(row[1])
+	return PLOTLY_PIE_CHART(labels, values, title="Distribucion de Lenguajes")

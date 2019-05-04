@@ -9,10 +9,32 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
-				<h3 style="text-align: center;">De todos los que intentan, ¿Cuantos usuarios han conseguido resolver este problema?</h3>
+				<h3 style="text-align: center;">De todos los que intentan, ¿Cuántos usuarios han conseguido resolver este problema?</h3>
 				{% autoescape false %}
 				{{ progress | safe}}
 				{% endautoescape %}
+				<h3 style="text-align: center;">Lenguajes más usados</h3>
+				{% autoescape false %}
+				{{ fav_language | safe}}
+				{% endautoescape %}
+			</div>
+			<div class="col-sm-6">
+				<h3 style="text-align: center;">Últimos envios</h3>
+				<table>
+					<tr>
+						<th> Usuario </th>
+						<th> Estado </th>
+						<th> Fecha </th>
+					</tr>
+					{% for rw in last_submissions %}
+						<tr>
+							<td> <a href="/user/{{rw[0]}}">{{ rw[0] }}</a></td>
+							{% for i in rw[1:] %}
+								<td>{{ i }}</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</table>
 			</div>
 		</div>
 {% endblock content %}
