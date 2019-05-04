@@ -1,33 +1,23 @@
 # TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-
-------------------Use Instructions--------------------------
-Tested on Windows 7
-1. Go to the folder where it is located the .py file
-2. Execute 'python mysql-test.py'
-3. The python application will be launched in a port of your localhost http://127.0.0.1:8181/
-4. In a browser, enter the route 'http://127.0.0.1:8181/users/(user id you want to see)'
-
-----------------------Conditions-----------------------------
-
-1.May not work if you have different values in bbdd in this points
-@@ -18,17 +16,3 @@ Tested on Windows 7
-
-2.Imports: Flask, render_template, request, pymysql, mysql.connector
-3.Xampp up
-
 ----------------------Docker------------------------------------
-1. Ten docker activo y corriendo
-2. Solo hace falta que bajes de este repositorio el Dockerfile (o bajatelo entero como quieras) puesto que en 
-el Dockerfile se encarga de clonar este repositorio a traves de github
-3. En la carpeta donde tengas el repositorio ejecuta a traves de un terminal 'docker build -t nombrequequieras .'
-4. A continuacion 'docker run -d -p 5000:5000 nombrequequieras'
-5. Introduce 'docker-machine ip default' y te dara una ip
-6. Probar si funciona con (la ip que te haya devuelto):5000/users/17
-7. Se puede comprobar que ha ido mal consultando el id del contenedor con 'docker ps' y que te 
-lo diga con 'docker logs (id)'
+1. Ten Corriendo / Have docker running
+2. Descarga los archivos del repositorio / Download the repository files
+    2a. En realidad lo unico que necesitamos son los archivos dockerfiles y docker-compose, ya que el resto de archivo los descarga del     repositorio / Actually the only thing we need are the files dockerfiles and docker-compose, since the rest of the file downloads         them from the repository  
+3. En la carpeta donde tengas el repositorio ejecuta a traves de un terminal 'docker-compose up' / In the folder where you have the repository run through a terminal 'docker-compose up'
+    3a. En caso de querer eliminar los contenedores usa 'docker-compose down --rmi all' / 
+If you want to eliminate the containers use 'docker-compose down --rmi all'
+4. Las imagenes se crearan a partir de las instrucciones introducidas en los Dockerfiles y en el yalm Docker-Compose / The images will be created from the instructions entered in the Dockerfiles and in the yalm Docker-Compose
+    4a. El sofwtare crea 2 imagenes, - acr-mysql donde se alojara la bd y - acr-app donde se alojara el servicio web
+    4b. Las imagenes correran sobre la ultima distribucion de ubuntu usando python3, entre otras dependencias / The images will run on       the last distribution of ubuntu using python3, among other dependencies
+    4c. Se prodra acceder a la db a traves del puerto 3306 y al servicio web a traves del puerto 8181 / The db can be accessed through       port 3306 and the web service through port 8181
+    4d. Para la sincronizacion entre contenedores, se ha utilizado la herramienta wait-for-it //  For the synchronization between containers, the wait-for-it tool has been used
+5. El script de docker-compose lanzara los contenedores en sus respectivos puerto de manera sincronizada y se encargara de la comunicacion entre estos / The docker-compose script will launch the containers in their respective ports in a synchronized manner and will take care of the communication between them
+6. Podremos probar si el servicio funciona en rutas como por ejemplo http://192.168.99.100:8181/problem_list / We can test if the service works on routes such as http://192.168.99.100:8181/problem_list
 
-Para parar contenedores corriendo 'docker stop (id)'
-Usar docker system prune -a para limpiar de vez en cuando
+Usar 'docker system prune -a' para limpiar de vez en cuando / Use 'docker system prune -a' to clean once in a while
+----------------------Conditions without docker-----------------------------
+1. Cambiar los valores pymysql.connect por los de tu base de datos en localhost / Change the values pymysql.connect to those of your database in localhost
+2. En mysql_test.py, cambiar app.run() por el host y el puerto donde vas a colgar el servicio / In mysql_test.py, change app.run () to the host and port where you are going to hang the service
+3.Import: Flask, flask_restful, request, pymysql, mysql.connector,flask_wtf,wtforms,plotly
+4.Xampp up (mysql and apache)
 
----------------------Depurar sin docker----------------------------------
-1. Cambiar los valores pymysql.connect por los de tu base de datos en localhost
-2. En mysql_test.py, cambiar app.run() por el host y el puerto donde vas a colgar el servicio
