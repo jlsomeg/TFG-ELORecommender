@@ -3,7 +3,7 @@ import time
 from py_scripts import ELO
 from py_scripts import ACR_Globals
 
-#__conn = pymysql.connect(host='localhost', database='acr_dat', user='root', password='')
+#__conn = pymysql.connect(host='localhost', database='acr_dat3', user='root', password='')
 __conn = pymysql.connect(host='acr-mysql', database='acr_dat', user='user', password='password')
 __cursor = __conn.cursor()
 
@@ -168,6 +168,21 @@ def simulate_fight(user_id, problem_id, language, status, tries):
 	__cursor.execute("UPDATE Problem_Scores SET elo_global = {} WHERE problem_id = {}".format(new_problem_elo, problem_id))
 	
 	__conn.commit()
+
+def get_easiest_problems():
+	easy_problems = []
+	for code in ACR_Globals.__CATEGORIES:
+		__cursor.execute("""SELECT pc.problemId,  pb.title, ps.elo_global
+					FROM problemcategories pc, problem_scores ps, problem pb
+					WHERE pc.categoryId = {}
+					AND pc.problemId = ps.problem_id
+					AND pc.problemId = pb.internalId
+					ORDER BY ps.elo_global ASC
+					LIMIT 5""".format(code))
+
+		for prob in __cursor.fetchall():
+			easy_problems.append((prob[0], prob[1], ACR_Globals.__CATEGORIES_READABLE[ACR_Globals.__CATEGORIES[code]], prob[2]))
+	return easy_problems
 
 def RECOMMENDATIONS(user_id):
 	__cursor.execute("SELECT * FROM user_scores WHERE user_id = {}".format(user_id))

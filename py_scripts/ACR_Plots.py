@@ -137,8 +137,8 @@ def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
 	for row in db_cursor.fetchall():
 		x.append(row[0])
 
-	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribucion de Puntuacion ELO de los {} de ACR".format(items),
-	 x_label="Puntuacion ELO", y_label="% de {}".format(items))
+	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribucion de Puntuación ELO de los {} de ACR".format(items),
+	 x_label="Puntuación ELO", y_label="% de {}".format(items))
 
 # Done
 def GRAPH_ELO_DIFFERENCES(db_cursor, half):
@@ -205,7 +205,7 @@ def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
 		x.append(r[0])
 		y.append(r[1])
 
-	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="N de Envios", x_label="Fecha")
+	return PLOTLY_BAR_PLOT(x,y, ax_type='date', title="Envios por Mes", y_label="Nº de Envios", x_label="Fecha")
 
 # Done
 def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
@@ -218,7 +218,7 @@ def GRAPH_USERS_EVOLUTION(db_cursor, user_id):
 	y.insert(0,8)
 
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolucion de tu Puntuacion ELO", x_label="", y_label="Puntuacion ELO")
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de tu Puntuación ELO", x_label="", y_label="Puntuación ELO")
 
 # Done
 def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
@@ -230,7 +230,7 @@ def GRAPH_PROBLEMS_EVOLUTION(db_cursor, problem_id):
 	y = [x[0] for x in db_cursor.fetchall()]
 	y.insert(0,8)
 
-	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y)
+	return PLOTLY_LINE_PLOT([x for x in range(len(y))], y, title="Evolución de la Puntuación ELO del Problema", x_label="", y_label="Puntuación ELO")
 
 # Done
 def GRAPH_USER_CATEGORIES(db_cursor, user_id):
@@ -308,7 +308,6 @@ def GRAPH_PROBLEM_LANGUAGES(db_cursor, problem_id):
 	labels = []
 	values = []
 	for row in db_cursor.fetchall():
-		print(row)
 		labels.append(row[0])
 		values.append(row[1])
 	return PLOTLY_PIE_CHART(labels, values, title="Distribucion de Lenguajes")
