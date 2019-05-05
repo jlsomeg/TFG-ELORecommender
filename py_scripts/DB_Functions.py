@@ -40,16 +40,22 @@ def problem_latest_submissions(problem_id):
 	return __cursor.fetchall()
 
 def problem_list():
-	__cursor.execute("SELECT internalId, title FROM problem ORDER BY internalId ASC")
+	__cursor.execute("""SELECT pb.internalId, pb.title, COUNT(sb.id)
+		FROM problem pb LEFT JOIN submission sb
+		ON pb.internalId = sb.problem_id
+		GROUP BY pb.internalId
+		ORDER BY internalId ASC""")
 	return __cursor.fetchall()
 
 def user_list():
-	__cursor.execute("""SELECT user_id, COUNT(DISTINCT(problem_id)), SUM(CASE 
-							WHEN status = 'AC' THEN 1 
-							WHEN status = 'PE' THEN 1 
-							ELSE 0 END) FROM submission 
-							GROUP BY user_id 
-							ORDER BY user_id ASC""")
+	__cursor.execute("""SELECT user_scores.user_id, COUNT(DISTINCT(submission.problem_id)), SUM(CASE 
+							WHEN submission.status = 'AC' THEN 1 
+							WHEN submission.status = 'PE' THEN 1 
+							ELSE 0 END) 
+							FROM submission RIGHT JOIN user_scores ON submission.user_id = user_scores.user_id
+							GROUP BY user_scores.user_id 
+							ORDER BY user_scores.user_id ASC""")
+
 	return __cursor.fetchall()
 
 def insert_submission(user_id, problem_id, language, status):

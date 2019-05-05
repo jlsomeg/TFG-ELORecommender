@@ -137,7 +137,7 @@ def GRAPH_ELO_DISTRIBUTION(db_cursor, items):
 	for row in db_cursor.fetchall():
 		x.append(row[0])
 
-	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribucion de Puntuación ELO de los {} de ACR".format(items),
+	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribución de Puntuación ELO de los {} de ACR".format(items),
 	 x_label="Puntuación ELO", y_label="% de {}".format(items))
 
 # Done
@@ -194,7 +194,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 		y3.append(perc_sum/sum(y1))
 
 	return PLOTLY_BAR_PLOT_2YAXIS(x,y2,y3, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
-		x_label="Numero de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
+		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
 
 # Done
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):
@@ -337,7 +337,7 @@ def GRAPH_PROBLEM_LANGUAGES(db_cursor, problem_id):
 		for row in db_cursor.fetchall():
 			labels.append(row[0])
 			values.append(row[1])
-		return PLOTLY_PIE_CHART(labels, values, title="Distribucion de Lenguajes")
+		return PLOTLY_PIE_CHART(labels, values, title="Distribución de Lenguajes")
 
 	else: 
 		return '<h2 style="text-align: center; vertical-align: middle; line-height: 200px; height: 200px; color: dimgray;"> Sin Actividad </h2>'

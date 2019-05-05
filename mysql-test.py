@@ -22,13 +22,13 @@ def dash_general():
 @app.route('/problem_list')
 def list_problems():
 	problems = db.problem_list()
-	return render_template('list.html', item_name='Problemas activos de la BD', item_list=problems, item='problem',
-		cols=['ID', 'Titulo'])
+	return render_template('list.html', item_name='Problemas de la BD', item_list=problems, item='problem',
+		cols=['ID', 'Titulo', 'Nº de Envios'])
 
 @app.route('/user_list')
 def list_users():
 	users = db.user_list()
-	return render_template('list.html', item_name='Usuarios activos de la BD', item_list=users, item='user', 
+	return render_template('list.html', item_name='Usuarios de la BD', item_list=users, item='user', 
 		cols=['ID', 'Nº de Problemas intentados', 'Nº de Problemas Resueltos'])
 
 @app.route('/user/<user_id>')
@@ -39,7 +39,7 @@ def dash_user(user_id):
 	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.__cursor, user_id) 		# User ELOs per category (in HTML code)
 	user_recommendations = db.RECOMMENDATIONS(user_id)
 
-	return render_template('user_dash.html', evolution=div_plot_user_evolution, progress=div_plot_user_progress, 
+	return render_template('user_dash.html', id=user_id ,evolution=div_plot_user_evolution, progress=div_plot_user_progress, 
 		categories=div_plot_user_categories, user_id=user_id, user_submissions=user_submissions, cols=['Problema', 'Estado', 'Fecha'],
 		user_recommendations=user_recommendations, rec_cols=['ID del Problema', 'Título', 'Categoría', 'Puntuación ELO'])
 
@@ -49,7 +49,7 @@ def dash_problems(problem_id):
 	fav_language = pl.GRAPH_PROBLEM_LANGUAGES(db.__cursor, problem_id)
 	div_plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(db.__cursor, problem_id)	# Problem ELO evolution plot (in HTML code)
 	div_plot_user_progress = pl.GRAPH_PROBLEM_SOLVE_RATIO(db.__cursor,problem_id)  		# problem completion pie chart (in HTML code)
-	return render_template('problem_dash.html', evolution = div_plot_problem_evolution, 
+	return render_template('problem_dash.html',id=problem_id , evolution = div_plot_problem_evolution, 
 		progress=div_plot_user_progress, problem_id=problem_id, last_submissions=last_submissions, fav_language=fav_language)
 
 ### Inserts
@@ -98,6 +98,8 @@ def simulate_submission():
 			return redirect(url_for('simulate_submission'))
 
 	return render_template('submission.html', form=form)
+
+### Other
 
 @app.route("/easiest", methods=['GET', 'POST'])
 def list_easiest_problems():

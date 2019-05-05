@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %} Usuario #{{id}} {% endblock %}
 {% block content %}
 		<div class="row">
 			<div class="col-sm-12" style="padding: 1em">
@@ -6,7 +7,7 @@
 				{{ evolution | safe}}
 				{% endautoescape %}
 			</div>
-			<div class="col-sm-12" style="padding-left: 5em; padding-right: 5em;">
+			<!--  <div class="col-sm-12" style="padding-left: 5em; padding-right: 5em;">
 				<p>Esta gráfica muestra la evolución de tu puntuación ELO desde el momento en el que te uniste a ACR. Debes recordar que:</p>
 				<ul>
 					<li style="font-weight: 600; color: cornflowerblue;">Tu puntuación ELO solo aumentará si consigues resolver problemas.</li>
@@ -14,7 +15,7 @@
 					<li style="font-weight: 600; color: crimson;">Si realizas 10 envíos para un mismo problema, y ninguno de ellos es correcto, tu puntuación ELO se reducirá. Esta reducción se efectuara por cada 10 envíos fallidos.</li>
 				</ul>
 				<hr style="border-width: 2px">
-			</div>
+			</div>-->
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
