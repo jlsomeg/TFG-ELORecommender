@@ -1,9 +1,10 @@
 # TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-
 ----------------------Docker------------------------------------
-1. Ten Corriendo / Have docker running
+1. Ten Docker(con Docker-Compose) corriendo / Have docker(with Docker-Compose) running
+
 2. Descarga los archivos del repositorio / Download the repository files
 
-    2a. En realidad lo unico que necesitamos son los archivos dockerfiles y docker-compose, ya que el resto de archivo los descarga del     repositorio / Actually the only thing we need are the files dockerfiles and docker-compose, since the rest of the file downloads         them from the repository  
+	2a. Si lo haces con git clone en Windows, ejecuta antes 'git config --global core.autocrlf false' para que este no convierta finales de línea al estilo Windows \r \n en lugar de los finales de línea \n que bash espera.
     
 3. En la carpeta donde tengas el repositorio ejecuta a traves de un terminal 'docker-compose up' / In the folder where you have the repository run through a terminal 'docker-compose up'
 

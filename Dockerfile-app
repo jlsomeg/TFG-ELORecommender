@@ -5,7 +5,7 @@ RUN apt-get install -y -q build-essential python3-pip python3-dev python-simplej
 RUN apt-get install python-flask -y
 
 RUN mkdir deployment
-RUN git clone https://github.com/jlsomeg/TFG---RestFul-Web-App-Using-Python-Flask-and-MySQL-.git /deployment/
+COPY . /deployment/
 RUN pip3 install pymysql
 RUN pip3 install flask_wtf
 RUN pip3 install wtforms
