@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %} Lista de Problemas {% endblock %}
+{% block content %}
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<h3 style="text-align: center;">Lista de Problemas</h3>
+				<table id="sorted-table" class="display" style="width: 100%">
+					<thead>
+						<tr>
+							<th> ID </th>
+							<th> Titulo </th>
+							<th> Nº de Envios </th>
+							<th> AC/Envios </th>
+							<th> AC/Usuarios </th>
+						</tr>
+					</thead>
+					{% for item in item_list %}
+						<tr>
+							<td> <a href="/problem/{{item[0]}}">{{ item[0] }}</a></td>
+							<td> {{ item[1] }} </td>
+							<td> {{ item[2] }} </td>
+							<td>{{ stats[loop.index0][1]|round(1, 'floor') }}%</td>
+							<td>{{ stats[loop.index0][2]|round(1, 'floor') }}%</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+{% endblock content %}

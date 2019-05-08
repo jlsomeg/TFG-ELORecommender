@@ -5,12 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{% block title %}{% endblock %} - ACR Recommender</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	<link rel="icon" href="../static/img/hecate.ico" type="image/x-icon" />
 	<link rel="stylesheet" type="text/css" href="../static/css/acr.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/lists.css">
 	<link href="https://fonts.googleapis.com/css?family=Asap|Ubuntu" rel="stylesheet" type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
@@ -36,9 +38,18 @@
 			</div>
 		</div>
 	</nav>
-
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#sorted-table').DataTable({
+				"lengthMenu": [[30, 50, 75, -1], [30, 50, 75, "Todo"]],
+				"language": {
+		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+		        }
+			} );
+		});
+	</script> 
 	<div class="container-fluid">
 		{% block content %}{% endblock %}
-	</div>    
+	</div>
 </body>
 </html>

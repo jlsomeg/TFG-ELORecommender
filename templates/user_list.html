@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Lista de {{ item_name }} {% endblock %}
+{% block content %}
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<h3 style="text-align: center;">Lista de {{ item_name }}</h3>
+				<table id="sorted-table" class="display" style="width: 100%">
+					<thead>
+						<tr>
+						{% for c in cols %}
+							<th> {{ c }} </th>
+						{% endfor %}
+						</tr>
+					</thead>
+					{% for rw in item_list %}
+						<tr>
+							<td> <a href="/{{ item }}/{{rw[0]}}">{{ rw[0] }}</a></td>
+							{% for i in rw[1:] %}
+								<td>{{ i }}</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+{% endblock content %}

@@ -21,9 +21,8 @@ def dash_general():
 
 @app.route('/problem_list')
 def list_problems():
-	problems = db.problem_list()
-	return render_template('list.html', item_name='Problemas de la BD', item_list=problems, item='problem',
-		cols=['ID', 'Titulo', 'Nº de Envios'])
+	problems, stats = db.problem_list()
+	return render_template('problem_list.html', item_list=problems, stats=stats)
 
 @app.route('/user_list')
 def list_users():
@@ -103,9 +102,8 @@ def simulate_submission():
 
 @app.route("/easiest", methods=['GET', 'POST'])
 def list_easiest_problems():
-	easiest = db.get_easiest_problems()
-	return render_template('list.html', item_name='los problemas más faciles de cada categoría', item_list=easiest, item='problem', 
-		cols=['ID', 'Titulo', 'Categoría', 'Puntuación ELO'])
+	easiest, stats = db.get_easiest_problems()
+	return render_template('easiest_list.html', item_list=easiest, stats=stats)
 
 if __name__ == '__main__':
 	app.run(port=8181, host="0.0.0.0")

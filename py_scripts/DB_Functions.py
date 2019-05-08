@@ -45,7 +45,26 @@ def problem_list():
 		ON pb.internalId = sb.problem_id
 		GROUP BY pb.internalId
 		ORDER BY internalId ASC""")
-	return __cursor.fetchall()
+
+	prob_list = __cursor.fetchall()
+
+	__cursor.execute("""SELECT ps.problem_id, 
+							(SUM(CASE 
+							WHEN su.status = 'AC' THEN 1 
+							WHEN su.status = 'PE' THEN 1 
+							ELSE 0 END) / COUNT(su.id))*100, 
+							(SUM(CASE 
+							WHEN su.status = 'AC' THEN 1 
+							WHEN su.status = 'PE' THEN 1 
+							ELSE 0 END) / COUNT(DISTINCT(su.user_id)))*100
+						FROM problem_scores ps, submission su
+						WHERE ps.problem_id = su.problem_id
+						GROUP BY ps.problem_id
+						ORDER BY ps.problem_id ASC""")
+
+	problems_ac = __cursor.fetchall()
+
+	return prob_list, problems_ac
 
 def user_list():
 	__cursor.execute("""SELECT user_scores.user_id, COUNT(DISTINCT(submission.problem_id)), SUM(CASE 
@@ -177,8 +196,9 @@ def simulate_fight(user_id, problem_id, language, status, tries):
 
 def get_easiest_problems():
 	easy_problems = []
+	problems_ac = []
 	for code in ACR_Globals.__CATEGORIES:
-		__cursor.execute("""SELECT pc.problemId,  pb.title, ps.elo_global
+		__cursor.execute("""SELECT pc.problemId, pb.title, ps.elo_global
 					FROM problemcategories pc, problem_scores ps, problem pb
 					WHERE pc.categoryId = {}
 					AND pc.problemId = ps.problem_id
@@ -186,9 +206,29 @@ def get_easiest_problems():
 					ORDER BY ps.elo_global ASC
 					LIMIT 5""".format(code))
 
+		p_ids = []
 		for prob in __cursor.fetchall():
 			easy_problems.append((prob[0], prob[1], ACR_Globals.__CATEGORIES_READABLE[ACR_Globals.__CATEGORIES[code]], prob[2]))
-	return easy_problems
+			p_ids.append(str(prob[0]))
+
+		__cursor.execute("""SELECT ps.problem_id, SUM(CASE 
+							WHEN su.status = 'AC' THEN 1 
+							WHEN su.status = 'PE' THEN 1 
+							ELSE 0 END) / COUNT(su.id), SUM(CASE 
+							WHEN su.status = 'AC' THEN 1 
+							WHEN su.status = 'PE' THEN 1 
+							ELSE 0 END) / COUNT(DISTINCT(su.user_id))
+					FROM problem_scores ps, submission su
+					WHERE ps.problem_id = su.problem_id
+					AND ps.problem_id in ({})
+					GROUP BY ps.problem_id
+					ORDER BY ps.elo_global ASC
+					LIMIT 5""".format(','.join(p_ids)))
+
+		for prob in __cursor.fetchall():
+			problems_ac.append((prob[0], prob[1]*100, prob[2]*100))
+
+	return easy_problems, problems_ac
 
 def RECOMMENDATIONS(user_id):
 	__cursor.execute("SELECT * FROM user_scores WHERE user_id = {}".format(user_id))
