@@ -1,69 +1,86 @@
 {% extends "base.html" %}
 {% block title %} Usuario #{{id}} {% endblock %}
 {% block content %}
-		<div class="row">
-			<div class="col-sm-12" style="padding: 1em">
-				{% autoescape false %}
-				{{ evolution | safe}}
-				{% endautoescape %}
-			</div>
-			<!--  <div class="col-sm-12" style="padding-left: 5em; padding-right: 5em;">
-				<p>Esta gráfica muestra la evolución de tu puntuación ELO desde el momento en el que te uniste a ACR. Debes recordar que:</p>
-				<ul>
-					<li style="font-weight: 600; color: cornflowerblue;">Tu puntuación ELO solo aumentará si consigues resolver problemas.</li>
-					<li style="font-weight: 600; color: crimson;">Si "abandonas" un problema (esto es, si empiezas a enviar soluciones para un problema y luego decides enviar soluciones a otro problema distinto sin haber solucionado antes el primero), tu puntuación ELO se reducirá.</li>
-					<li style="font-weight: 600; color: crimson;">Si realizas 10 envíos para un mismo problema, y ninguno de ellos es correcto, tu puntuación ELO se reducirá. Esta reducción se efectuara por cada 10 envíos fallidos.</li>
-				</ul>
-				<hr style="border-width: 2px">
-			</div>-->
-		</div>
-		<div class="row">
-			<div class="col-sm-6">
-				<h3 style="text-align: center;">Tu puntuación en distintas categorías</h3>
-				{% autoescape false %}
-				{{ categories | safe}}
-				{% endautoescape %}
-				<h3 style="text-align: center;">¿Cuántos problemas has resuelto?</h3>
-				{% autoescape false %}
-				{{ progress | safe}}
-				{% endautoescape %}
-			</div>
-			<div class="col-sm-6">
-				<h3 style="text-align: center;">Tus últimos envios</h3>
-				<table>
-					<tr>
-					{% for c in cols %}
-						<th> {{ c }} </th>
-					{% endfor %}
-					</tr>
-					{% for rw in user_submissions %}
-						<tr>
-							<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
-							{% for i in rw[1:] %}
-								<td>{{ i }}</td>
+
+		<ul class="nav nav-pills">
+			<li class="active"><a data-toggle="pill" href="#stats">Estadísticas</a></li>
+			<li><a data-toggle="pill" href="#recommender">Problemas Recomendados</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div id="stats" class="tab-pane fade in active">
+				<div class="row">
+					<div class="col-sm-12" style="padding: 1em">
+						{% autoescape false %}
+						{{ evolution | safe}}
+						{% endautoescape %}
+					</div>
+					<!--  <div class="col-sm-12" style="padding-left: 5em; padding-right: 5em;">
+						<p>Esta gráfica muestra la evolución de tu puntuación ELO desde el momento en el que te uniste a ACR. Debes recordar que:</p>
+						<ul>
+							<li style="font-weight: 600; color: cornflowerblue;">Tu puntuación ELO solo aumentará si consigues resolver problemas.</li>
+							<li style="font-weight: 600; color: crimson;">Si "abandonas" un problema (esto es, si empiezas a enviar soluciones para un problema y luego decides enviar soluciones a otro problema distinto sin haber solucionado antes el primero), tu puntuación ELO se reducirá.</li>
+							<li style="font-weight: 600; color: crimson;">Si realizas 10 envíos para un mismo problema, y ninguno de ellos es correcto, tu puntuación ELO se reducirá. Esta reducción se efectuara por cada 10 envíos fallidos.</li>
+						</ul>
+						<hr style="border-width: 2px">
+					</div>-->
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<h3 style="text-align: center;">Tu puntuación en distintas categorías</h3>
+						{% autoescape false %}
+						{{ categories | safe}}
+						{% endautoescape %}
+						<h3 style="text-align: center;">¿Cuántos problemas has resuelto?</h3>
+						{% autoescape false %}
+						{{ progress | safe}}
+						{% endautoescape %}
+					</div>
+					<div class="col-sm-6">
+						<h3 style="text-align: center;">Tus últimos envios</h3>
+						<table>
+							<tr>
+								<th> Problema </th>
+								<th> Estado </th>
+								<th> Fecha </th>
+							</tr>
+							{% for rw in user_submissions %}
+								<tr>
+									<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
+									{% for i in rw[1:] %}
+										<td>{{ i }}</td>
+									{% endfor %}
+								</tr>
 							{% endfor %}
-						</tr>
-					{% endfor %}
-				</table>
+						</table>
+					</div>
+				</div>
 			</div>
-			<div class="col-sm-12">
-				<hr style="border-width: 2px">
-				<h3 style="text-align: center;">Problemas Recomendados</h3>
-				<table>
-					<tr>
-					{% for c in rec_cols %}
-						<th> {{ c }} </th>
-					{% endfor %}
-					</tr>
-					{% for rw in user_recommendations %}
-						<tr>
-							<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
-							{% for i in rw[1:] %}
-								<td style="font-size: medium;">{{ i }}</td>
+			<div id="recommender" class="tab-pane fade">
+				<div class="row">
+					<div class="col-sm-12">
+						<h3 style="text-align: center;">Problemas Recomendados</h3>
+						<table id="sorted-table" class="display" style="width: 100%">
+							<thead>
+								<tr>
+									<th> ID del Problema </th>
+									<th> Título </th>
+									<th> Categoría </th>
+									<th> ELO [0-16] </th>
+								</tr>
+							</thead>
+							{% for rw in user_recommendations %}
+								<tr>
+									<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
+									{% for i in rw[1:] %}
+										<td style="font-size: medium;">{{ i }}</td>
+									{% endfor %}
+								</tr>
 							{% endfor %}
-						</tr>
-					{% endfor %}
-				</table>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
+
 {% endblock content %}

@@ -38,8 +38,7 @@ def dash_user(user_id):
 	user_recommendations = db.RECOMMENDATIONS(user_id)
 
 	return render_template('user_dash.html', id=user_id ,evolution=div_plot_user_evolution, progress=div_plot_user_progress, 
-		categories=div_plot_user_categories, user_id=user_id, user_submissions=user_submissions, cols=['Problema', 'Estado', 'Fecha'],
-		user_recommendations=user_recommendations, rec_cols=['ID del Problema', 'Título', 'Categoría', 'Puntuación ELO'])
+		categories=div_plot_user_categories, user_id=user_id, user_submissions=user_submissions, user_recommendations=user_recommendations)
 
 @app.route('/problem/<problem_id>')
 def dash_problems(problem_id):
