@@ -64,7 +64,17 @@ def problem_list():
 
 	problems_ac = __cursor.fetchall()
 
-	return prob_list, problems_ac
+	categories = {}
+	__cursor.execute("SELECT problemId, categoryId FROM problemcategories ORDER BY problemId ASC")
+	for row in __cursor.fetchall():
+		try:
+			if row[0] not in categories:
+				categories[row[0]] = []
+			categories[row[0]].append(ACR_Globals.__CATEGORIES_READABLE[ACR_Globals.__CATEGORIES[row[1]]]) 
+		except:
+			pass
+
+	return prob_list, problems_ac, categories
 
 def user_list():
 	__cursor.execute("""SELECT user_scores.user_id, COUNT(DISTINCT(submission.problem_id)), SUM(CASE 

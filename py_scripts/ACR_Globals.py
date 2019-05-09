@@ -22,14 +22,14 @@ __CATEGORIES = {
 __CATEGORIES_READABLE = {
 	'elo_adhoc': 'Ad-hoc',
 	'elo_recorr': 'Recorridos',
-	'elo_search': 'Busqueda', 
-	'elo_bin_srch': 'Busqueda Binaria', 
-	'elo_sorting': 'Ordenacion', 
+	'elo_search': 'Búsqueda', 
+	'elo_bin_srch': 'Búsqueda Binaria', 
+	'elo_sorting': 'Ordenación', 
 	'elo_vrz': 'Algoritmos voraces',
-	'elo_dnmc': 'Programacion dinamica',
-	'elo_dyv': 'Divide y venceras',
-	'elo_bk_trk': 'Busqueda exhaustiva, vuelta atras',
-	'elo_space': 'Busqueda en el espacio de soluciones',
+	'elo_dnmc': 'Programación dinámica',
+	'elo_dyv': 'Divide y vencerás',
+	'elo_bk_trk': 'Búsqueda exhaustiva, vuelta atrás',
+	'elo_space': 'Búsqueda en el espacio de soluciones',
 	'elo_graph': 'Grafos',
-	'elo_geo': 'Geometria'
+	'elo_geo': 'Geometría'
 }

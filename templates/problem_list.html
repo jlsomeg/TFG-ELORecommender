@@ -10,6 +10,7 @@
 						<tr>
 							<th> ID </th>
 							<th> Titulo </th>
+							<th> Categorias </th>
 							<th> Nº de Envios </th>
 							<th> ELO [0-16] </th>
 							<th> AC/Envios </th>
@@ -20,6 +21,11 @@
 						<tr>
 							<td> <a href="/problem/{{item[0]}}">{{ item[0] }}</a></td>
 							<td> {{ item[1] }} </td>
+							<td>
+								{% for ctgr in categories[item[0]] %}
+									{{ ctgr }} <br>
+								{% endfor %}
+							</td>
 							<td> {{ item[2] }} </td>
 							<td>{{ stats[loop.index0][1]|round(3, 'floor') }}</td>
 							<td>{{ stats[loop.index0][2]|round(1, 'floor') }}%</td>

@@ -21,8 +21,8 @@ def dash_general():
 
 @app.route('/problem_list')
 def list_problems():
-	problems, stats = db.problem_list()
-	return render_template('problem_list.html', item_list=problems, stats=stats)
+	problems, stats, categories = db.problem_list()
+	return render_template('problem_list.html', item_list=problems, stats=stats, categories=categories)
 
 @app.route('/user_list')
 def list_users():
