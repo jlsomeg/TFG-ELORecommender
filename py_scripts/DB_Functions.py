@@ -48,7 +48,7 @@ def problem_list():
 
 	prob_list = __cursor.fetchall()
 
-	__cursor.execute("""SELECT ps.problem_id, 
+	__cursor.execute("""SELECT ps.problem_id, ps.elo_global, 
 							(SUM(CASE 
 							WHEN su.status = 'AC' THEN 1 
 							WHEN su.status = 'PE' THEN 1 
@@ -70,7 +70,7 @@ def user_list():
 	__cursor.execute("""SELECT user_scores.user_id, COUNT(DISTINCT(submission.problem_id)), SUM(CASE 
 							WHEN submission.status = 'AC' THEN 1 
 							WHEN submission.status = 'PE' THEN 1 
-							ELSE 0 END) 
+							ELSE 0 END), user_scores.elo_global
 							FROM submission RIGHT JOIN user_scores ON submission.user_id = user_scores.user_id
 							GROUP BY user_scores.user_id 
 							ORDER BY user_scores.user_id ASC""")

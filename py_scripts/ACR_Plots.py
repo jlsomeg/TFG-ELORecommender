@@ -48,7 +48,7 @@ def PLOTLY_BAR_PLOT_2YAXIS(x,y1,y2, y1_name='', y2_name='', title="", x_label=""
 		xaxis=dict(title=x_label, type='category'),
 		yaxis=dict(title=y1_label),
 		yaxis2=dict(title=y2_label,
-					range=[0,1],
+					range=[0,100],
 					tickfont=dict(color='rgb(188, 80, 144)'),
 					overlaying='y',
 					side='right')
@@ -65,7 +65,7 @@ def PLOTLY_LINE_PLOT(x,y, ax_type="-", title="", x_label="", y_label=""):
 
 	layout = go.Layout(
 		title=title,
-		xaxis=dict(title=x_label, type=ax_type),
+		xaxis=dict(title=x_label, type=ax_type, range=[0,round(max(x)*1.01)]),
 		yaxis=dict(title=y_label)
 	)
 
@@ -157,8 +157,8 @@ def GRAPH_ELO_DIFFERENCES(db_cursor, half):
 
 	return PLOTLY_HISTOGRAM_PLOT(x,title="", x_label="Diferencia de ELOs", y_label="% de Enfrentamientos")
 
-# Done
-def GRAPH_TRIES_AVERAGE(db_cursor):
+# DEPRECATED
+def GRAPH_TRIES_AVERAGE_DEPRECATED(db_cursor):
 	db_cursor.execute("""SELECT user_id, SUM(CASE 
 		WHEN status = 'AC' THEN 1 
 		WHEN status = 'PE' THEN 1 
@@ -195,6 +195,76 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 
 	return PLOTLY_BAR_PLOT_2YAXIS(x,y2,y3, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
 		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
+
+# Done
+def GRAPH_TRIES_AVERAGE(db_cursor):
+	db_cursor.execute("""SELECT user_id, problem_id, SUM(CASE 
+		WHEN status = 'AC' THEN 1 
+		WHEN status = 'PE' THEN 1 
+		ELSE 0 END), COUNT(id) 
+		FROM submission 
+		GROUP BY user_id, problem_id""")
+
+	num_subm = {}
+	for i in range(1,21): num_subm[str(i)] = 0
+	num_subm['+ de 20'] = 0
+
+	#with open('output.txt', 'w') as f:
+	for row in db_cursor.fetchall():
+		#f.write(str(row)+'\n')
+		if row[2] != 0:
+			if row[3] < 21:  
+				num_subm[str(row[3])] += 1
+			else: 
+				num_subm['+ de 20'] += 1
+
+	x = list(num_subm.keys())
+	y1 = list(num_subm.values())
+	total_sum = sum(y1)
+	
+	y2 = []
+	y3 = []
+
+	perc_sum = 0
+	for i in y1:
+		perc_sum += i
+		y2.append((i/total_sum)*100)
+		y3.append((perc_sum/sum(y1))*100)
+
+	#for i in range(len(x)):
+		#print(x[i], y1[i], y2[i], y3[i])
+
+	return PLOTLY_BAR_PLOT_2YAXIS(x,y2,y3, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
+		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
+
+# Done
+def TRIES_PER_PROBLEM(db_cursor, problem_id):
+	db_cursor.execute("""SELECT user_id, problem_id, SUM(CASE 
+		WHEN status = 'AC' THEN 1 
+		WHEN status = 'PE' THEN 1 
+		ELSE 0 END), COUNT(id) 
+		FROM submission
+		WHERE problem_id = {}
+		GROUP BY user_id, problem_id""".format(problem_id))
+
+	num_subm = {}
+	for i in range(1,21): num_subm[str(i)] = 0
+	num_subm['+ de 20'] = 0
+
+	for row in db_cursor.fetchall():
+		if row[2] != 0:
+			if row[3] < 21:  
+				num_subm[str(row[3])] += 1
+			else: 
+				num_subm['+ de 20'] += 1
+
+	total_sum = sum(num_subm.values())
+
+	x = list(num_subm.keys())
+	y = [(val/total_sum)*100 for val in num_subm.values()]
+
+	return PLOTLY_BAR_PLOT(x, y, x_label="Nº de Intentos", y_label="% de Alumnos", 
+		ax_type='category', title="% de Usuarios que han necesitado X intentos para resolver este problema",)
 
 # Done
 def GRAPH_SUBMISSIONS_PER_MONTHS(db_cursor):

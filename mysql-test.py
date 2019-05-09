@@ -27,8 +27,7 @@ def list_problems():
 @app.route('/user_list')
 def list_users():
 	users = db.user_list()
-	return render_template('list.html', item_name='Usuarios de la BD', item_list=users, item='user', 
-		cols=['ID', 'Nº de Problemas intentados', 'Nº de Problemas Resueltos'])
+	return render_template('user_list.html', item_list=users)
 
 @app.route('/user/<user_id>')
 def dash_user(user_id):
@@ -48,7 +47,8 @@ def dash_problems(problem_id):
 	fav_language = pl.GRAPH_PROBLEM_LANGUAGES(db.__cursor, problem_id)
 	div_plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(db.__cursor, problem_id)	# Problem ELO evolution plot (in HTML code)
 	div_plot_user_progress = pl.GRAPH_PROBLEM_SOLVE_RATIO(db.__cursor,problem_id)  		# problem completion pie chart (in HTML code)
-	return render_template('problem_dash.html',id=problem_id , evolution = div_plot_problem_evolution, 
+	div_plot_problem_tries = pl.TRIES_PER_PROBLEM(db.__cursor,problem_id)  		# problem completion pie chart (in HTML code)
+	return render_template('problem_dash.html',id=problem_id , evolution=div_plot_problem_evolution, problem_tries=div_plot_problem_tries,
 		progress=div_plot_user_progress, problem_id=problem_id, last_submissions=last_submissions, fav_language=fav_language)
 
 ### Inserts

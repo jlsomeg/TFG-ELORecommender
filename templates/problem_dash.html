@@ -9,6 +9,13 @@
 			</div>
 		</div>
 		<div class="row">
+			<div class="col-sm-12">
+				{% autoescape false %}
+				{{ problem_tries | safe}}
+				{% endautoescape %}
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-6">
 				<h3 style="text-align: center;">De todos los que intentan, ¿Cuántos usuarios han conseguido resolver este problema?</h3>
 				{% autoescape false %}

@@ -1,24 +1,25 @@
 {% extends "base.html" %}
-{% block title %} Lista de {{ item_name }} {% endblock %}
+{% block title %} Lista de Usuarios {% endblock %}
 {% block content %}
 		<div class="row">
 			<div class="col-sm-1"></div>
 			<div class="col-sm-10">
-				<h3 style="text-align: center;">Lista de {{ item_name }}</h3>
+				<h3 style="text-align: center;">Lista de Usuarios</h3>
 				<table id="sorted-table" class="display" style="width: 100%">
 					<thead>
 						<tr>
-						{% for c in cols %}
-							<th> {{ c }} </th>
-						{% endfor %}
+							<th> ID </th>
+							<th> Nº de Problemas Intentados </th>
+							<th> Nº de Problemas Resueltos </th>
+							<th> ELO [0-16] </th>
 						</tr>
 					</thead>
-					{% for rw in item_list %}
+					{% for item in item_list %}
 						<tr>
-							<td> <a href="/{{ item }}/{{rw[0]}}">{{ rw[0] }}</a></td>
-							{% for i in rw[1:] %}
-								<td>{{ i }}</td>
-							{% endfor %}
+							<td> <a href="/user/{{item[0]}}">{{ item[0] }}</a></td>
+							<td> {{ item[1] }} </td>
+							<td> {{ item[2] }} </td>
+							<td> {{ item[3]|round(3, 'floor') }} </td>
 						</tr>
 					{% endfor %}
 				</table>
