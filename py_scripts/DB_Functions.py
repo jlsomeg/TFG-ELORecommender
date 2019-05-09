@@ -90,12 +90,12 @@ def user_list():
 def insert_submission(user_id, problem_id, language, status):
 
 	# Checks if both user and problem exists
-	__cursor.execute("SELECT * FROM User_Scores WHERE user_id = {}".format(user_id))
+	__cursor.execute("SELECT * FROM user_scores WHERE user_id = {}".format(user_id))
 
 	if __cursor.fetchone() is None:
 		raise RuntimeError('El usuario no existe en la BD')
 
-	__cursor.execute("SELECT * FROM Problem_Scores WHERE problem_id = {}".format(problem_id))
+	__cursor.execute("SELECT * FROM problem_scores WHERE problem_id = {}".format(problem_id))
 
 	if __cursor.fetchone() is None:
 		raise RuntimeError('El problema no existe en la BD')
@@ -124,7 +124,7 @@ def insert_submission(user_id, problem_id, language, status):
 		tries = 1
 
 	# Checks if the user has switched problems
-	__cursor.execute(""" SELECT user_id, problem_id, status FROm submission 
+	__cursor.execute(""" SELECT user_id, problem_id, status FROM submission 
 		WHERE user_id = {}
 		ORDER BY id DESC
 		LIMIT 1""".format(user_id))
@@ -161,7 +161,7 @@ def insert_submission(user_id, problem_id, language, status):
 	
 def simulate_fight(user_id, problem_id, language, status, tries):
 	# Get ELO from user if exists
-	__cursor.execute("SELECT elo_global FROM User_Scores WHERE user_id = {}".format(user_id))
+	__cursor.execute("SELECT elo_global FROM user_scores WHERE user_id = {}".format(user_id))
 
 	old_user_elo = __cursor.fetchone()
 	if old_user_elo is None:
@@ -170,7 +170,7 @@ def simulate_fight(user_id, problem_id, language, status, tries):
 		old_user_elo = old_user_elo[0]
 
 	# Get ELO from problem if exists
-	__cursor.execute("SELECT elo_global FROM Problem_Scores WHERE problem_id = {}".format(problem_id))
+	__cursor.execute("SELECT elo_global FROM problem_scores WHERE problem_id = {}".format(problem_id))
 
 	old_problem_elo = __cursor.fetchone()
 	if old_problem_elo is None:
@@ -185,12 +185,12 @@ def simulate_fight(user_id, problem_id, language, status, tries):
 	for cat in __cursor.fetchall():
 		try:
 			category = ACR_Globals.__CATEGORIES[cat[0]]
-			__cursor.execute("SELECT {} FROM User_Scores WHERE user_id = {}".format(category, user_id))
+			__cursor.execute("SELECT {} FROM user_scores WHERE user_id = {}".format(category, user_id))
 			Old_Category_ELO = __cursor.fetchone()[0]
 			New_Category_ELO, _ = ELO.SIMULATE(Old_Category_ELO, old_problem_elo, status, tries)
 			
 			# Update category ELOs
-			__cursor.execute("UPDATE User_Scores SET {} = {} WHERE user_id = {}".format(category, New_Category_ELO, user_id))
+			__cursor.execute("UPDATE user_scores SET {} = {} WHERE user_id = {}".format(category, New_Category_ELO, user_id))
 		except:
 			pass
 
@@ -199,8 +199,8 @@ def simulate_fight(user_id, problem_id, language, status, tries):
 		VALUES ({}, {}, '{}', '{}', {}, {}, '{}')""".format(user_id, problem_id, language, status, new_user_elo, new_problem_elo, time.strftime('%Y-%m-%d %H:%M:%S')))
 
 	# Update ELOs on score tables
-	__cursor.execute("UPDATE User_Scores SET elo_global = {} WHERE user_id = {}".format(new_user_elo, user_id))
-	__cursor.execute("UPDATE Problem_Scores SET elo_global = {} WHERE problem_id = {}".format(new_problem_elo, problem_id))
+	__cursor.execute("UPDATE user_scores SET elo_global = {} WHERE user_id = {}".format(new_user_elo, user_id))
+	__cursor.execute("UPDATE problem_scores SET elo_global = {} WHERE problem_id = {}".format(new_problem_elo, problem_id))
 	
 	__conn.commit()
 
