@@ -206,12 +206,11 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 		GROUP BY user_id, problem_id""")
 
 	num_subm = {}
-	for i in range(1,21): num_subm[str(i)] = 0
+	for i in range(1,21): 
+		num_subm[str(i)] = 0
 	num_subm['+ de 20'] = 0
 
-	#with open('output.txt', 'w') as f:
 	for row in db_cursor.fetchall():
-		#f.write(str(row)+'\n')
 		if row[2] != 0:
 			if row[3] < 21:  
 				num_subm[str(row[3])] += 1
@@ -219,22 +218,12 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 				num_subm['+ de 20'] += 1
 
 	x = list(num_subm.keys())
-	y1 = list(num_subm.values())
-	total_sum = sum(y1)
+	total_sum = sum(num_subm.values())
 	
-	y2 = []
-	y3 = []
+	y1 = [(i/total_sum)*100 for i in num_subm.values()]
+	y2 = [sum(y2[:i+1]) for i in range(len(y2))]
 
-	perc_sum = 0
-	for i in y1:
-		perc_sum += i
-		y2.append((i/total_sum)*100)
-		y3.append((perc_sum/sum(y1))*100)
-
-	#for i in range(len(x)):
-		#print(x[i], y1[i], y2[i], y3[i])
-
-	return PLOTLY_BAR_PLOT_2YAXIS(x,y2,y3, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
+	return PLOTLY_BAR_PLOT_2YAXIS(x,y1,y2, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
 		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")
 
 # Done

@@ -10,9 +10,9 @@ def K_FACTOR(elo_diff, underdog_won, tries):
 	if tries >= ACR_Globals.__MAX_TRIES: 
 		tries = ACR_Globals.__MAX_TRIES
 	if underdog_won: 	
-		return ((elo_diff + ACR_Globals.__MAX_ELO) / ACR_Globals.__MAX_ELO) * (tries / ACR_Globals.__MAX_TRIES)
+		return ((elo_diff + ACR_Globals.__MAX_ELO) / ACR_Globals.__MAX_ELO) * (1/tries) * 0.5
 	else:				
-		return (1 - elo_diff / ACR_Globals.__MAX_ELO) * (tries / ACR_Globals.__MAX_TRIES)
+		return (1 - elo_diff / ACR_Globals.__MAX_ELO) * (1/tries) * 0.5
 
 def SIMULATE(ELO_user, ELO_problem, Submission_State, tries):
 	""" Calculates the new ratings for both player & problem """
