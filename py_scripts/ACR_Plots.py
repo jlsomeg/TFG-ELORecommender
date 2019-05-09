@@ -259,6 +259,7 @@ def TRIES_PER_PROBLEM(db_cursor, problem_id):
 				num_subm['+ de 20'] += 1
 
 	total_sum = sum(num_subm.values())
+	total_sum = total_sum if total_sum != 0 else 1
 
 	x = list(num_subm.keys())
 	y = [(val/total_sum)*100 for val in num_subm.values()]

@@ -57,8 +57,8 @@ def problem_list():
 							WHEN su.status = 'AC' THEN 1 
 							WHEN su.status = 'PE' THEN 1 
 							ELSE 0 END) / COUNT(DISTINCT(su.user_id)))*100
-						FROM problem_scores ps, submission su
-						WHERE ps.problem_id = su.problem_id
+						FROM problem_scores ps LEFT JOIN submission su
+						ON ps.problem_id = su.problem_id
 						GROUP BY ps.problem_id
 						ORDER BY ps.problem_id ASC""")
 
