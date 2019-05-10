@@ -28,4 +28,4 @@ class SubmissionForm(FlaskForm):
 
 class ELOSelectionForm(FlaskForm):
 	elo_type = SelectField('Tipo de ELO', choices = [(1,'Tipo 1'), (2, 'Tipo 2'), (3,'Tipo 3')], validators=[DataRequired()], coerce=int)
-	submit = SubmitField('Aplicar')
+	submit = SubmitField('Cambiar')

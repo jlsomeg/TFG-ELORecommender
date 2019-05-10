@@ -346,10 +346,12 @@ def CATEGORIES_RECOMMENDATION(r_type, user_id, user_elo, code):
 
 # ELO CHANGE
 def RE_CALCULATE_ELOS(elo_type):
+	start_time = time.time()
 	try:
 		RESET_ELOS()
 		CALCULATE_ELOS(elo_type)
 		__conn.commit()
+		print("Time spent calculating ELOs: ", time.time() - start_time)
 	except Exception as e:
 		print(e)
 		raise RuntimeError('Ha ocurrido un problema al cambiar el tipo de ELO')

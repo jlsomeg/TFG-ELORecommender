@@ -2,39 +2,6 @@
 {% block title %} Cambiar fórmula {% endblock %}
 {% block content %}
 	<div class="row" style="padding-top: 2em">
-		<div class="col-sm-2"></div>
-		<div class="col-sm-2">
-			<h3 style="text-align: center;">Tipo 1</h3>
-			<h4 style="text-align: center;">Expectación</h3>
-			<p>
-				\begin{gather*}
-				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
-				\end{gather*}
-			</p>
-		</div>
-		<div class="col-sm-1"></div>
-		<div class="col-sm-2">
-			<h3 style="text-align: center;">Tipo 2</h3>
-			<h4 style="text-align: center;">Expectación</h3>
-			<p>
-				\begin{gather*}
-				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
-				\end{gather*}
-			</p>
-		</div>
-		<div class="col-sm-1"></div>
-		<div class="col-sm-2">
-			<h3 style="text-align: center;">Tipo 3</h3>
-			<h4 style="text-align: center;">Expectación</h3>
-			<p>
-				\begin{gather*}
-				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
-				\end{gather*}
-			</p>
-		</div>
-		<div class="col-sm-2"></div>
-	</div>
-	<div class="row" style="padding-top: 2em">
 		<div class="col-sm-3"></div>
 		<div class="col-sm-6">
 			{% with messages = get_flashed_messages(with_categories=true) %}
@@ -50,7 +17,6 @@
 				<form method="POST" action="">
 					{{ form.hidden_tag() }}
 					<fieldset class="form-group">
-						<legend class="border-bottom mb-4">Cambiar tipo de ELO</legend>
 						<div class="form-group">
 							{{ form.elo_type.label(class="form-control-label") }}
 							{% if form.elo_type.errors %}
@@ -72,5 +38,112 @@
 			</div>
 		</div>
 		<div class="col-sm-3"></div>
+	</div>
+	<div class="row" style="padding-top: 2em">
+		<div class="col-sm-4">
+			<h2 style="text-align: center; font-weight: 600;">Tipo 1</h2>
+			<hr>
+			<h4 style="text-align: center; font-weight: 600;">Expectación</h4>
+			<p>
+				\begin{gather*}
+				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				\end{gather*}
+			</p>
+			<hr>
+			<h4 style="text-align: center; font-weight: 600;">K-Factor</h4>
+			<h5 style="text-align: center; font-weight: 600;">Si ELO menor gana:</h5>
+			<p>
+				\begin{gather*}
+				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2}\\
+				\end{gather*}
+			</p>
+			<h5 style="text-align: center; font-weight: 600;">Si ELO mayor gana:</h5>
+			<p>
+				\begin{gather*}
+				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2}\\
+				\end{gather*}
+			</p>
+		</div>
+		<div class="col-sm-4">
+			<h2 style="text-align: center; font-weight: 600;">Tipo 2</h2>
+			<hr>
+			<h4 style="text-align: center; font-weight: 600;">Expectación</h4>
+			<p>
+				\begin{gather*}
+				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				\end{gather*}
+			</p>
+			<hr>
+			<h4 style="text-align: center; font-weight: 600;">K-Factor</h4>
+			<h5 style="text-align: center; font-weight: 600;">Si ELO menor gana:</h5>
+			<p>
+				\begin{gather*}
+				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				\end{gather*}
+			</p>
+			<h5 style="text-align: center; font-weight: 600;">Si ELO mayor gana:</h5>
+			<p>
+				\begin{gather*}
+				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				\end{gather*}
+			</p>
+		</div>
+		<div class="col-sm-4">
+			<h2 style="text-align: center; font-weight: 600;">Tipo 3</h2>
+			<hr>
+			<h4 style="text-align: center; font-weight: 600;">Expectación</h4>
+			<p>
+				\begin{gather*}
+				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				\end{gather*}
+			</p>
+			<hr>
+			<h4 style="text-align: center; font-weight: 600;">K-Factor</h4>
+			<h5 style="text-align: center; font-weight: 600;">Si ELO menor gana:</h5>
+			<p>
+				\begin{gather*}
+				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				\end{gather*}
+			</p>
+			<h5 style="text-align: center; font-weight: 600;">Si ELO mayor gana:</h5>
+			<p>
+				\begin{gather*}
+				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				\end{gather*}
+			</p>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<div class="row" style="padding-top: 2em">
+		<p style="text-align: center;">
+			\begin{gather*}
+			Ganador\_Nuevo\_ELO= Ganador\_Viejo\_ELO + K \times (1 - Expectación\_Ganador)\\
+			\end{gather*}
+		</p>
+		<p style="text-align: center;">
+			\begin{gather*}
+			Perdedor\_Nuevo\_ELO= Perdedor\_Viejo\_ELO + K \times (0 - Expectación\_Perdedor)\\
+			\end{gather*}
+		</p>
+	</div>
+	<div class="row" style="padding-top: 2em">
+		<h3 style="text-align: center;">Leyenda</h3>
+		<div class="col-sm-6">
+			<p>\begin{gather*} MAX\_ELO\end{gather*}</p>
+			<p style="text-align: center;">Puntuación maxima que pueden alcanzar usuarios y problemas. El valor de MAX_ELO utilizado es 16.</p>
+			<p>\begin{gather*} ELO_1, ELO_2\end{gather*}</p>
+			<p style="text-align: center;">Puntuación ELO del Usuario y Problema (no necesariamente en ese orden).</p>
+			<p>\begin{gather*} ELO\_DIFF\end{gather*}</p>
+			<p style="text-align: center;">Valor absoluto de la diferencia de puntuaciones ELO del Usuario y Problema.</p>
+			
+		</div>
+		<div class="col-sm-6">
+			<p>\begin{gather*} MIN\_ELO\end{gather*}</p>
+			<p style="text-align: center;">Puntuación minima que pueden alcanzar usuarios y problemas. El valor de MAX_ELO utilizado es 0.</p>
+			<p>\begin{gather*} INTENTOS\end{gather*}</p>
+			<p style="text-align: center;">Número de intentos usados por el usuario para resolver el problema.</p>
+			<p>\begin{gather*} MAX\_DIFF\end{gather*}</p>
+			<p style="text-align: center;">Un usuario / problema con MAX_DIFF puntos de ventaja sobre su oponente, tendra una probabilidad de ganar 10 veces mayor a la probabilidad de ganar de su oponente. El valor de MAX_DIFF utilizado es 8</p>
+		</div>
 	</div>
 {% endblock content %}
