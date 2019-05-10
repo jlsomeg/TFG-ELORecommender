@@ -221,7 +221,7 @@ def GRAPH_TRIES_AVERAGE(db_cursor):
 	total_sum = sum(num_subm.values())
 	
 	y1 = [(i/total_sum)*100 for i in num_subm.values()]
-	y2 = [sum(y2[:i+1]) for i in range(len(y2))]
+	y2 = [sum(y1[:i+1]) for i in range(len(y1))]
 
 	return PLOTLY_BAR_PLOT_2YAXIS(x,y1,y2, title="% de Usuarios que han necesitado X intentos para resolver un problema", 
 		x_label="Nº de Intentos", y1_label="% de Alumnos", y1_name="% de Alumnos", y2_name="% Acumulado de Alumnos")

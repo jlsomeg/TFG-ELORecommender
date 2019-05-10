@@ -343,3 +343,169 @@ def CATEGORIES_RECOMMENDATION(r_type, user_id, user_elo, code):
 			ORDER BY diff ASC LIMIT {}""".format(user_elo, user_elo, code, user_id, ACR_Globals.__NUM_RECOMD)
 	
 	__cursor.execute(query)
+
+# ELO CHANGE
+def RE_CALCULATE_ELOS(elo_type):
+	try:
+		RESET_ELOS()
+		CALCULATE_ELOS(elo_type)
+		__conn.commit()
+	except Exception as e:
+		print(e)
+		raise RuntimeError('Ha ocurrido un problema al cambiar el tipo de ELO')
+
+def RESET_ELOS():
+
+	# Resets ELO scores (Users)
+	__cursor.execute("""UPDATE user_scores SET
+		elo_global=8.0,
+		elo_adhoc=8.0,
+		elo_recorr=8.0,
+		elo_search=8.0,
+		elo_bin_srch=8.0,
+		elo_sorting=8.0,
+		elo_vrz=8.0,
+		elo_dnmc=8.0,
+		elo_dyv=8.0,
+		elo_bk_trk=8.0,
+		elo_space=8.0,
+		elo_graph=8.0,
+		elo_geo=8.0""")
+
+	# Resets ELO scores (Problems)
+	__cursor.execute("""UPDATE problem_scores SET elo_global=8.0""")
+
+	# Resets ELO History
+	__cursor.execute("UPDATE submission SET user_elo=NULL, problem_elo=NULL")
+	__conn.commit()
+
+def CALCULATE_ELOS(elo_type):
+	current_fights = {}
+	tries_per_couple = {}
+
+	__cursor.execute("SELECT user_id, elo_global FROM user_scores")
+	dict_user_elo = dict(__cursor.fetchall())
+
+	__cursor.execute("SELECT problem_id, elo_global FROM problem_scores")
+	dict_problem_elo = dict(__cursor.fetchall())
+	
+	__cursor.execute("SELECT * FROM user_scores")
+	dict_user_categories = {}
+
+	for row in __cursor.fetchall():
+		categories = {}
+		for i, code in enumerate(ACR_Globals.__CATEGORIES):
+			categories[code] = row[i+2]
+		dict_user_categories[row[0]] = categories
+
+	__cursor.execute("SELECT * FROM submission ORDER BY id ASC")
+
+	#for row in tqdm(__cursor.fetchall(), desc="Calculating ELOs"):
+	for row in __cursor.fetchall():
+		subm_id = row[0]
+		p_id = row[1]
+		u_id = row[2]
+		status = row[5]
+
+		# Checks the Nº of tries
+		if (u_id,p_id) not in tries_per_couple:
+			tries_per_couple[(u_id,p_id)] = 1
+		else:
+			tries_per_couple[(u_id,p_id)] += 1
+
+		# Checks if the user hasn't switched problems
+		if u_id not in current_fights:
+			current_fights[u_id] = p_id	
+
+		# OK
+		if elo_type == 1:
+			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and 10 tries)
+			if current_fights[u_id] != p_id or status in ('AC', 'PE'):
+
+				# If he switches
+				if current_fights[u_id] != p_id:
+					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], status, 1, dict_user_categories)
+					current_fights[u_id] = p_id
+
+				# If he wins or reaches __MAX_TRIES tries
+				if status in ('AC', 'PE') or tries_per_couple[(u_id,p_id)] == ACR_Globals.__MAX_TRIES:			
+					if status in ('AC', 'PE'): 
+						del current_fights[u_id]
+					dict_user_elo[u_id], dict_problem_elo[p_id] = CHANGE_ELOS(subm_id, u_id, dict_user_elo[u_id], p_id, dict_problem_elo[p_id], status, 1, dict_user_categories)
+
+		# OK
+		elif elo_type == 2:
+			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and 10 tries)
+			if current_fights[u_id] != p_id or status in ('AC', 'PE'):
+
+				# If he switches
+				if current_fights[u_id] != p_id:
+					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], 
+						status, tries_per_couple[(u_id,current_fights[u_id])], dict_user_categories)
+					current_fights[u_id] = p_id
+
+				# If he wins
+				if status in ('AC', 'PE'):			
+					del current_fights[u_id]
+					dict_user_elo[u_id], dict_problem_elo[p_id] = CHANGE_ELOS(subm_id, u_id, dict_user_elo[u_id], p_id, dict_problem_elo[p_id],
+						status, tries_per_couple[(u_id,p_id)], dict_user_categories)
+
+		# OK
+		elif elo_type == 3:
+			
+			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and 10 tries)
+			if current_fights[u_id] != p_id or status in ('AC', 'PE') or (tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES) == 0:
+
+				# If he switches
+				if current_fights[u_id] != p_id:
+					num_tries = tries_per_couple[(u_id,current_fights[u_id])] % ACR_Globals.__MAX_TRIES if tries_per_couple[(u_id,current_fights[u_id])] % ACR_Globals.__MAX_TRIES != 0 else ACR_Globals.__MAX_TRIES
+					
+					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], 
+						status, num_tries, dict_user_categories)
+					
+					current_fights[u_id] = p_id
+
+				# If he wins or reaches __MAX_TRIES tries
+				if status in ('AC', 'PE') or tries_per_couple[(u_id,p_id)] == ACR_Globals.__MAX_TRIES:			
+					if status in ('AC', 'PE'): 
+						del current_fights[u_id]
+					
+					num_tries = tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES if tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES != 0 else ACR_Globals.__MAX_TRIES
+					
+					dict_user_elo[u_id], dict_problem_elo[p_id] = CHANGE_ELOS(subm_id, u_id, dict_user_elo[u_id], p_id, dict_problem_elo[p_id], status,
+					 num_tries, dict_user_categories)
+
+	for user,elo in dict_user_elo.items():
+		__cursor.execute("UPDATE user_scores SET elo_global = {} WHERE user_id = {}".format(elo, user))
+
+	for problem,elo in dict_problem_elo.items():
+		__cursor.execute("UPDATE problem_scores SET elo_global = {} WHERE problem_id = {}".format(elo, problem))
+
+	for user, elo in dict_user_categories.items():
+		__cursor.execute("""UPDATE user_scores SET
+			elo_adhoc={},
+			elo_recorr={},
+			elo_search={},
+			elo_bin_srch={},
+			elo_sorting={},
+			elo_vrz={},
+			elo_dnmc={},
+			elo_dyv={},
+			elo_bk_trk={},
+			elo_space={},
+			elo_graph={},
+			elo_geo={}
+			WHERE user_id = {}""".format(*elo.values(), user))
+
+def CHANGE_ELOS(subm_id, u_id, old_user_elo, p_id, old_problem_elo, status, tries, dict_user_categories):
+	new_user_elo, new_problem_elo = ELO.SIMULATE(old_user_elo, old_problem_elo, status, tries)
+
+	__cursor.execute("SELECT categoryId FROM problemcategories WHERE problemId = {}".format(p_id))
+	for cat in __cursor.fetchall():
+		try:
+			dict_user_categories[u_id][cat[0]], _ = ELO.SIMULATE(dict_user_categories[u_id][cat[0]], old_problem_elo, status, tries)
+		except:
+			pass
+
+	__cursor.execute("UPDATE submission SET problem_elo = {}, user_elo = {} WHERE id = {} and user_id = {} and problem_id = {}".format(new_problem_elo, new_user_elo, subm_id, u_id, p_id))
+	return new_user_elo, new_problem_elo

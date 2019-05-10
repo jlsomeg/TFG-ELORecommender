@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
-from forms import UserInsertForm, ProblemInsertForm, SubmissionForm
+from forms import UserInsertForm, ProblemInsertForm, SubmissionForm, ELOSelectionForm
 from py_scripts import ACR_Plots as pl
 from py_scripts import DB_Functions as db
 
@@ -98,6 +98,19 @@ def simulate_submission():
 	return render_template('submission.html', form=form)
 
 ### Other
+
+@app.route("/change", methods=['GET', 'POST'])
+def elo_change():
+	form = ELOSelectionForm()
+	if form.validate_on_submit():
+		try:
+			db.RE_CALCULATE_ELOS(form.elo_type.data)
+			flash(f'Se ha cambiado la fórmula de ELO al Tipo {form.elo_type.data}!', 'success')
+		except RuntimeError as err:
+			flash("ERROR: {}".format(err.args[0]), 'danger')
+		finally:
+			return redirect(url_for('elo_change'))
+	return render_template('elo_change.html', form=form)
 
 @app.route("/easiest", methods=['GET', 'POST'])
 def list_easiest_problems():

@@ -25,3 +25,7 @@ class SubmissionForm(FlaskForm):
 	language = SelectField('Lenguaje', choices = [('C','C'), ('CPP', 'CPP'), ('JAV','JAV')], validators=[DataRequired()])
 	status = SelectField('Estado del Envio', choices = [('AC', 'AC'), ('WA', 'WA')], validators=[DataRequired()])
 	submit = SubmitField('Enviar')
+
+class ELOSelectionForm(FlaskForm):
+	elo_type = SelectField('Tipo de ELO', choices = [(1,'Tipo 1'), (2, 'Tipo 2'), (3,'Tipo 3')], validators=[DataRequired()], coerce=int)
+	submit = SubmitField('Aplicar')

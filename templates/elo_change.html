@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %} Cambiar fórmula {% endblock %}
+{% block content %}
+	<div class="row" style="padding-top: 2em">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-2">
+			<h3 style="text-align: center;">Tipo 1</h3>
+			<h4 style="text-align: center;">Expectación</h3>
+			<p>
+				\begin{gather*}
+				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				\end{gather*}
+			</p>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-2">
+			<h3 style="text-align: center;">Tipo 2</h3>
+			<h4 style="text-align: center;">Expectación</h3>
+			<p>
+				\begin{gather*}
+				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				\end{gather*}
+			</p>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-2">
+			<h3 style="text-align: center;">Tipo 3</h3>
+			<h4 style="text-align: center;">Expectación</h3>
+			<p>
+				\begin{gather*}
+				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				\end{gather*}
+			</p>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<div class="row" style="padding-top: 2em">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+						<div class="alert alert-{{ category }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<div class="content-section">
+				<form method="POST" action="">
+					{{ form.hidden_tag() }}
+					<fieldset class="form-group">
+						<legend class="border-bottom mb-4">Cambiar tipo de ELO</legend>
+						<div class="form-group">
+							{{ form.elo_type.label(class="form-control-label") }}
+							{% if form.elo_type.errors %}
+								{{ form.elo_type(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.elo_type.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.elo_type(class="form-control form-control-lg") }}
+							{% endif %}
+						</div>
+					</fieldset>
+					<div class="form-group">
+						{{ form.submit(class="btn btn-outline-info") }}
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+{% endblock content %}
