@@ -6,11 +6,7 @@ from py_scripts import ACR_Globals
 #__conn = pymysql.connect(host='localhost', database='acr_dat3', user='root', password='')
 __conn = pymysql.connect(host='acr-mysql', database='acr_dat', user='user', password='password')
 __cursor = __conn.cursor()
-
-try:
-	__cursor.execute("ALTER TABLE submission DROP FOREIGN KEY Submission_ibfk_2")
-except:
-	pass
+__elo_type = 3
 
 def insert_user(user_id, elo):
 	try:
@@ -351,7 +347,9 @@ def RE_CALCULATE_ELOS(elo_type):
 		RESET_ELOS()
 		CALCULATE_ELOS(elo_type)
 		__conn.commit()
-		print("Time spent calculating ELOs: ", time.time() - start_time)
+		global __elo_type
+		__elo_type = elo_type
+		print("Time spent calculating ELOs: ", time.time() - start_time, flush=True)
 	except Exception as e:
 		print(e)
 		raise RuntimeError('Ha ocurrido un problema al cambiar el tipo de ELO')

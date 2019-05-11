@@ -11,13 +11,13 @@ app.config['SECRET_KEY'] = '5404d19eaf645951b91dae10a842be5b'
 @app.route('/')
 @app.route('/stats')
 def dash_general():
-	div_bar_submissions_per_month = pl.GRAPH_SUBMISSIONS_PER_MONTHS(db.__cursor)				# Submissions per month / year (in HTML code)
-	div_hist_users_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.__cursor, 'Usuarios')		# Users ELO distribution histogram (in HTML code)
-	div_hist_problems_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION(db.__cursor, 'Problemas')	# Problems ELO distribution histogram (in HTML code)
-	div_bars_tries_till_solved = pl.GRAPH_TRIES_AVERAGE(db.__cursor)
+	bar_submissions_per_month = pl.GRAPH_SUBMISSIONS_PER_MONTHS()				# Submissions per month / year (in HTML code)
+	hist_users_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION('Usuarios')		# Users ELO distribution histogram (in HTML code)
+	hist_problems_elo_distribution = pl.GRAPH_ELO_DISTRIBUTION('Problemas')	# Problems ELO distribution histogram (in HTML code)
+	bars_tries_till_solved = pl.GRAPH_TRIES_AVERAGE()
 
-	return render_template('db_stats.html', subm_per_month=div_bar_submissions_per_month, user_distribution=div_hist_users_elo_distribution, 
-		problem_distribution=div_hist_problems_elo_distribution, tries_average=div_bars_tries_till_solved)
+	return render_template('db_stats.html', subm_per_month=bar_submissions_per_month, user_distribution=hist_users_elo_distribution, 
+		problem_distribution=hist_problems_elo_distribution, tries_average=bars_tries_till_solved)
 
 @app.route('/problem_list')
 def list_problems():
@@ -32,23 +32,23 @@ def list_users():
 @app.route('/user/<user_id>')
 def dash_user(user_id):
 	user_submissions = db.user_submissions(user_id)									# List of the user's latest submissions
-	div_plot_user_evolution = pl.GRAPH_USERS_EVOLUTION(db.__cursor, user_id)		# User ELO evolution plot (in HTML code)
-	div_plot_user_progress = pl.GRAPH_USER_PROBLEM_PROGRESS(db.__cursor, user_id) 	# user problem completion pie chart (in HTML code)
-	div_plot_user_categories = pl.GRAPH_USER_CATEGORIES(db.__cursor, user_id) 		# User ELOs per category (in HTML code)
+	plot_user_evolution = pl.GRAPH_USERS_EVOLUTION(user_id)		# User ELO evolution plot (in HTML code)
+	plot_user_progress = pl.GRAPH_USER_PROBLEM_PROGRESS(user_id) 	# user problem completion pie chart (in HTML code)
+	plot_user_categories = pl.GRAPH_USER_CATEGORIES(user_id) 		# User ELOs per category (in HTML code)
 	user_recommendations = db.RECOMMENDATIONS(user_id)
 
-	return render_template('user_dash.html', id=user_id ,evolution=div_plot_user_evolution, progress=div_plot_user_progress, 
-		categories=div_plot_user_categories, user_id=user_id, user_submissions=user_submissions, user_recommendations=user_recommendations)
+	return render_template('user_dash.html', id=user_id ,evolution=plot_user_evolution, progress=plot_user_progress, 
+		categories=plot_user_categories, user_id=user_id, user_submissions=user_submissions, user_recommendations=user_recommendations)
 
 @app.route('/problem/<problem_id>')
 def dash_problems(problem_id):
 	last_submissions = db.problem_latest_submissions(problem_id)						# Latest submissions
-	fav_language = pl.GRAPH_PROBLEM_LANGUAGES(db.__cursor, problem_id)
-	div_plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(db.__cursor, problem_id)	# Problem ELO evolution plot (in HTML code)
-	div_plot_user_progress = pl.GRAPH_PROBLEM_SOLVE_RATIO(db.__cursor,problem_id)  		# problem completion pie chart (in HTML code)
-	div_plot_problem_tries = pl.TRIES_PER_PROBLEM(db.__cursor,problem_id)  		# problem completion pie chart (in HTML code)
-	return render_template('problem_dash.html',id=problem_id , evolution=div_plot_problem_evolution, problem_tries=div_plot_problem_tries,
-		progress=div_plot_user_progress, problem_id=problem_id, last_submissions=last_submissions, fav_language=fav_language)
+	fav_language = pl.GRAPH_PROBLEM_LANGUAGES(problem_id)
+	plot_problem_evolution = pl.GRAPH_PROBLEMS_EVOLUTION(problem_id)	# Problem ELO evolution plot (in HTML code)
+	plot_user_progress = pl.GRAPH_PROBLEM_SOLVE_RATIO(problem_id)  		# problem completion pie chart (in HTML code)
+	plot_problem_tries = pl.TRIES_PER_PROBLEM(problem_id)  		# problem completion pie chart (in HTML code)
+	return render_template('problem_dash.html',id=problem_id , evolution=plot_problem_evolution, problem_tries=plot_problem_tries,
+		progress=plot_user_progress, problem_id=problem_id, last_submissions=last_submissions, fav_language=fav_language)
 
 ### Inserts
 
@@ -110,7 +110,7 @@ def elo_change():
 			flash("ERROR: {}".format(err.args[0]), 'danger')
 		finally:
 			return redirect(url_for('elo_change'))
-	return render_template('elo_change.html', form=form)
+	return render_template('elo_change.html', form=form, elo_type=db.__elo_type)
 
 @app.route("/easiest", methods=['GET', 'POST'])
 def list_easiest_problems():

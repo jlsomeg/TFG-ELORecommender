@@ -17,6 +17,7 @@
 				<form method="POST" action="">
 					{{ form.hidden_tag() }}
 					<fieldset class="form-group">
+						<legend class="border-bottom mb-4">Cambiar tipo de ELO (Tipo actual: {{ elo_type }})</legend>
 						<div class="form-group">
 							{{ form.elo_type.label(class="form-control-label") }}
 							{% if form.elo_type.errors %}
