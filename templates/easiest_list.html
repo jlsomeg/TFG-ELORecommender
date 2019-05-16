@@ -30,4 +30,15 @@
 			</div>
 			<div class="col-sm-1"></div>
 		</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#sorted-table').DataTable({
+				"order": [[ 3, "asc" ]],
+				"lengthMenu": [[10, 30, 50, -1], [10, 30, 50, "Todo"]],
+				"language": {
+		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+		        }
+			} );
+		});
+	</script> 
 {% endblock content %}

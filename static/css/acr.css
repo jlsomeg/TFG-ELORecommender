@@ -24,3 +24,10 @@ table a {
 	color: #fff;
 	background-color: darkgray;
 }
+
+.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover {
+    background-color: #ababab;
+    border-bottom-color: #fff;
+    color: #FFF;
+    font-size: large;
+}

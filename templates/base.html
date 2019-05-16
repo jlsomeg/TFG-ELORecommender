@@ -14,6 +14,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="http://malsup.github.io/jquery.blockUI.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 </head>
 <body>
@@ -40,16 +41,6 @@
 			</div>
 		</div>
 	</nav>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#sorted-table').DataTable({
-				"lengthMenu": [[30, 50, 75, -1], [30, 50, 75, "Todo"]],
-				"language": {
-		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-		        }
-			} );
-		});
-	</script> 
 	<div class="container-fluid">
 		{% block content %}{% endblock %}
 	</div>
