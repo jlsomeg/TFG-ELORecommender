@@ -35,6 +35,8 @@
 					<div class="form-group">
 						{{ form.submit(class="btn btn-outline-info") }}
 					</div>
+					<img src="../static/img/loading.gif" id="loading-animation" style="width: 2em;"/>
+					<p id="loading-text">Esto tardará algunos segundos</p>
 				</form>
 			</div>
 		</div>
@@ -147,4 +149,15 @@
 			<p style="text-align: center;">Un usuario / problema con MAX_DIFF puntos de ventaja sobre su oponente, tendra una probabilidad de ganar 10 veces mayor a la probabilidad de ganar de su oponente. El valor de MAX_DIFF utilizado es 8</p>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$("#loading-animation").hide();
+		$("#loading-text").hide();
+
+	    $("input[name='submit']").click(function (e) {
+	        $(this).hide();
+	        $("#loading-animation").show();
+	        $("#loading-text").show();
+	        $(this).submit();
+	    });
+	</script>
 {% endblock content %}
