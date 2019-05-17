@@ -31,3 +31,12 @@ table a {
     color: #FFF;
     font-size: large;
 }
+
+.math-heading {
+	text-align: center; 
+	font-weight: 600;
+}
+
+.math-formula-size {
+	font-size: 90%;
+}

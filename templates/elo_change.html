@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %} Cambiar fórmula {% endblock %}
+
+{% block head %}
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+{% endblock head %}
+
 {% block content %}
 	<div class="row" style="padding-top: 2em">
 		<div class="col-sm-3"></div>
@@ -44,23 +49,23 @@
 	</div>
 	<div class="row" style="padding-top: 2em">
 		<div class="col-sm-4">
-			<h2 style="text-align: center; font-weight: 600;">Tipo 1</h2>
+			<h2 class="math-heading">Tipo 1</h2>
 			<hr>
-			<h4 style="text-align: center; font-weight: 600;">Expectación</h4>
+			<h4 class="math-heading">Expectación</h4>
 			<p>
 				\begin{gather*}
 				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
 				\end{gather*}
 			</p>
 			<hr>
-			<h4 style="text-align: center; font-weight: 600;">K-Factor</h4>
-			<h5 style="text-align: center; font-weight: 600;">Si ELO menor gana:</h5>
+			<h4 class="math-heading">K-Factor</h4>
+			<h5 class="math-heading">Si ELO menor gana:</h5>
 			<p>
 				\begin{gather*}
 				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2}\\
 				\end{gather*}
 			</p>
-			<h5 style="text-align: center; font-weight: 600;">Si ELO mayor gana:</h5>
+			<h5 class="math-heading">Si ELO mayor gana:</h5>
 			<p>
 				\begin{gather*}
 				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2}\\
@@ -68,23 +73,23 @@
 			</p>
 		</div>
 		<div class="col-sm-4">
-			<h2 style="text-align: center; font-weight: 600;">Tipo 2</h2>
+			<h2 class="math-heading">Tipo 2</h2>
 			<hr>
-			<h4 style="text-align: center; font-weight: 600;">Expectación</h4>
+			<h4 class="math-heading">Expectación</h4>
 			<p>
 				\begin{gather*}
 				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
 				\end{gather*}
 			</p>
 			<hr>
-			<h4 style="text-align: center; font-weight: 600;">K-Factor</h4>
-			<h5 style="text-align: center; font-weight: 600;">Si ELO menor gana:</h5>
+			<h4 class="math-heading">K-Factor</h4>
+			<h5 class="math-heading">Si ELO menor gana:</h5>
 			<p>
 				\begin{gather*}
 				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
 				\end{gather*}
 			</p>
-			<h5 style="text-align: center; font-weight: 600;">Si ELO mayor gana:</h5>
+			<h5 class="math-heading">Si ELO mayor gana:</h5>
 			<p>
 				\begin{gather*}
 				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
@@ -92,23 +97,23 @@
 			</p>
 		</div>
 		<div class="col-sm-4">
-			<h2 style="text-align: center; font-weight: 600;">Tipo 3</h2>
+			<h2 class="math-heading">Tipo 3</h2>
 			<hr>
-			<h4 style="text-align: center; font-weight: 600;">Expectación</h4>
+			<h4 class="math-heading">Expectación</h4>
 			<p>
 				\begin{gather*}
 				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
 				\end{gather*}
 			</p>
 			<hr>
-			<h4 style="text-align: center; font-weight: 600;">K-Factor</h4>
-			<h5 style="text-align: center; font-weight: 600;">Si ELO menor gana:</h5>
+			<h4 class="math-heading">K-Factor</h4>
+			<h5 class="math-heading">Si ELO menor gana:</h5>
 			<p>
 				\begin{gather*}
 				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
 				\end{gather*}
 			</p>
-			<h5 style="text-align: center; font-weight: 600;">Si ELO mayor gana:</h5>
+			<h5 class="math-heading">Si ELO mayor gana:</h5>
 			<p>
 				\begin{gather*}
 				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
@@ -133,7 +138,7 @@
 		<h3 style="text-align: center;">Leyenda</h3>
 		<div class="col-sm-6">
 			<p>\begin{gather*} MAX\_ELO\end{gather*}</p>
-			<p style="text-align: center;">Puntuación maxima que pueden alcanzar usuarios y problemas. El valor de MAX_ELO utilizado es 16.</p>
+			<p style="text-align: center;">Puntuación maxima que pueden alcanzar usuarios y problemas. <br> El valor de MAX_ELO utilizado es 16.</p>
 			<p>\begin{gather*} ELO_1, ELO_2\end{gather*}</p>
 			<p style="text-align: center;">Puntuación ELO del Usuario y Problema (no necesariamente en ese orden).</p>
 			<p>\begin{gather*} ELO\_DIFF\end{gather*}</p>
