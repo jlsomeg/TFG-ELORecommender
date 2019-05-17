@@ -2,3 +2,10 @@
 */*/*/__pycache__/
 */*/__pycache__/
 */__pycache__/
+__pycache__/forms.cpython-37.pyc
+py_scripts/__pycache__/__init__.cpython-37.pyc
+py_scripts/__pycache__/ACR_Globals.cpython-37.pyc
+py_scripts/__pycache__/ACR_Plots.cpython-37.pyc
+py_scripts/__pycache__/DB_Functions.cpython-37.pyc
+py_scripts/__pycache__/ELO.cpython-37.pyc
+*.pyc
