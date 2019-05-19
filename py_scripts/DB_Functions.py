@@ -342,7 +342,7 @@ def RE_CALCULATE_ELOS(elo_type):
 	try:
 		RESET_ELOS(db)
 		CALCULATE_ELOS(db, elo_type)
-		__conn.commit()
+		db.conn.commit()
 
 		global __elo_type
 		__elo_type = elo_type
