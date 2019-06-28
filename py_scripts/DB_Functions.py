@@ -143,10 +143,10 @@ def insert_submission(user_id, problem_id, language, status):
 				GROUP BY user_id, problem_id""".format(user_id, last_problem), fetchone=True)
 
 			prev_tries = (prev_tries[0] + 1) % ACR_Globals.__MAX_TRIES
-			simulate_fight(db, user_id, last_problem, language, status, 10 if prev_tries == 0 else prev_tries)
+			simulate_fight(db, user_id, last_problem, language, status, ACR_Globals.__MAX_TRIES if prev_tries == 0 else prev_tries)
 			
 		if status == 'AC' or tries == 0:
-			simulate_fight(db, user_id, problem_id, language, status, 10 if tries == 0 else tries)
+			simulate_fight(db, user_id, problem_id, language, status, ACR_Globals.__MAX_TRIES if tries == 0 else tries)
 	
 	else:
 		db.query("""INSERT INTO submission (user_id, problem_id, language, status, submissionDate) 
@@ -411,7 +411,7 @@ def CALCULATE_ELOS(db, elo_type):
 
 		# OK
 		if elo_type == 1:
-			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and 10 tries)
+			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and ACR_Globals.__MAX_TRIES tries)
 			if current_fights[u_id] != p_id or status in ('AC', 'PE'):
 
 				# If he switches
@@ -427,7 +427,7 @@ def CALCULATE_ELOS(db, elo_type):
 
 		# OK
 		elif elo_type == 2:
-			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and 10 tries)
+			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and ACR_Globals.__MAX_TRIES tries)
 			if current_fights[u_id] != p_id or status in ('AC', 'PE'):
 
 				# If he switches
@@ -445,7 +445,7 @@ def CALCULATE_ELOS(db, elo_type):
 		# OK
 		elif elo_type == 3:
 			
-			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and 10 tries)
+			# Checks all conditions that could trigger a simulation (AC/PE, Problem Switch and ACR_Globals.__MAX_TRIES tries)
 			if current_fights[u_id] != p_id or status in ('AC', 'PE') or (tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES) == 0:
 
 				# If he switches
