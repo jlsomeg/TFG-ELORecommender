@@ -51,10 +51,10 @@
 		<div class="col-sm-4">
 			<h2 class="math-heading">Tipo 1</h2>
 			<hr>
-			<h4 class="math-heading">Expectación</h4>
+			<h4 class="math-heading">Expectativa</h4>
 			<p>
 				\begin{gather*}
-				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				E = \frac{1}{1+10^{-\left(\frac{R_1 - R_2}{MAX\_DIFF}\right)}}
 				\end{gather*}
 			</p>
 			<hr>
@@ -62,23 +62,23 @@
 			<h5 class="math-heading">Si ELO menor gana:</h5>
 			<p>
 				\begin{gather*}
-				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2}\\
+				K= \frac{\Delta R + R_{MAX}}{2 \times R_{MAX}}
 				\end{gather*}
 			</p>
 			<h5 class="math-heading">Si ELO mayor gana:</h5>
 			<p>
 				\begin{gather*}
-				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2}\\
+				K= \left(1 - \frac{ \Delta R}{R_{MAX}}\right)\times\frac{1}{2}
 				\end{gather*}
 			</p>
 		</div>
 		<div class="col-sm-4">
 			<h2 class="math-heading">Tipo 2</h2>
 			<hr>
-			<h4 class="math-heading">Expectación</h4>
+			<h4 class="math-heading">Expectativa</h4>
 			<p>
 				\begin{gather*}
-				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				E = \frac{1}{1+10^{-\left(\frac{R_1 - R_2}{MAX\_DIFF}\right)}}
 				\end{gather*}
 			</p>
 			<hr>
@@ -86,23 +86,23 @@
 			<h5 class="math-heading">Si ELO menor gana:</h5>
 			<p>
 				\begin{gather*}
-				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				K= \frac{\Delta R + R_{MAX}}{R_{MAX} \times 2 \times N_{TRIES}}
 				\end{gather*}
 			</p>
 			<h5 class="math-heading">Si ELO mayor gana:</h5>
 			<p>
 				\begin{gather*}
-				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				K= \left(1 - \frac{ \Delta R}{R_{MAX}}\right)\times\frac{1}{2 \times N_{TRIES}}
 				\end{gather*}
 			</p>
 		</div>
 		<div class="col-sm-4">
 			<h2 class="math-heading">Tipo 3</h2>
 			<hr>
-			<h4 class="math-heading">Expectación</h4>
+			<h4 class="math-heading">Expectativa</h4>
 			<p>
 				\begin{gather*}
-				Expt = \frac{1}{1+10^{-\left(\frac{( ELO_{1} -ELO_{2})}{MAX\_DIFF}\right)}}
+				E = \frac{1}{1+10^{-\left(\frac{R_1 - R_2}{MAX\_DIFF}\right)}}
 				\end{gather*}
 			</p>
 			<hr>
@@ -110,13 +110,13 @@
 			<h5 class="math-heading">Si ELO menor gana:</h5>
 			<p>
 				\begin{gather*}
-				K = \frac{ELO\_DIFF\ +\ MAX\_ELO}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				K= \frac{\Delta R + R_{MAX}}{R_{MAX} \times 2 \times N_{TRIES}}
 				\end{gather*}
 			</p>
 			<h5 class="math-heading">Si ELO mayor gana:</h5>
 			<p>
 				\begin{gather*}
-				K = \frac{1 - ELO\_DIFF}{MAX\_ELO} \times \frac{1}{2} \times \frac{1}{INTENTOS}\\
+				K= \left(1 - \frac{ \Delta R}{R_{MAX}}\right)\times\frac{1}{2 \times N_{TRIES}}
 				\end{gather*}
 			</p>
 		</div>
@@ -125,33 +125,36 @@
 	<div class="row" style="padding-top: 2em">
 		<p style="text-align: center;">
 			\begin{gather*}
-			Ganador\_Nuevo\_ELO= Ganador\_Viejo\_ELO + K \times (1 - Expectación\_Ganador)\\
+			R_{winner}' = R_{winner} + K \times (S_a - E_{winner})
 			\end{gather*}
 		</p>
 		<p style="text-align: center;">
 			\begin{gather*}
-			Perdedor\_Nuevo\_ELO= Perdedor\_Viejo\_ELO + K \times (0 - Expectación\_Perdedor)\\
+			R_{loser}' = R_{loser} + K \times (S_a - E_{loser})\\
 			\end{gather*}
 		</p>
 	</div>
 	<div class="row" style="padding-top: 2em">
 		<h3 style="text-align: center;">Leyenda</h3>
 		<div class="col-sm-6">
-			<p>\begin{gather*} MAX\_ELO\end{gather*}</p>
-			<p style="text-align: center;">Puntuación maxima que pueden alcanzar usuarios y problemas. <br> El valor de MAX_ELO utilizado es 16.</p>
-			<p>\begin{gather*} ELO_1, ELO_2\end{gather*}</p>
+			<p>\begin{gather*} E \end{gather*}</p>
+			<p style="text-align: center;">Expectativa de un usuario o problema de ganar un enfrentamiento.</p>
+			<p>\begin{gather*} R_1, R_2\end{gather*}</p>
 			<p style="text-align: center;">Puntuación ELO del Usuario y Problema (no necesariamente en ese orden).</p>
-			<p>\begin{gather*} ELO\_DIFF\end{gather*}</p>
+			<p>\begin{gather*} \Delta R\end{gather*}</p>
 			<p style="text-align: center;">Valor absoluto de la diferencia de puntuaciones ELO del Usuario y Problema.</p>
-			
+			<p>\begin{gather*} R_{MAX}\end{gather*}</p>
+			<p style="text-align: center;">Puntuación maxima que pueden alcanzar usuarios y problemas. <br> Para las pruebas, este valor será 16.</p>
 		</div>
 		<div class="col-sm-6">
-			<p>\begin{gather*} MIN\_ELO\end{gather*}</p>
-			<p style="text-align: center;">Puntuación minima que pueden alcanzar usuarios y problemas. El valor de MAX_ELO utilizado es 0.</p>
-			<p>\begin{gather*} INTENTOS\end{gather*}</p>
+			<p>\begin{gather*} N_{TRIES}\end{gather*}</p>
 			<p style="text-align: center;">Número de intentos usados por el usuario para resolver el problema.</p>
+			<p>\begin{gather*} S_a\end{gather*}</p>
+			<p style="text-align: center;">Resultado del enfrentamiento. Será 1 en caso de victoria y 0 la derrota.</p>
+			<p>\begin{gather*} K \end{gather*}</p>
+			<p style="text-align: center;">Un factor que influye en el incremento o perdida de puntuación.</p>
 			<p>\begin{gather*} MAX\_DIFF\end{gather*}</p>
-			<p style="text-align: center;">Un usuario / problema con MAX_DIFF puntos de ventaja sobre su oponente, tendra una probabilidad de ganar 10 veces mayor a la probabilidad de ganar de su oponente. El valor de MAX_DIFF utilizado es 8</p>
+			<p style="text-align: center;">Un usuario / problema con MAX_DIFF puntos de ventaja sobre su oponente, tendra una expectativa de ganar 10 veces mayor a la expectativa de ganar de su oponente. <br> El valor de MAX_DIFF utilizado es 8</p>
 		</div>
 	</div>
 	<script type="text/javascript">

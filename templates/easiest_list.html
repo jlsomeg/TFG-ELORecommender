@@ -28,7 +28,7 @@
 							<td> <a href="/problem/{{item[0]}}">{{ item[0] }}</a></td>
 							<td>{{ item[1] }}</td>
 							<td>{{ item[2] }}</td>
-							<td>{{ item[3]|round(3, 'floor') }}</td>
+							<td>{{ (item[3]*100)|round|int }}</td>
 							<td>{{ stats[loop.index0][1]|round(1, 'floor') }}%</td>
 							<td>{{ stats[loop.index0][2]|round(1, 'floor') }}%</td>
 						</tr>

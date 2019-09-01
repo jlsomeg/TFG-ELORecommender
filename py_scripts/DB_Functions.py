@@ -3,7 +3,7 @@ from py_scripts import ELO
 from py_scripts import DB_Connection
 from py_scripts import ACR_Globals
 
-__elo_type = 3
+__elo_type = 0
 
 def insert_user(user_id, elo):
 	db = DB_Connection.database()
@@ -336,6 +336,12 @@ def CATEGORIES_RECOMMENDATION(db, r_type, user_id, user_elo, code):
 	return db.query(query, fetchall=True)
 
 # ELO CHANGE
+def ELO_TYPE():
+	db = DB_Connection.database()
+	global __elo_type
+	__elo_type = db.query("SELECT elo_type FROM elo_type LIMIT 1", fetchone=True)[0]
+	db.close()
+
 def RE_CALCULATE_ELOS(elo_type):
 	db = DB_Connection.database()
 	start_time = time.time()
@@ -346,6 +352,7 @@ def RE_CALCULATE_ELOS(elo_type):
 
 		global __elo_type
 		__elo_type = elo_type
+		db.change_elo_type(elo_type)
 
 		print("Time spent calculating ELOs: ", time.time() - start_time, flush=True)
 		db.close()

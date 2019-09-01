@@ -80,9 +80,9 @@
 							{% for rw in user_recommendations %}
 								<tr>
 									<td> <a href="/problem/{{rw[0]}}">{{ rw[0] }}</a></td>
-									{% for i in rw[1:] %}
-										<td style="font-size: medium;">{{ i }}</td>
-									{% endfor %}
+									<td style="font-size: medium;">{{ rw[1] }}</td>
+									<td style="font-size: medium;">{{ rw[2] }}</td>
+									<td style="font-size: medium;">{{ (rw[3]*100)|round|int }}</td>
 								</tr>
 							{% endfor %}
 						</table>
