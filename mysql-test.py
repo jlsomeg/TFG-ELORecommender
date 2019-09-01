@@ -5,6 +5,7 @@ from py_scripts import DB_Functions as db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5404d19eaf645951b91dae10a842be5b'
+db.ELO_TYPE()
 
 ### Dashes
 
