@@ -26,7 +26,7 @@
 							<td> <a href="/user/{{item[0]}}">{{ item[0] }}</a></td>
 							<td> {{ item[1] }} </td>
 							<td> {{ item[2] }} </td>
-							<td> {{ item[3]|round(3, 'floor') }} </td>
+							<td>{{ (item[3]*100)|round|int }}</td>
 						</tr>
 					{% endfor %}
 				</table>

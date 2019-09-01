@@ -34,7 +34,7 @@
 								{% endfor %}
 							</td>
 							<td> {{ item[2] }} </td>
-							<td>{{ stats[loop.index0][1]|round(3, 'floor') }}</td>
+							<td>{{ (stats[loop.index0][1]*100)|round|int }}</td>
 							<td>{{ stats[loop.index0][2]|round(1, 'floor') if stats[loop.index0][2] != None else 0 }}%</td>
 							<td>{{ stats[loop.index0][3]|round(1, 'floor') if stats[loop.index0][3] != None else 0 }}%</td>
 						</tr>

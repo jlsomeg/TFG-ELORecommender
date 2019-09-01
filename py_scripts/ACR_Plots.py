@@ -99,15 +99,15 @@ def PLOTLY_HISTOGRAM_PLOT(x, title="", x_label="", y_label=""):
 		x = x,
 		histnorm="percent",
 		xbins = dict(
-			end=16, 
-		    size=0.5, 
+			end=1600, 
+		    size=50, 
 		    start=0)
 		)
 	]
 
 	layout = go.Layout(
 		title=title,
-		xaxis=dict(title=x_label, range=[0,16]),
+		xaxis=dict(title=x_label, range=[0,1600]),
 		yaxis=dict(title=y_label)
 	)
 
@@ -134,7 +134,7 @@ def GRAPH_ELO_DISTRIBUTION(items):
 	x = []
 	
 	for row in db.query("""SELECT elo_global FROM {}""".format('user_scores' if items=='Usuarios' else 'problem_scores'), fetchall=True):
-		x.append(row[0])
+		x.append(row[0]*100)
 
 	db.close()
 	return PLOTLY_HISTOGRAM_PLOT(x, title="Distribución de Puntuación ELO de los {} de ACR".format(items),
@@ -229,10 +229,10 @@ def GRAPH_USERS_EVOLUTION(user_id):
 	AND user_elo IS NOT NULL 
 	ORDER BY id""".format(user_id), fetchall=True)
 	
-	y = [x[0] for x in rows]
-	y.insert(0,8)
+	y = [round(x[0]*100) for x in rows]
+	y.insert(0,800)
 
-	latest_elo = db.query("SELECT elo_global FROM user_scores WHERE user_id = {}".format(user_id), fetchone=True)[0]
+	latest_elo = round(db.query("SELECT elo_global FROM user_scores WHERE user_id = {}".format(user_id), fetchone=True)[0]*100)
 	if y[-1] != latest_elo:
 		y.append(latest_elo)
 
@@ -247,10 +247,10 @@ def GRAPH_PROBLEMS_EVOLUTION(problem_id):
 		AND problem_elo IS NOT NULL 
 		ORDER BY id""".format(problem_id), fetchall=True)
 
-	y = [x[0] for x in rows]
-	y.insert(0,8)
+	y = [round(x[0]*100) for x in rows]
+	y.insert(0,800)
 
-	latest_elo = db.query("SELECT elo_global FROM problem_scores WHERE problem_id = {}".format(problem_id), fetchone=True)[0]
+	latest_elo = round(db.query("SELECT elo_global FROM problem_scores WHERE problem_id = {}".format(problem_id), fetchone=True)[0]*100)
 	if y[-1] != latest_elo:
 		y.append(latest_elo)
 
