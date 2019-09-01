@@ -19,10 +19,6 @@ class database():
 		elif commit:
 			self.conn.commit()
 
-	def get_elo_type(self):
-		self.cursor.execute("SELECT elo_type FROM elo_type LIMIT 1")
-		return self.cursor.fetchone()[0]
-
 	def change_elo_type(self, new_value):
 		self.cursor.execute("UPDATE elo_type SET elo_type={}".format(new_value))
 		self.conn.commit()
