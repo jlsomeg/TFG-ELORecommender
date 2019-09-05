@@ -262,14 +262,14 @@ def GRAPH_USER_CATEGORIES(user_id):
 	db = DB_Connection.database()
 	row = db.query("""SELECT * FROM user_scores WHERE user_id = {}""".format(user_id), fetchone=True)
 	
-	values = [i for i in row[2:]]
+	values = [round(i*100) for i in row[2:]]
 	values.append(values[0])
 	
 	axes = ['Ad-hoc', 'Recorridos', 'Busqueda', 'Busqueda Binaria', 'Ordenacion', 'Algoritmos voraces','Programacion dinamica',
 	'Divide y venceras','Busqueda exhaustiva, vuelta atras','Busqueda en el espacio de soluciones','Grafos','Geometria','Ad-hoc']
 	
 	db.close()
-	return PLOTLY_SPIDER_PLOT(values, axes, [0,16], title="ELO por Categoria")
+	return PLOTLY_SPIDER_PLOT(values, axes, [0,1600], title="ELO por Categoria")
 
 # Done
 def GRAPH_USER_PROBLEM_PROGRESS(user_id):
