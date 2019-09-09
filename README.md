@@ -32,6 +32,10 @@ El repositorio está dividido en tres partes que van de la mano con las partes e
 	
 		Forman parte las carpetas *static* y *templates* ademas de *mysql-test.py*
 
+### Submodulo
+
+La carpeta *TFG-ACR-ELO-Testing* está implementado como un submodulo de este repositorio, es decir, forma parte de un repositorio independiente propiedad de [@Kernel-13](https://github.com/Kernel-13) y en el está contenido todos los scripts de recomendación usados en este repositorio, ademas de mucho mas contenido adicional como pruebas y testeo del desarrollo de los scripts o graficas correspondientes a distintos momentos de tiempo o técnicas en el progreso del proyecto.
+		
 ### Despliegue
 
 Ademas el repositorio ha sido encapsulado con la ayuda de Docker de manera que el despliegue, al ser totalmente automatizado, sea mucho más liviano, portable y sencillo, pudiéndolo probar en cualquier maquina que tenga instalado Docker sin el problema de añadir bibliotecas o dependencias con tan solo la ejecución de un comando.
