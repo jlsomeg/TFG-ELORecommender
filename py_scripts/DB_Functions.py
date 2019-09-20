@@ -109,17 +109,6 @@ def insert_submission(user_id, problem_id, language, status):
 	if already_solved is not None:
 		raise RuntimeError('El usuario ya ha resuelto este problema')
 
-	# Gets the number of tries
-	tries = db.query("""SELECT COUNT(id), user_id, problem_id FROM submission 
-		WHERE user_id = {} 
-		AND problem_id = {}
-		GROUP BY user_id, problem_id""".format(user_id, problem_id), fetchone=True)
-
-	if tries is not None:
-		tries = (tries[0] + 1) % ACR_Globals.__MAX_TRIES
-	else:
-		tries = 1
-
 	# Checks if the user has switched problems
 	gave_up = False
 	row = db.query(""" SELECT user_id, problem_id, status FROM submission 
@@ -133,21 +122,64 @@ def insert_submission(user_id, problem_id, language, status):
 			if row[1] != problem_id:
 				gave_up = True
 
-	if gave_up or status == 'AC' or tries == 0:
-		if gave_up:
 
-			# Checks the number of tries of the previous problem
-			prev_tries = db.query("""SELECT COUNT(id), user_id, problem_id FROM submission 
-				WHERE user_id = {} 
-				AND problem_id = {}
-				GROUP BY user_id, problem_id""".format(user_id, last_problem), fetchone=True)
+	if __elo_type == 1:
+		if gave_up or status == 'AC':
+			if gave_up:
+				simulate_fight(db, user_id, last_problem, language, 'WA', 1)
+			else:
+				simulate_fight(db, user_id, last_problem, language, status, 1)
 
-			prev_tries = (prev_tries[0] + 1) % ACR_Globals.__MAX_TRIES
-			simulate_fight(db, user_id, last_problem, language, status, ACR_Globals.__MAX_TRIES if prev_tries == 0 else prev_tries)
-			
-		if status == 'AC' or tries == 0:
-			simulate_fight(db, user_id, problem_id, language, status, ACR_Globals.__MAX_TRIES if tries == 0 else tries)
-	
+	else:
+		# Gets the number of tries
+		tries = db.query("""SELECT COUNT(id), user_id, problem_id FROM submission 
+			WHERE user_id = {} 
+			AND problem_id = {}
+			GROUP BY user_id, problem_id""".format(user_id, problem_id), fetchone=True)
+
+		if tries is not None:
+			tries = (tries[0] + 1) #% ACR_Globals.__MAX_TRIES
+		else:
+			tries = 1
+
+
+		if __elo_type == 2:
+
+			if gave_up:
+
+				# Checks the number of tries of the previous problem
+				prev_tries = db.query("""SELECT COUNT(id), user_id, problem_id FROM submission 
+					WHERE user_id = {} 
+					AND problem_id = {}
+					GROUP BY user_id, problem_id""".format(user_id, last_problem), fetchone=True)
+
+				simulate_fight(db, user_id, last_problem, language, 'WA', prev_tries[0])
+
+			if status == 'AC':
+				simulate_fight(db, user_id, problem_id, language, status, tries)
+
+		elif __elo_type == 3:
+
+			tries = tries % ACR_Globals.__MAX_TRIES
+
+			if gave_up:
+
+				# Checks the number of tries of the previous problem
+				prev_tries = db.query("""SELECT COUNT(id), user_id, problem_id FROM submission 
+					WHERE user_id = {} 
+					AND problem_id = {}
+					GROUP BY user_id, problem_id""".format(user_id, last_problem), fetchone=True)
+
+				prev_tries = prev_tries[0] % ACR_Globals.__MAX_TRIES
+				simulate_fight(db, user_id, last_problem, language, 'WA', ACR_Globals.__MAX_TRIES if prev_tries == 0 else prev_tries)
+				
+			if tries == 0 and status != 'AC':
+				simulate_fight(db, user_id, last_problem, language, status, ACR_Globals.__MAX_TRIES)
+
+			if status == 'AC':
+				simulate_fight(db, user_id, problem_id, language, status, ACR_Globals.__MAX_TRIES if tries == 0 else tries)
+
+
 	else:
 		db.query("""INSERT INTO submission (user_id, problem_id, language, status, submissionDate) 
 		VALUES ({}, {}, '{}', '{}', '{}')""".format(user_id, problem_id, language, status, time.strftime('%Y-%m-%d %H:%M:%S')), commit=True)
@@ -423,7 +455,7 @@ def CALCULATE_ELOS(db, elo_type):
 
 				# If he switches
 				if current_fights[u_id] != p_id:
-					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(db, subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], status, 1, dict_user_categories)
+					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(db, subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], 'WA', 1, dict_user_categories)
 					current_fights[u_id] = p_id
 
 				# If he wins or reaches __MAX_TRIES tries
@@ -440,7 +472,7 @@ def CALCULATE_ELOS(db, elo_type):
 				# If he switches
 				if current_fights[u_id] != p_id:
 					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(db, subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], 
-						status, tries_per_couple[(u_id,current_fights[u_id])], dict_user_categories)
+						'WA', tries_per_couple[(u_id,current_fights[u_id])], dict_user_categories)
 					current_fights[u_id] = p_id
 
 				# If he wins
@@ -460,17 +492,20 @@ def CALCULATE_ELOS(db, elo_type):
 					num_tries = tries_per_couple[(u_id,current_fights[u_id])] % ACR_Globals.__MAX_TRIES if tries_per_couple[(u_id,current_fights[u_id])] % ACR_Globals.__MAX_TRIES != 0 else ACR_Globals.__MAX_TRIES
 					
 					dict_user_elo[u_id], dict_problem_elo[current_fights[u_id]] = CHANGE_ELOS(db, subm_id, u_id, dict_user_elo[u_id], current_fights[u_id], dict_problem_elo[current_fights[u_id]], 
-						status, num_tries, dict_user_categories)
+						'WA', num_tries, dict_user_categories)
 					
 					current_fights[u_id] = p_id
 
+				
 				# If he wins or reaches __MAX_TRIES tries
-				if status in ('AC', 'PE') or tries_per_couple[(u_id,p_id)] == ACR_Globals.__MAX_TRIES:			
-					if status in ('AC', 'PE'): 
-						del current_fights[u_id]
+				if tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES == 0 and status not in ('AC', 'PE'):
+					dict_user_elo[u_id], dict_problem_elo[p_id] = CHANGE_ELOS(db, subm_id, u_id, dict_user_elo[u_id], p_id, dict_problem_elo[p_id], status,
+					 ACR_Globals.__MAX_TRIES, dict_user_categories)
+
+				if status in ('AC', 'PE'):			
+					del current_fights[u_id]
 					
 					num_tries = tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES if tries_per_couple[(u_id,p_id)] % ACR_Globals.__MAX_TRIES != 0 else ACR_Globals.__MAX_TRIES
-					
 					dict_user_elo[u_id], dict_problem_elo[p_id] = CHANGE_ELOS(db, subm_id, u_id, dict_user_elo[u_id], p_id, dict_problem_elo[p_id], status,
 					 num_tries, dict_user_categories)
 
