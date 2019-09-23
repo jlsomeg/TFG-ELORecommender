@@ -90,7 +90,7 @@ def user_list():
 
 def insert_submission(user_id, problem_id, language, status):
 	db = DB_Connection.database()
-
+	update_elo = False
 	# Checks if both user and problem exists
 
 	if db.query("SELECT * FROM user_scores WHERE user_id = {}".format(user_id), fetchone=True) is None:
@@ -124,11 +124,14 @@ def insert_submission(user_id, problem_id, language, status):
 
 
 	if __elo_type == 1:
-		if gave_up or status == 'AC':
-			if gave_up:
-				simulate_fight(db, user_id, last_problem, language, 'WA', 1)
-			else:
-				simulate_fight(db, user_id, last_problem, language, status, 1)
+
+		if gave_up:
+			simulate_fight(db, user_id, last_problem, language, 'WA', 1)
+			update_elo = True
+
+		if status == 'AC':
+			simulate_fight(db, user_id, last_problem, language, status, 1)
+			update_elo = True
 
 	else:
 		# Gets the number of tries
@@ -154,9 +157,11 @@ def insert_submission(user_id, problem_id, language, status):
 					GROUP BY user_id, problem_id""".format(user_id, last_problem), fetchone=True)
 
 				simulate_fight(db, user_id, last_problem, language, 'WA', prev_tries[0])
+				update_elo = True
 
 			if status == 'AC':
 				simulate_fight(db, user_id, problem_id, language, status, tries)
+				update_elo = True
 
 		elif __elo_type == 3:
 
@@ -172,15 +177,18 @@ def insert_submission(user_id, problem_id, language, status):
 
 				prev_tries = prev_tries[0] % ACR_Globals.__MAX_TRIES
 				simulate_fight(db, user_id, last_problem, language, 'WA', ACR_Globals.__MAX_TRIES if prev_tries == 0 else prev_tries)
+				update_elo = True
 				
 			if tries == 0 and status != 'AC':
 				simulate_fight(db, user_id, last_problem, language, status, ACR_Globals.__MAX_TRIES)
-
+				update_elo = True
+				
 			if status == 'AC':
 				simulate_fight(db, user_id, problem_id, language, status, ACR_Globals.__MAX_TRIES if tries == 0 else tries)
+				update_elo = True
 
 
-	else:
+	if not update_elo:
 		db.query("""INSERT INTO submission (user_id, problem_id, language, status, submissionDate) 
 		VALUES ({}, {}, '{}', '{}', '{}')""".format(user_id, problem_id, language, status, time.strftime('%Y-%m-%d %H:%M:%S')), commit=True)
 
